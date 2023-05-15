@@ -52,7 +52,7 @@ CREATE TABLE
         `gender`        ENUM('MALE', 'FEMALE')  NULL,
         `account_id`    INT NOT NULL UNIQUE,
         PRIMARY KEY(id),
-        FOREIGN KEY (`account_id`) REFERENCES `Account`(id)
+        FOREIGN KEY (`account_id`) REFERENCES `Account`(id) ON DELETE CASCADE
     );
 
 /*
@@ -82,7 +82,7 @@ CREATE TABLE
         `image`         TEXT    NULL,
         `tourAtt_id`    INT  NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY (`tourAtt_id`) REFERENCES `Tourist_attraction`(id)
+        FOREIGN KEY (`tourAtt_id`) REFERENCES `Tourist_attraction`(id) ON DELETE CASCADE
 );
 
 /*
@@ -148,6 +148,6 @@ CREATE TABLE
         `total_price`       INT NOT NULL,
         `book_time`     DATETIME NOT NULL DEFAULT now(),
         PRIMARY KEY (`account_id`, `tour_id`),
-        Foreign Key (`account_id`)  REFERENCES `account`(id),
-        Foreign Key (`tour_id`)     REFERENCES `tour`(id)
+        Foreign Key (`account_id`)  REFERENCES `account`(id) ON DELETE CASCADE,
+        Foreign Key (`tour_id`)     REFERENCES `tour`(id) ON DELETE CASCADE
     )

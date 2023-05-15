@@ -2,6 +2,7 @@ package com.gr1.dtos.request;
 
 import java.util.Date;
 
+import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;

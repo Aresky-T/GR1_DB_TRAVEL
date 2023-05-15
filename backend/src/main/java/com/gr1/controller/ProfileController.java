@@ -2,6 +2,7 @@ package com.gr1.controller;
 
 import java.util.Optional;
 
+import com.gr1.exception.ProfileException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import com.gr1.entity.Profile;
 import com.gr1.service.IAccountService;
 import com.gr1.service.IProfileService;
 
+import javax.validation.constraints.Null;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -39,53 +42,33 @@ public class ProfileController {
     public ResponseEntity<?> getProfile(Authentication authentication) {
         String username = authentication.getName();
         Account account = accountService.findByUsername(username);
-        int accountId = account.getId();
-
-        Optional<Profile> result = profileService.findByAccountId(accountId);
-
-        if (result.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("No profile for account_id = " + accountId));
+        if (account == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid account"));
         }
-
+        Optional<Profile> result = profileService.findByAccount(account);
+        if (result.isEmpty()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("No profile for account_id = " + account.getId()));
+        }
         var profile = result.get();
-
         if (profile.getAvatarUrl() == null || profile.getDateOfBirth() == null || profile.getFullName() == null
                 || profile.getGender() == null || profile.getPhone() == null) {
-            return ResponseEntity.ok("Please update your profile");
+            return  ResponseEntity.badRequest().body(new MessageResponse("Please update your profile"));
         }
-
         ProfileResponse profileDTO = modelMapper.map(profile, ProfileResponse.class);
-
         return ResponseEntity.ok(profileDTO);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody ProfileUpdate form, Authentication authentication) throws Exception {
-        String username = authentication.getName();
-        Optional<Profile> result = profileService.findByAccountUsername(username);
-        if (result.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("profile is not exists"));
+    public ResponseEntity<?> update(@RequestBody ProfileUpdate form, Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            Profile profile = profileService.updateProfile(form, username);
+            ProfileResponse profileDTO = modelMapper.map(profile, ProfileResponse.class);
+            return ResponseEntity.ok(profileDTO);
+        } catch (ProfileException ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        } catch (NullPointerException ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse("you must enter all values"));
         }
-        Profile profile = result.get();
-        profile.setAvatarUrl(form.getAvatarUrl());
-        profile.setFullName(form.getFullName());
-        profile.setAddress(form.getAddress());
-        profile.setPhone(form.getPhone());
-        profile.setDateOfBirth(form.getDateOfBirth());
-
-        if (form.getGender() != null) {
-            switch (form.getGender()) {
-                case "MALE":
-                    profile.setGender(EGender.MALE);
-                    break;
-                case "FEMALE":
-                    profile.setGender(EGender.FEMALE);
-                    break;
-                default:
-            }
-        }
-
-        profileService.createOrUpdateProfile(profile, username);
-        return ResponseEntity.ok("update profile success");
     }
 }

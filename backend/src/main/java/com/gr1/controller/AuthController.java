@@ -3,6 +3,7 @@ package com.gr1.controller;
 import com.gr1.dtos.request.LoginForm;
 import com.gr1.dtos.request.SignUpForm;
 import com.gr1.dtos.response.AccountResponse;
+import com.gr1.dtos.response.JwtResponse;
 import com.gr1.dtos.response.MessageResponse;
 import com.gr1.entity.Account;
 import com.gr1.entity.ERole;
@@ -58,7 +59,7 @@ public class AuthController {
         account.setStatus(EStatus.ACTIVE);
         account.setRole(ERole.USER);
         Account accountResponse = accountService.saveOrUpdate(account);
-        profileService.createOrUpdateProfile(new Profile(), accountResponse.getUsername());
+        profileService.addProfile(accountResponse.getUsername());
         return new ResponseEntity<>("Sign up success", HttpStatus.OK);
     }
 
@@ -79,7 +80,7 @@ public class AuthController {
         authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String token = jwtUtil.generateToken(username);
-        return ResponseEntity.ok(new AccountResponse(
+        return ResponseEntity.ok(new JwtResponse(
                 account.getId(),
                 token,
                 account.getUsername(),
