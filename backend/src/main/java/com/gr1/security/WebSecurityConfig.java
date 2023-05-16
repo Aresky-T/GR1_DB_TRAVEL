@@ -1,6 +1,5 @@
 package com.gr1.security;
 
-import com.gr1.exception.CustomGlobalExceptionHandler;
 import com.gr1.jwt.JwtAuthenticationProvider;
 import com.gr1.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -24,11 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenFilter jwtTokenFilter;
     @Autowired
+    private WebCorsFilter webCorsFilter;
+    @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
     @Autowired
     private AuthenticationEntryPointHandler authenticationEntryPointHandler;
-    @Autowired
-    private CustomGlobalExceptionHandler customGlobalExceptionHandler;
 
     private static final String[] AUTH_WHITELIST = {
             // for Swagger UI v2
@@ -47,33 +47,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean () throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Override
-    protected void configure (AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(jwtAuthenticationProvider);
     }
 
     @Override
-    protected void configure (HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPointHandler)
-                .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/v1/profile/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers(HttpMethod.GET, "/api/v1/account/get-all-accounts").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/v1/account/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/v1/account/update-password").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST,"/api/v1/account/forgot-password").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/account/forgot-password").permitAll()
+                .antMatchers("/api/v1/account/**").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/tour_guide/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .and()
+                .httpBasic()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPointHandler)
+                .and()
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(webCorsFilter, ChannelProcessingFilter.class)
+        ;
     }
 }

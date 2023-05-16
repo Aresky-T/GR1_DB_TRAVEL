@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -48,4 +49,7 @@ public class Account implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "`updated_time`", nullable = false)
     private Date updatedTime;
+
+    @OneToMany(mappedBy = "account")
+    private List<BookTourInfo> bookTourInfoList;
 }

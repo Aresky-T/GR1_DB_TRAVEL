@@ -107,7 +107,7 @@ public class AccountService implements IAccountService {
         if (account.getRole() == ERole.ADMIN){
             throw new AccountException("Cannot lock admin account");
         }
-        account.setStatus(EStatus.BLOCKED);
+        account.setStatus(EStatus.ACTIVE);
         accountRepository.save(account);
     }
 

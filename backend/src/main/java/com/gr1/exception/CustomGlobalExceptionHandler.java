@@ -1,6 +1,7 @@
 package com.gr1.exception;
 
 import com.gr1.dtos.response.MessageResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,6 +32,11 @@ public class CustomGlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<MessageResponse> handleBadCredentialsException(BadCredentialsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(TourGuideException.class)
+    public ResponseEntity<MessageResponse> handleTourGuideException(TourGuideException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
     }
 }

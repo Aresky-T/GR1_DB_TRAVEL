@@ -86,6 +86,21 @@ CREATE TABLE
 );
 
 /*
+ CREATE TABLE `Tour_guide`
+ */
+DROP TABLE IF EXISTS `Tour_guide`;
+CREATE TABLE
+    IF NOT EXISTS `Tour_guide` (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `full_name`     VARCHAR(100) NOT NULL,
+        `avatar_url`    VARCHAR(255) NOT NULL,
+        `age`           INT NOT NULL,
+        `description`   VARCHAR(255) NOT NULL,
+        `phone`         VARCHAR(20) NOT NULL,
+        `address`       VARCHAR(200) NOT NULL
+    );
+
+/*
  CREATE TABLE `Tour`
  */
 DROP TABLE IF EXISTS `Tour`;
@@ -110,22 +125,8 @@ CREATE TABLE
         `price3`            INT NOT NULL,
         `tour_guide`        INT NULL,
         `tour_code`         VARCHAR(100) NOT NULL UNIQUE,
-        PRIMARY KEY(id)
-    );
-
-/*
- CREATE TABLE `Tour_guide`
- */
-DROP TABLE IF EXISTS `Tour_guide`;
-CREATE TABLE
-    IF NOT EXISTS `Tour_guide` (
-        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        `full_name`     VARCHAR(100) NOT NULL,
-        `avatar_url`    VARCHAR(255) NOT NULL,
-        `age`           INT NOT NULL,
-        `description`    INT NOT NULL,
-        `phone`         VARCHAR(20) NOT NULL,
-        `address`       VARCHAR(200) NOT NULL
+        PRIMARY KEY(id),
+        FOREIGN KEY (`tour_guide`) REFERENCES `Tour_guide`(id) ON DELETE SET NULL
     );
 
 /*

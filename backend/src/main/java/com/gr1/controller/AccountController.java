@@ -2,28 +2,19 @@ package com.gr1.controller;
 
 import com.gr1.dtos.request.UpdatePasswordForm;
 import com.gr1.dtos.response.AccountResponse;
-import com.gr1.dtos.response.MessageResponse;
 import com.gr1.email.IEmailService;
 import com.gr1.entity.Account;
-import com.gr1.exception.AccountException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import com.gr1.service.IAccountService;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -53,6 +44,12 @@ public class AccountController {
     @PutMapping("/lock-account")
     public ResponseEntity<?> lockAccount(@RequestParam(name = "account_id") Integer accountId){
         accountService.lockAccount(accountId);
+        return ResponseEntity.ok("lock account success");
+    }
+
+    @PutMapping("/activate-account")
+    public ResponseEntity<?> activeAccount(@RequestParam(name = "account_id") Integer accountId){
+        accountService.activateAccount(accountId);
         return ResponseEntity.ok("lock account success");
     }
 

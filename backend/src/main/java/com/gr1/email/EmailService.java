@@ -41,7 +41,7 @@ public class EmailService implements IEmailService{
         formatter.withZone(ZoneId.of("Asia/Ho_Chi_Minh"));
         String formattedDateTime = formatter.format(now);
         // Random password
-        String passwordRandom = PasswordUtils.generateRandomPassword();
+        String passwordRandom = PasswordUtils.randomSecurePassword(10);
         account.setPassword(passwordEncoder.encode(passwordRandom));
         // Save new random password
         accountService.saveOrUpdate(account);
