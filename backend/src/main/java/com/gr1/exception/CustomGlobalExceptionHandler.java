@@ -39,4 +39,9 @@ public class CustomGlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleTourGuideException(TourGuideException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
     }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<MessageResponse> handleCustomException(CustomException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
+    }
 }

@@ -67,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/v1/account/forgot-password").permitAll()
                 .antMatchers("/api/v1/account/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/tour_guide/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/v1/tourist-attraction/**").permitAll()
+                .antMatchers("/api/v1/tourist-attraction/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
