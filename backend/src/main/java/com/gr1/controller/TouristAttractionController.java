@@ -23,6 +23,13 @@ public class TouristAttractionController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByName(@RequestParam String search){
+        List<TouristAttraction> result = touristAttractionService.searchByName(search);
+        List<TouristAttractionResponse> dtos = modelMapper.map(result, new TypeToken<List<TouristAttractionResponse>>(){}.getType());
+        return ResponseEntity.ok(dtos);
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody TouristAttRequest touristAttRequest){
         touristAttractionService.createTouristAttraction(touristAttRequest, touristAttRequest.getListContents());

@@ -18,9 +18,9 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
+	font-family: 'Source San 3', sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -38,10 +38,45 @@ blockquote, q {
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
 	content: none;
 }
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+// 
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Dancing+Script:wght@500;600;700&family=Grenze:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Poppins:wght@100&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Dancing+Script:wght@500;600;700&family=Grenze:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@100&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+
+// 
+:root {
+	--navbar-admin-height: 100px;
+	--shadow-color: #0000007a;
+	--sidebar-width: 240px;
+}
+
+
+.admin-container{
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: 240px 1fr;
+	grid-template-rows: 100px 1fr;
+	grid-template-areas:
+					"a b"
+					"a c";
+}
+
+//
+@import url("./admin/_home_admin.scss");
+@import url("./admin/_sidebar.scss");
+@import url("./admin/_navbar_admin.scss");
+@import url("./admin/_admin_main.scss");
+@import url("./admin/_admin_login.scss");
+@import url("./admin/_tour_manager.scss");
+@import url("./admin/_admin_modal.scss");
+
+//
+@import url("./global/_loading.scss");

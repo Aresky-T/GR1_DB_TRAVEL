@@ -2,13 +2,11 @@ package com.gr1.controller;
 
 import com.gr1.dtos.request.LoginForm;
 import com.gr1.dtos.request.SignUpForm;
-import com.gr1.dtos.response.AccountResponse;
 import com.gr1.dtos.response.JwtResponse;
 import com.gr1.dtos.response.MessageResponse;
 import com.gr1.entity.Account;
 import com.gr1.entity.ERole;
 import com.gr1.entity.EStatus;
-import com.gr1.entity.Profile;
 import com.gr1.jwt.JwtUtil;
 import com.gr1.security.CustomUserDetailsService;
 import com.gr1.service.IAccountService;
@@ -72,7 +70,7 @@ public class AuthController {
         Account account = accountService.findByUsername(username);
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())){
-            throw new BadCredentialsException("Invalid username or password!");
+            throw new BadCredentialsException("Invalid password!");
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = 
@@ -88,5 +86,11 @@ public class AuthController {
                 account.getRole().toString(),
                 account.getStatus().toString()
         ));
+    }
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<?> validateToken(@RequestParam String token){
+        accountService.validateJwt(token);
+        return ResponseEntity.ok("Valid");
     }
 }

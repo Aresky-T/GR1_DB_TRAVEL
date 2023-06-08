@@ -1,12 +1,16 @@
 package com.gr1.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "`Tour`")
+@NoArgsConstructor
 public class Tour implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -30,7 +34,7 @@ public class Tour implements Serializable {
     private String image4;
 
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private String startTime;
 
     @Column(name = "time", length = 100, nullable = false)
     private String time;
@@ -70,5 +74,5 @@ public class Tour implements Serializable {
     private String tourCode;
 
     @OneToMany(mappedBy = "tour")
-    private List<BookTourInfo> tourInfoList;
+    private List<BookedTour> tourInfoList;
 }

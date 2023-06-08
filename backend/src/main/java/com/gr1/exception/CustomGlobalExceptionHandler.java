@@ -6,9 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class CustomGlobalExceptionHandler {
@@ -43,5 +46,15 @@ public class CustomGlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<MessageResponse> handleCustomException(CustomException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<MessageResponse> handleUsernameNotFoundException(UsernameNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<MessageResponse> handleConstraintViolationException(ConstraintViolationException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Validation field failed"));
     }
 }

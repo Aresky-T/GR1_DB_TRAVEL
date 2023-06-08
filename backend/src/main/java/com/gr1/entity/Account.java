@@ -51,5 +51,5 @@ public class Account implements Serializable {
     private Date updatedTime;
 
     @OneToMany(mappedBy = "account")
-    private List<BookTourInfo> bookTourInfoList;
+    private List<BookedTour> bookedTourList;
 }

@@ -112,7 +112,7 @@ CREATE TABLE
         `image2`            TEXT NOT NULL,
         `image3`            TEXT NOT NULL,
         `image4`            TEXT NOT NULL,
-        `start_time`        DATETIME NOT NULL,
+        `start_time`        VARCHAR(100) NOT NULL,
         `time`              VARCHAR(100) NOT NULL,
         `start_address`     VARCHAR(255) NOT NULL,
         `destination_list`  VARCHAR(255) NOT NULL,
@@ -132,9 +132,9 @@ CREATE TABLE
 /*
  CREATE TABLE `Book_tour_information`
  */
-DROP TABLE IF EXISTS `Book_tour_information`;
+DROP TABLE IF EXISTS `Booked_tour_information`;
 CREATE TABLE
-    IF NOT EXISTS `Book_tour_information`(
+    IF NOT EXISTS `Booked_tour_information`(
         `account_id`        INT NOT NULL,
         `tour_id`           INT NOT NULL,
         `full_name`         VARCHAR(100) NOT NULL,
@@ -147,8 +147,26 @@ CREATE TABLE
         `baby_number`       INT NOT NULL,
         `note`              VARCHAR(255) NULL,
         `total_price`       INT NOT NULL,
-        `book_time`     DATETIME NOT NULL DEFAULT now(),
+        `book_time`     	DATETIME NOT NULL DEFAULT now(),
+        `status`			ENUM('NOT_STARTED', 'ON_GOING', 'FINISHED', 'CANCELLED'),
         PRIMARY KEY (`account_id`, `tour_id`),
         Foreign Key (`account_id`)  REFERENCES `account`(id) ON DELETE CASCADE,
         Foreign Key (`tour_id`)     REFERENCES `tour`(id) ON DELETE CASCADE
-    )
+    );
+    
+/*
+CREATE TABLE `Request_cancel_booked_tour`
+*/
+DROP TABLE IF EXISTS `Request_cancel_booked_tour` ;
+CREATE TABLE 
+	IF NOT EXISTS `Request_cancel_booked_tour`(
+		id			INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		account_id	INT NOT NULL,
+        tour_id		INT NOT NULL,
+        reason		VARCHAR(255) NOT NULL,
+        request_time	DATETIME NOT NULL DEFAULT now(),
+        UNIQUE KEY (account_id, tour_id),
+        FOREIGN KEY (account_id) REFERENCES `account`(id),
+        FOREIGN KEY (tour_id) REFERENCES `tour`(id)
+    );
+    

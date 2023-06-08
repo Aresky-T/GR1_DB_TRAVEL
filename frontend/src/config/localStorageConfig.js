@@ -47,6 +47,17 @@ export const createCustomStorage = function (key) {
 }
 
 /**
+ * This function retrieves a value from local storage and parses it as JSON.
+ * @param key - The key parameter is a string that represents the key of the item to be retrieved from
+ * the localStorage. It is used to identify the item that was previously stored in the localStorage.
+ * @returns The function `getLocalStorage` is returning the parsed value of the item with the specified
+ * key from the browser's local storage. The value is returned as a JavaScript object.
+ */
+export const getLocalStorage = function (key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+
+/**
  * It removes the value of the key from the localStorage.
  * @param key - The key of the item you want to remove from localStorage.
  */

@@ -18,4 +18,5 @@ public interface IAccountService {
     void activateAccount(Integer accountId);
     void deleteAccount(Integer accountId);
     void updatePassword(UpdatePasswordForm form, String username);
+    void validateJwt(String jwt);
 }
