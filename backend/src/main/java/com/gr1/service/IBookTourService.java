@@ -10,6 +10,7 @@ public interface IBookTourService {
     List<BookedTour> findAllByUser(String username);
     List<BookedTour> findAll();
     BookedTour findById (int id);
+    BookedTour findByTourAndAccount (int tourId, String username);
     void create (BookTourRequest request, String username);
     void changeStatusBookedTour(BookedTour bookedTour, EBookedTour status);
 }

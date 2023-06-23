@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookTourRepository extends JpaRepository<BookedTour, Integer> {
@@ -18,4 +19,7 @@ public interface BookTourRepository extends JpaRepository<BookedTour, Integer> {
     Boolean existByAccountAndTour(@Param("account") Account account, @Param("tour") Tour tour);
 
     List<BookedTour> findAllByAccount (Account account);
+
+    @Query("SELECT B FROM BookedTour B WHERE B.tour = ?1 AND B.account = ?2")
+    Optional<BookedTour> findByTourAndAccount (Tour tour, Account account);
 }

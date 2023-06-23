@@ -16,7 +16,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookTourService implements IBookTourService {
@@ -46,6 +45,17 @@ public class BookTourService implements IBookTourService {
         Optional<BookedTour> optional = bookTourRepository.findById(id);
         if(optional.isEmpty()){
             throw new CustomException("Id không hợp lệ");
+        }
+        return optional.get();
+    }
+
+    @Override
+    public BookedTour findByTourAndAccount (int tourId, String username) {
+        Account account = accountService.findByUsername(username);
+        Tour tour = tourService.findById(tourId);
+        Optional<BookedTour> optional = bookTourRepository.findByTourAndAccount(tour, account);
+        if(optional.isEmpty()){
+            throw new CustomException("TourId không hợp lệ");
         }
         return optional.get();
     }

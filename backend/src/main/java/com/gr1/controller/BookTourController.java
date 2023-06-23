@@ -51,6 +51,14 @@ public class BookTourController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/get-by-tour/{tourId}")
+    public  ResponseEntity<?> getByTourAndAccount (@PathVariable int tourId, Authentication authentication) {
+        String username = authentication.getName();
+        BookedTour bookedTour = bookTourService.findByTourAndAccount(tourId, username);
+        BookedTourResponse dto = modelMapper.map(bookedTour, BookedTourResponse.class);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/get-all")
     public ResponseEntity<?> getAll(){
         List<BookedTour> entities = bookTourService.findAll();
