@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { BsFillPeopleFill } from 'react-icons/bs'
+import React, {useEffect, useState} from 'react'
+import {BsFillPeopleFill} from 'react-icons/bs'
 
-const TourInfo = ({ tour, bookingFormik }) => {
+const TourInfo = ({tour, bookingFormik}) => {
 
     const [totalPrice, setTotalPrice] = useState();
 
@@ -21,7 +21,7 @@ const TourInfo = ({ tour, bookingFormik }) => {
             </h3>
             <div className="tour-summary__details">
                 <div className="ts__details__image">
-                    <img src={tour?.image1} alt="" />
+                    <img src={tour?.image1} alt=""/>
                 </div>
                 <div className="ts__details">
                     <div className="ts__details__item ts__details__title">
@@ -39,11 +39,11 @@ const TourInfo = ({ tour, bookingFormik }) => {
                 </div>
             </div>
             <div className="tour-summary__tourists">
-                <h4>Hành khách</h4>
+                <h4 className="tour-summary__tourists__title">Hành khách</h4>
                 <div className="ts__tourists_details">
                     <div>Tổng:
                         <span><b>{bookingFormik.values.adultNumber + bookingFormik.values.childrenNumber + bookingFormik.values.babyNumber}</b></span>
-                        <BsFillPeopleFill />
+                        <BsFillPeopleFill/>
                     </div>
                     <div>
                         (
@@ -95,7 +95,8 @@ const TourInfo = ({ tour, bookingFormik }) => {
                     className='bt--action__btn'
                     type="submit"
                     onClick={bookingFormik.handleSubmit}
-                >Đặt ngay</button>
+                >Đặt ngay
+                </button>
             </div>
         </div>
     )

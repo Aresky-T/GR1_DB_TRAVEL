@@ -117,9 +117,27 @@ R
 +src/components/global/TouristAttraction.jsx,4\1\415eafc82bb4065ed1733c3c8ca6f49b8a1e8d05
 Q
 !src/styles/global/_tour_card.scss,5\0\5078933f25e6e567220c362c199e2ed57e30b5c6
-P
- src/config/localStorageConfig.js,4\0\406211e2a64e72e0958afa38ab56b209f8a1edce
 N
 src/config/paginationConfig.js,a\9\a95cf2cf8d38ec07a333452870331fdfacb32d54
 \
 ,src/components/pagination/CustomPaginate.jsx,4\5\45b0151f724d0ff8933b41b37849a118af00eaf4
+X
+(src/containers/global/ToursContainer.jsx,c\7\c7318dbdf8a2bb719a9cda83bb64416cf109b0ca
+K
+src/api/global/tours.api.js,c\a\ca3291879433505793b34dbcd2028ef1b21b7835
+O
+src/components/global/Tours.jsx,a\0\a0f37cc02575dcf8086b6167c07f8f529cb07ec1
+_
+/src/styles/global/_tourist_attraction_page.scss,e\7\e7ecf3c111f0595abd10b16e8ddcff7e6b3561ba
+M
+src/styles/global/_tours.scss,9\9\99b6ed196af993a8a5b6b1743fd6e89a51bcb2c9
+J
+src/router/PrivateRoute.js,a\7\a73b2836548aeecad195f83402f4d9d28dd65717
+S
+#src/styles/global/_main_header.scss,9\d\9db310654521fb7b9535bea23c8b3e75cbbef6ea
+I
+src/router/PublicRoute.js,e\9\e988c88500a1e03555bb4fa4cecaf6e1451071fb
+<
+package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
+P
+ src/config/localStorageConfig.js,4\0\406211e2a64e72e0958afa38ab56b209f8a1edce

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import Booking from '../../components/user/Booking'
-import { getTourByTourCodeApi } from '../../api/admin/tour.api';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useFormik } from 'formik';
+import React, {useEffect, useState} from 'react'
+import Booking from '../../components/global/Booking'
+import {getTourByTourCodeApi} from '../../api/admin/tour.api';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useFormik} from 'formik';
 import * as yup from 'yup';
-import { CUSTOM_REGEX } from '../../constant/regex';
-import { useDispatch, useSelector } from 'react-redux';
-import { authSelector } from '../../redux/selector';
-import { ROUTE } from '../../constant/route';
-import { errorAlert, successAlert, warningAlertNoCancel, warningAlertWithCancel } from '../../config/sweetAlertConfig';
-import { bookTourForUserApi, getBookedTourForUserApi } from '../../api/user/book_tour.api';
-import { offLoading } from '../../redux/slices/loading.slice';
+import {CUSTOM_REGEX} from '../../constant/regex';
+import {useDispatch, useSelector} from 'react-redux';
+import {authSelector} from '../../redux/selector';
+import {ROUTE} from '../../constant/route';
+import {errorAlert, successAlert, warningAlertNoCancel, warningAlertWithCancel} from '../../config/sweetAlertConfig';
+import {bookTourForUserApi, getBookedTourForUserApi} from '../../api/user/book_tour.api';
+import {offLoading} from '../../redux/slices/loading.slice';
+import {customToast} from "../../toaster";
 
 const initTourist = {
     fullName: '',
@@ -37,22 +38,22 @@ const validationBooking = yup.object().shape({
     touristList: yup.array().of(validationTourist)
         .test("Tourist-list-length", 'Tourist List length must be equal to the sum of adultNumber, childrenNumber and babyNumber',
             function (value) {
-                const { adultNumber, childrenNumber, babyNumber } = this.parent;
+                const {adultNumber, childrenNumber, babyNumber} = this.parent;
                 return value.length === adultNumber + childrenNumber + babyNumber
             }).required("Tourist List must be a array!"),
     adults: yup.array().of(yup.mixed())
         .test('adults-length', 'Adults length must be equal to adultNumber!', function (value) {
-            const { adultNumber } = this.parent;
+            const {adultNumber} = this.parent;
             return value.length === adultNumber;
         }).required("Adults must be a array!"),
     children: yup.array().of(yup.mixed())
         .test('children-length', 'Children length must be equal to childrenNumber!', function (value) {
-            const { childrenNumber } = this.parent;
+            const {childrenNumber} = this.parent;
             return value.length === childrenNumber;
         }).required("Children must be a array!"),
     babies: yup.array().of(yup.mixed())
         .test('babies-length', 'Babies length must be equal to babyNumber!', function (value) {
-            const { babyNumber } = this.parent;
+            const {babyNumber} = this.parent;
             return value.length === babyNumber;
         }).required("Babies must be a array!"),
 })
@@ -106,7 +107,8 @@ const BookingContainer = () => {
                             .then(res => {
                                 dispatch(offLoading());
                                 console.log(res.data)
-                                successAlert("Chúc mừng", "Bạn đã đặt tour thành công!", "Trang chủ")
+                                successAlert("Chúc mừng", "Đặt tour thành công, cảm ơn quý khách đã lựa chọn dịch vụ của BK Travel!",
+                                    "Trang chủ")
                                     .then(res => {
                                         if (res.isConfirmed) {
                                             navigate(ROUTE.HOME);
@@ -141,7 +143,7 @@ const BookingContainer = () => {
         switch (action) {
             case "increase":
                 if (totalSeats >= tour.availableSeats) {
-                    alert("Đã vượt quá số chỗ trống")
+                    customToast("Đã vượt quá số chỗ trống", "⚠️")
                     return;
                 }
                 bookingFormik.setValues({
@@ -151,16 +153,17 @@ const BookingContainer = () => {
                 break;
             case "decrease":
                 if (bookingFormik.values[name] < 1) {
-                    alert("Số hành khách không thể nhỏ hơn 0");
+                    customToast("Số hành khách không thể nhỏ hơn 0", "⚠️")
                     return;
                 }
 
                 if (totalSeats <= 1) {
-                    alert("Phải có ít nhất 1 hành khách");
+                    customToast("Phải có ít nhất 1 hành khách", "⚠️")
                     return;
                 }
 
                 if (name === "adultNumber" && bookingFormik.values.adultNumber <= 1) {
+                    customToast("Phải có ít nhất 1 hành khách là người lớn", "⚠️")
                     alert("Phải có ít nhất 1 hành khách là người lớn")
                     return;
                 }
@@ -186,7 +189,7 @@ const BookingContainer = () => {
         if (typeof (adultNumber) === "number" && adultNumber > 0) {
             for (let i = 1; i <= adultNumber; i++) {
                 if (bookingFormik.values.adults.length < i) {
-                    adults.push({ ...initTourist })
+                    adults.push({...initTourist})
                 }
 
                 if (bookingFormik.values.adults.length > adultNumber) {
@@ -198,7 +201,7 @@ const BookingContainer = () => {
         if (typeof (childrenNumber) === "number" && childrenNumber >= 0) {
             for (let i = 0; i <= childrenNumber; i++) {
                 if (bookingFormik.values.children.length < i) {
-                    children.push({ ...initTourist })
+                    children.push({...initTourist})
                 }
 
                 if (bookingFormik.values.children.length > childrenNumber) {
@@ -210,7 +213,7 @@ const BookingContainer = () => {
         if (typeof (babyNumber) === "number" && babyNumber >= 0) {
             for (let i = 0; i <= babyNumber; i++) {
                 if (bookingFormik.values.babies.length < i) {
-                    babies.push({ ...initTourist })
+                    babies.push({...initTourist})
                 }
 
                 if (bookingFormik.values.babies.length > babyNumber) {
