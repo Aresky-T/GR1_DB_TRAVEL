@@ -41,8 +41,6 @@ X
 -src/containers/global/LoginAdminContainer.jsx,b\a\bafede3ae75c021daeda2f2de6c9ea05d67f3f2c
 <
 src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d
-<
-package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
 N
 src/redux/slices/auth.slice.js,3\6\368a653ee946a79c850e92a80c791f4915d808f7
 V
@@ -97,8 +95,6 @@ S
 #src/pages/Global/LoginAdminPage.jsx,9\3\93a84a7d6ea0977464f6131ce17de5e2bd64228e
 N
 src/pages/Global/LoginPage.jsx,e\9\e90d90b814c1b148a412b9dc0af52eb99b28c8b5
-E
-src/utils/AppUtils.js,7\f\7f4f849dc6f40ba1c550aa61e41326a11a20aab2
 _
 /src/components/global/TouristAttractionCard.jsx,5\b\5b36aed7955a37fd94f32545143b3304e93c8f86
 Z
@@ -127,21 +123,3 @@ N
 src/config/paginationConfig.js,a\9\a95cf2cf8d38ec07a333452870331fdfacb32d54
 \
 ,src/components/pagination/CustomPaginate.jsx,4\5\45b0151f724d0ff8933b41b37849a118af00eaf4
-S
-#src/styles/global/_main_header.scss,9\d\9db310654521fb7b9535bea23c8b3e75cbbef6ea
-E
-src/styles/index.scss,4\1\41e30fba9abaa1ac1dfe02388867cd3b5883c5d3
-_
-/src/styles/global/_tourist_attraction_page.scss,e\7\e7ecf3c111f0595abd10b16e8ddcff7e6b3561ba
-O
-src/components/global/Tours.jsx,a\0\a0f37cc02575dcf8086b6167c07f8f529cb07ec1
-M
-src/styles/global/_tours.scss,9\9\99b6ed196af993a8a5b6b1743fd6e89a51bcb2c9
-K
-src/api/global/tours.api.js,c\a\ca3291879433505793b34dbcd2028ef1b21b7835
-X
-(src/containers/global/ToursContainer.jsx,c\7\c7318dbdf8a2bb719a9cda83bb64416cf109b0ca
-I
-src/router/PublicRoute.js,e\9\e988c88500a1e03555bb4fa4cecaf6e1451071fb
-J
-src/router/PrivateRoute.js,a\7\a73b2836548aeecad195f83402f4d9d28dd65717
