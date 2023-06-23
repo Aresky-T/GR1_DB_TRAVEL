@@ -4,7 +4,8 @@ import App from './App';
 import './styles/index.scss';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import 'sweetalert2/src/sweetalert2.scss'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

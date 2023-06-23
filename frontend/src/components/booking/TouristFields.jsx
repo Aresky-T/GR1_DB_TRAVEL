@@ -1,12 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { CUSTOM_REGEX } from '../../constant/regex';
-import * as yup from 'yup'
-
-const validationSchema = yup.object().shape({
-    fullName: yup.string().required("Required fullName").matches(CUSTOM_REGEX.REGEX_STRING, 'Invalid fullName'),
-    birthDate: yup.date().required("Required birthDate"),
-    gender: yup.string().required('Required gender').matches(CUSTOM_REGEX.REGEX_STRING, "Invalid gender")
-})
 
 const TouristFields = React.memo(({ label, bookingFormik, tourist, list, listName }) => {
     const [currentTourist, setCurrentTourist] = useState({
@@ -26,32 +18,23 @@ const TouristFields = React.memo(({ label, bookingFormik, tourist, list, listNam
     }
 
     useEffect(() => {
-        validationSchema.isValid(currentTourist)
-        .then(isValid => {
-            if(isValid){
-                const newList = list.map(item => {
-                    if(item === tourist){
-                        return currentTourist
-                    }
-                    return item
-                })
-                bookingFormik.setFieldValue(listName, newList);
+        const newList = list.map(item => {
+            if (item === tourist) {
+                return currentTourist
             }
+            return item
         })
-        .catch(err => {
-            console.log(err)
-        })
+        bookingFormik.setFieldValue(listName, newList);
         // eslint-disable-next-line
     }, [currentTourist])
 
-    console.log(list)
-
     useEffect(() => {
-        if(tourist){
+        if (tourist) {
             setCurrentTourist({
                 ...tourist
             })
         }
+        // eslint-disable-next-line
     }, [])
 
     return (

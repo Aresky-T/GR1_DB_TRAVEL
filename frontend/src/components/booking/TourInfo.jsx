@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsFillPeopleFill } from 'react-icons/bs'
 
-const TourInfo = ({tour, bookingFormik}) => {
+const TourInfo = ({ tour, bookingFormik }) => {
 
     const [totalPrice, setTotalPrice] = useState();
 
@@ -93,6 +93,8 @@ const TourInfo = ({tour, bookingFormik}) => {
                 </span>
                 <button
                     className='bt--action__btn'
+                    type="submit"
+                    onClick={bookingFormik.handleSubmit}
                 >Đặt ngay</button>
             </div>
         </div>

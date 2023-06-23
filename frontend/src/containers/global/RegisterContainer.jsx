@@ -5,12 +5,10 @@ import { CUSTOM_REGEX } from '../../constant/regex'
 import { useFormik } from 'formik'
 import { registerUserApi } from '../../api/global/auth.api'
 import { customToast } from '../../toaster'
-import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { offLoading } from '../../redux/slices/loading.slice'
-import 'sweetalert2/src/sweetalert2.scss'
 import { authSelector } from '../../redux/selector'
 import { ROUTE } from '../../constant/route'
 
@@ -27,8 +25,6 @@ const yupSchema = yup.object().shape({
     .required('Mật khẩu không được để trống!')
     .oneOf([yup.ref('password'), null], 'Mật khẩu xác nhận không khớp!')
 })
-
-const MySwal = withReactContent(Swal);
 
 
 const RegisterContainer = () => {
@@ -62,7 +58,7 @@ const RegisterContainer = () => {
   });
 
   const showSwalWithLink = () => {
-    MySwal.fire({
+    Swal.fire({
       icon: "success",
       title: "Đăng ký tài khoản thành công!",
       confirmButtonText: "Đăng nhập",

@@ -29,6 +29,13 @@
                 margin-block: 10px;
             }
 
+            .ci__representative__note {
+                font-size: 12px;
+                font-style: italic;
+                line-height: 1.5;
+                padding: 10px 0;
+            }
+
             .cir-info--fields {
                 color: var(--font-color2);
                 display: grid;
@@ -70,6 +77,13 @@
 
             .cit__title {
                 margin-block: 10px;
+            }
+
+            .ci__tourist-note {
+                font-size: 12px;
+                font-style: italic;
+                padding: 10px 0;
+                line-height: 1.5;
             }
 
             .ct__tourist-type {
@@ -124,6 +138,17 @@
 
             .ci__tl__main {
                 margin-top: 30px;
+
+                .ci__tl__main__title {
+                    padding: 10px 0;
+                }
+
+                .ci__tl__main__note {
+                    font-size: 12px;
+                    font-style: italic;
+                    padding: 10px 0;
+                    line-height: 1.5;
+                }
 
                 .ci__tl__main__item {
                     display: flex;
@@ -202,6 +227,31 @@
                 }
             }
         }
+
+        .ci__note {
+            margin-top: 30px;
+
+            .cit__title {
+                margin: 10px 0;
+            }
+
+            .note-area {
+                color: var(--font-color2);
+                font-size: 13px;
+                font-family: inherit;
+                border: none;
+                outline: 1px solid #ccc;
+                padding: 5px;
+                width: 100%;
+                height: 100px;
+                box-sizing: border-box;
+
+                &:hover,
+                &:focus {
+                    outline-color: var(--secondary-color);
+                }
+            }
+        }
     }
 
     .tour-info {
@@ -214,7 +264,6 @@
         .tour-summary {
             width: 100%;
             .tour-summary__details {
-
                 display: flex;
                 height: 100px;
                 width: 100%;
@@ -256,7 +305,7 @@
                     display: flex;
                     margin-top: 15px;
 
-                    &>div {
+                    & > div {
                         display: flex;
                         align-items: center;
 
@@ -269,7 +318,7 @@
                             &:last-child {
                                 margin-right: 0;
                             }
-                            
+
                             b {
                                 margin-left: 5px;
                             }
@@ -300,7 +349,7 @@
             .book-tour--action {
                 display: flex;
                 flex-direction: column;
-                align-items: center;                
+                align-items: center;
                 padding: 20px;
 
                 .tour__total-price {
@@ -308,7 +357,7 @@
                     text-align: center;
                     padding-block: 15px;
 
-                    b>span {
+                    b > span {
                         color: var(--primary-color);
                         font-style: italic;
                         margin-left: 10px;
@@ -326,7 +375,7 @@
                     color: #fff;
                     font-weight: bold;
 
-                    transition: all .1s linear;
+                    transition: all 0.1s linear;
                     cursor: pointer;
 
                     &:hover {

@@ -47,6 +47,9 @@ const CustomerInfo = ({ bookingFormik, handleChangeTouristNumber }) => {
                 <h3 className="cir__title">
                     Người đại diện
                 </h3>
+                <p className="ci__representative__note">
+                    (Hãy nhập thông tin của quý khách để chúng tôi có thể liên hệ tới quý khách sau khi đặt tour thành công!)
+                </p>
                 <div className="cir-info--fields">
                     <div className="cir-info__item">
                         <label>Họ tên: </label>
@@ -79,7 +82,11 @@ const CustomerInfo = ({ bookingFormik, handleChangeTouristNumber }) => {
                 </div>
             </div>
             <div className="ci__tourist-list">
-                <h3 className='cit__title'>Hành khách</h3>
+                <h3 className='cit__title'>Danh sách Hành khách</h3>
+                <p className="ci__tourist-note">
+                    (Quý khách có thể thay đổi số lượng hành khách tương ứng với <b>người lớn</b>, <b>trẻ em</b>, <b>em bé</b> tại đây!
+                    Sau đó quý khách hãy nhập thông tin hành khách ở bên dưới)
+                </p>
                 <div className="ct__tourist-type">
                     <div className='cit-type__item'>
                         <h5 className='cit-type__item__title'>Người lớn</h5>
@@ -134,10 +141,23 @@ const CustomerInfo = ({ bookingFormik, handleChangeTouristNumber }) => {
                     </div>
                 </div>
                 <div className="ci__tl__main">
+                    <h5 className='ci__tl__main__title'>Nhập danh sách khách hàng tại đây:</h5>
+                    <p className="ci__tl__main__note">
+                        (Hãy nhập đầy đủ thông tin của từng hành khách bao gồm <b>họ tên</b>, <b>ngày sinh</b>, <b>giới tính</b>!)
+                    </p>
                     {renderAdultFieldsList()}
                     {renderChildrenFieldsList()}
                     {renderBabyFieldsList()}
                 </div>
+            </div>
+            <div className="ci__note">
+                <h4 className='cit__title'>Lời nhắn nhủ: </h4>
+                <textarea name="note" cols="30" rows="10"
+                    className='note-area'
+                    placeholder='Quý khách có gì thắc mắc muốn gửi tới chúng tôi?'
+                    value={bookingFormik.values.note}
+                    onChange={bookingFormik.handleChange}
+                ></textarea>
             </div>
         </>
     )
