@@ -1,12 +1,14 @@
 package com.gr1.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "`TourAtt_blog_content`")
 public class TourAttBlogContent implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -27,4 +29,17 @@ public class TourAttBlogContent implements Serializable {
     @ManyToOne
     @JoinColumn(name = "tourAtt_id", nullable = false)
     private TouristAttraction touristAttraction;
+
+    public TourAttBlogContent(String subTitle, String content, String image){
+        this.subTitle = subTitle;
+        this.content = content;
+        this.image = image;
+    }
+
+    public TourAttBlogContent(int id, String subTitle, String content, String image){
+        this.id = id;
+        this.subTitle = subTitle;
+        this.content = content;
+        this.image = image;
+    }
 }

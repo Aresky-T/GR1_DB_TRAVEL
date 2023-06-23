@@ -1,0 +1,274 @@
+.home-container {
+    padding: 50px 0;
+    .home_header {
+        width: 100%;
+        display: flex;
+        padding-top: 50px;
+
+        .home_header_left {
+            width: 50%;
+            .subtitle{
+
+                display: flex;
+                align-items: center;
+
+                .title {
+                    background-color: var(--primary-color);
+                    color: #fff;
+                    font-family: 'Island Moments', cursive;
+                    font-size: 25px;
+                    line-height: 25px;
+                    border-radius: 20px;
+                    padding: 5px 10px;
+                    margin-right: 20px;
+                }
+
+                img {
+                    width: 50px;
+                }
+            }
+
+            h1 {
+                font-size: 2rem;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-top: 1rem;
+                margin-bottom: 2rem;
+                color: var(--heading-color);
+
+                .highlight {
+                    color: var(--secondary-color);
+                }
+            }
+
+            p {
+                font-size: 15px;
+                color: var(--text-color);
+                line-height: 1.5;
+            }
+        }
+
+        .home_header_right {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            width: 50%;
+
+            .hero_image-box {
+                position: relative;
+
+                video{
+                    width: 170px;
+                    height: 350px;
+                    border-radius: 20px;
+                    border: 1px solid var(--secondary-color);
+                    object-fit: cover;
+                    position: relative;
+                }
+
+                &:nth-child(1) {
+                    bottom: 30px;
+                }
+
+                &:nth-child(2) {
+                    bottom: 15px;
+                }
+            }
+        }
+    }
+
+    .home_main {
+        .featured {
+            .subtitle {
+                margin: 50px 0;
+                display: flex;
+                flex-direction: column;
+
+                .title {
+                    background-color: var(--primary-color);
+                    color: #fff;
+                    font-family: 'Island Moments', cursive;
+                    font-size: 25px;
+                    line-height: 25px;
+                    border-radius: 20px;
+                    padding: 5px 10px;
+                    width: fit-content;
+                    margin-right: 20px;
+                    margin-bottom: 20px;
+                }
+
+                h1 {
+                    margin-top: 10px;
+                    color: var(--font-color);
+                }
+            }
+        }
+        .tour {
+            .featured__list-1 {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: 600px;
+                gap: 20px;
+            }
+        }
+        .tourist_attraction {
+            .featured__list-2 {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                grid-template-rows: 250px;
+                column-gap: 20px;
+                row-gap: 50px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1270px) {
+    .home-container {
+        .home_header {
+            .home_header_right {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 175px);
+                height: 360px;
+                gap: 10px;
+                .hero_image-box{
+                    bottom: 0 !important;
+
+                    &:nth-child(1) {
+                        grid-row: 1/3;
+                        video {
+                            height: 100%;
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        grid-row: 1/2;
+                         video {
+                             height: 100%;
+                         }
+                    }
+
+                    &:nth-child(3) {
+                        grid-row: 2/3;
+                        video {
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1090px) {
+    .home-container {
+        .home_main {
+            .featured {
+                .featured__list-1 {
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: auto;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 855px) {
+    .home-container {
+        .home_header {
+            flex-direction: column;
+
+            .home_header_left, .home_header_right {
+                width: 100%;
+            }
+
+            .home_header_left {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+
+            .home_header_right {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 350px;
+                column-gap: 30px;
+                height: 350px;
+
+                .hero_image-box {
+                    grid-row: 1/2 !important;
+                    video {
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        .home_main {
+            .featured {
+                .featured__list-2 {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .home-container {
+        .home_main {
+            .featured {
+                .featured__list-1 {
+                    grid-template-columns: 100%;
+                    grid-template-rows: auto;
+                    row-gap: 50px;
+
+                    .tour-card {
+                        .tour-card__action {
+                            justify-content: space-evenly;
+                        }
+                    }
+                }
+                .featured__list-2 {
+                    grid-template-columns: auto;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .home-container {
+        padding-inline: 5vw !important;
+        .home_header {
+            .home_header_right {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: 350px;
+                column-gap: 10px;
+                height: 350px;
+
+                .hero_image-box {
+                    grid-row: 1/2 !important;
+                    video {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    &:nth-child(3) {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .home_main {
+            .featured {
+                .featured-list {
+                    grid-template-columns: 100%;
+                    grid-template-rows: auto;
+                }
+                .featured-list.featured__list-1 {
+                    row-gap: 50px;
+                }
+            }
+        }
+    }
+}

@@ -4,14 +4,18 @@ import com.gr1.dtos.request.ProfileUpdate;
 import com.gr1.entity.Account;
 import com.gr1.entity.EGender;
 import com.gr1.entity.Profile;
+import com.gr1.exception.CustomException;
 import com.gr1.exception.ProfileException;
 import com.gr1.repository.AccountRepository;
 import com.gr1.repository.ProfileRepository;
 import com.gr1.service.IProfileService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
-import java.util.Optional;
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Service
 public class ProfileService implements IProfileService {
@@ -37,13 +41,13 @@ public class ProfileService implements IProfileService {
     }
 
     @Override
-    public Optional<Profile> findByAccountUsername(String username) {
-        if(Boolean.TRUE.equals(accountRepository.existsByUsername(username))){
-            Account account = accountRepository.findByUsername(username).get();
-            return profileRepository.findByAccount(account);
+    public Profile findByAccountUsername(String username) {
+        Optional<Account> optional = accountRepository.findByUsername(username);
+        if (optional.isPresent()) {
+            Optional<Profile> profileOptional = profileRepository.findByAccount(optional.get());
+            return profileOptional.orElse(null);
         }
-
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -80,6 +84,19 @@ public class ProfileService implements IProfileService {
         } else {
             throw new ProfileException("Invalid username");
         }
+    }
+
+    @Override
+    public void updateProfileByFields (Profile profile, Map<String, Object> fields) {
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Profile.class, key);
+            if(Objects.isNull(field)){
+                throw new CustomException("Field not found: " + "[" + key + "]");
+            }
+            ReflectionUtils.makeAccessible(field);
+            ReflectionUtils.setField(field, profile, value);
+        });
+        profileRepository.save(profile);
     }
 
     protected static void setGenderProfile(Profile profile, String gender){

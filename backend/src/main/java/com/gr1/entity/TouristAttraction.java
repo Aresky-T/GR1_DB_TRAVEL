@@ -1,6 +1,7 @@
 package com.gr1.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "`Tourist_attraction`")
 public class TouristAttraction implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,4 +39,11 @@ public class TouristAttraction implements Serializable {
 
     @OneToMany(mappedBy = "touristAttraction")
     private List<TourAttBlogContent> contents;
+
+    public TouristAttraction (String name, String imageUrl, String title, String intro) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.intro = intro;
+    }
 }

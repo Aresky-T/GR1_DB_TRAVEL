@@ -27,7 +27,7 @@ public class TourGuideService implements ITourGuideService {
     public TourGuide findById (int id) {
         Optional<TourGuide> optional = tourGuideRepository.findById(id);
         if (optional.isEmpty()){
-            throw new TourGuideException("Invalid id");
+            throw new TourGuideException("Invalid tour guide id: " + id);
         }
         return optional.get();
     }

@@ -15,7 +15,7 @@ public class ProfileUpdate {
     private String fullName;
     private String address;
     private String phone;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
     private String gender;
 }

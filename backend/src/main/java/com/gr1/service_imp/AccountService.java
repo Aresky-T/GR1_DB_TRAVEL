@@ -5,6 +5,7 @@ import com.gr1.entity.Account;
 import com.gr1.entity.ERole;
 import com.gr1.entity.EStatus;
 import com.gr1.exception.AccountException;
+import com.gr1.jwt.JwtUtil;
 import com.gr1.repository.AccountRepository;
 import com.gr1.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class AccountService implements IAccountService {
     private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public Account findById (int id) {
@@ -133,5 +136,12 @@ public class AccountService implements IAccountService {
         }
         account.setPassword(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
+    }
+
+    @Override
+    public void validateJwt (String jwt) {
+        if (!jwtUtil.validateToken(jwt)){
+            throw new AccountException("Invalid");
+        }
     }
 }

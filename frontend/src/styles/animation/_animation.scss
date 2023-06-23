@@ -1,0 +1,19 @@
+@keyframes loadWidth {
+    from {
+        width: 0;
+    }
+    
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes slideRightToLeft {
+    from {
+        transform: translateX(100%) scaleX(0);
+    }
+
+    to {
+        transform: translateX(0) scaleX(1);
+    }
+}

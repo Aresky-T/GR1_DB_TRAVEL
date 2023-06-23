@@ -1,0 +1,88 @@
+.tourist-attraction-container {
+  padding-inline: 0 !important;
+  margin-top: 0 !important;
+
+  .tourist-attraction-header {
+    .tour-att-header__filter {
+      width: fit-content;
+      height: 60px;
+      border-radius: 30px;
+      border: none;
+      box-shadow: 0 10px 30px 0 rgba(120, 120, 120, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      right: 10vw;
+      bottom: -100px;
+
+      input {
+        border: none;
+        outline: none;
+        width: 300px;
+        margin: 0 20px 0 30px;
+        padding: 10px 5px;
+        font-size: 16px;
+        font-style: italic;
+      }
+
+      .search-icon {
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+        color: #fff;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  .tourist-attraction-main {
+    padding-inline: 10vw;
+    margin-top: 150px;
+    margin-bottom: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .tourist-attraction-list {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, max-content));
+      grid-template-rows: repeat(auto-fill, 300px);
+      grid-auto-rows: 300px;
+      gap: 60px;
+    }
+
+    .empty_result {
+      color: var(--font-color);
+      font-style: italic;
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .tourist-attraction-container {
+    .tourist-attraction-header {
+      .tour-att-header__filter {
+        width: 80vw;
+
+        input {
+          width: 80%
+        }
+
+        ;
+      }
+    }
+  }
+}

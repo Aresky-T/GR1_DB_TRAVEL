@@ -1,6 +1,5 @@
 package com.gr1.entity;
 
-import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,0 +1,68 @@
+.tourist-attraction-card {
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+
+  .tourist-attraction__image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease-in-out;
+    }
+  }
+  .tourist-attraction__name {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    position: absolute;
+    bottom: -30px;
+    color: #000;
+    transition: color .2s linear;
+  }
+
+  &:hover {
+    .tourist-attraction__image {
+      img {
+        transform: scale(1.2);
+      }
+    }
+    .tourist-attraction__name {
+      color: var(--secondary-color);
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+    .tourist-attraction-card {
+
+      &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .8) 100%);
+        border-radius: inherit;
+        opacity: 1;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .tourist-attraction__name {
+        width: 100%;
+        text-align: center;
+        bottom: 20px;
+        color: #fff;
+        z-index: 100;
+      }
+    }
+}

@@ -1,5 +1,7 @@
 package com.gr1.controller;
 
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.gr1.exception.ProfileException;
@@ -7,12 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.gr1.dtos.request.ProfileUpdate;
 import com.gr1.dtos.response.MessageResponse;
@@ -70,5 +67,16 @@ public class ProfileController {
         } catch (NullPointerException ex) {
             return ResponseEntity.badRequest().body(new MessageResponse("you must enter all values"));
         }
+    }
+
+    @PatchMapping()
+    public ResponseEntity<?> updateByFields(@RequestBody Map<String, Object> fields, Authentication authentication) {
+        String username = authentication.getName();
+        Profile profile = profileService.findByAccountUsername(username);
+        if(Objects.isNull(profile)){
+           return ResponseEntity.badRequest().body(new MessageResponse("profile is not exist"));
+        }
+        profileService.updateProfileByFields(profile, fields);
+        return ResponseEntity.ok("success");
     }
 }

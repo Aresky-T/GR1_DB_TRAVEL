@@ -1,0 +1,107 @@
+.tour-card {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 5px rgba(157, 157, 157, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 15px;
+  overflow: hidden;
+
+  .tour-card__image {
+    width: 100%;
+    height: 35%;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .price {
+      background-color: var(--primary-color);
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 7px;
+      border-radius: 0 10px 0 0;
+      user-select: none;
+    }
+  }
+  .tour-card__info {
+    padding: 10px 15px;
+    .tour-card__title {
+      font-weight: bold;
+      padding-bottom: 10px;
+      line-height: 1.3;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--third-color);
+      }
+    }
+
+    .tour-card-item {
+      padding: 5px 0;
+
+      .text {
+        font-size: 14px;
+        color: var(--font-color);
+        font-style: italic;
+        line-height: 1.3;
+
+        .content {
+          font-weight: bold;
+          font-style: normal;
+        }
+
+        .content.available-seats {
+          color: var(--primary-color)
+        }
+      }
+    }
+  }
+  .tour-card__action {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+
+    .action_item {
+      background-color: var(--secondary-color);
+      color: #fff;
+      width: fit-content;
+      height: 30px;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: all 0.1s linear;
+
+      button {
+        background-color: inherit;
+        width: 100%;
+        height: 100%;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+      }
+    }
+    .action_item.booking:hover {
+      background-color: var(--primary-color);
+    }
+    .action_item.detail {
+      border: 1px solid var(--third-color);
+      background-color: #fff;
+      color: var(--third-color);
+
+      &:hover {
+        background-color: var(--third-color);
+        color: #fff;
+      }
+    }
+  }
+}
