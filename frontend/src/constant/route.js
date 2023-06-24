@@ -9,6 +9,7 @@ export const ROUTE = {
     TOUR_SEARCH: '/tour-search',
     TOURIST_ATTRACTION: '/tourist-attraction',
     TOURIST_ATTRACTION_DETAIL: '/tourist-attraction/:id',
+    FORGOT_PASSWORD: '/forgot-password',
     HOME_ADMIN: '/admin',
     LOGIN_ADMIN: '/admin/login',
     ACCOUNT_MANAGER: '/admin/account-manager',

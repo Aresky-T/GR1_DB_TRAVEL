@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.gr1.service.IAccountService;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -67,7 +68,7 @@ public class AccountController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam String email){
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) throws MessagingException {
         emailService.sendForgotPasswordEmail(email);
         return ResponseEntity.ok("success");
     }

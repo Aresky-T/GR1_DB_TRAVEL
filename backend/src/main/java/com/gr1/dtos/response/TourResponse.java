@@ -25,6 +25,7 @@ public class TourResponse {
     private Integer price2;
     private Integer price3;
     private String tourCode;
+    private String createdTime;
     private TourGuideDTO tourGuide;
 
     @Data

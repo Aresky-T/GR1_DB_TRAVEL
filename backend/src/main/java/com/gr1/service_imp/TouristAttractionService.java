@@ -10,6 +10,8 @@ import com.gr1.repository.TourAttBlogContentRepository;
 import com.gr1.repository.TouristAttractionRepository;
 import com.gr1.service.ITouristAttractionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,6 +38,12 @@ public class TouristAttractionService implements ITouristAttractionService {
     @Override
     public List<TouristAttraction> searchByName (String search) {
         return touristAttractionRepository.findByNameLike(search);
+    }
+
+    @Override
+    public List<TouristAttraction> findLatestTouristAttractions (int count) {
+        PageRequest pageRequest = PageRequest.of(0, count, Sort.Direction.DESC, "createdTime");
+        return touristAttractionRepository.findAll(pageRequest).getContent();
     }
 
     @Override

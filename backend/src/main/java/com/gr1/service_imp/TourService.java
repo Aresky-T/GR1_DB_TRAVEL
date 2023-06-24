@@ -10,13 +10,16 @@ import com.gr1.service.ITourService;
 import com.gr1.specification.TourSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +36,20 @@ public class TourService implements ITourService {
     @Override
     public List<Tour> findAll () {
         return tourRepository.findAll();
+    }
+
+    @Override
+    public List<Tour> getLatestTours (int count) {
+//        PageRequest pageRequest = PageRequest.of(0, count, Sort.Direction.DESC, "createdTime");
+//        return tourRepository.findAll(pageRequest).getContent();
+        List<Tour> tourList = tourRepository.getToursOrderByCreatedTime(count);
+        List<Tour> latest = new ArrayList<>();
+        for (int i = 0; i < tourList.size(); i++) {
+            if(i < count) {
+                latest.add(tourList.get(i));
+            }
+        }
+        return latest;
     }
 
     public Page<Tour> fillAllAndFilter(Pageable pageable, TourFilter filter){
@@ -57,6 +74,12 @@ public class TourService implements ITourService {
             throw new CustomException("Invalid tour_code: " + tourCode);
         }
         return optional.get();
+    }
+
+    @Transactional
+    @Override
+    public void saveTour (Tour tour) {
+        tourRepository.save(tour);
     }
 
     @Transactional

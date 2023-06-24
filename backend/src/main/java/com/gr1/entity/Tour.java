@@ -2,9 +2,11 @@ package com.gr1.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -72,6 +74,11 @@ public class Tour implements Serializable {
 
     @Column(name = "tour_code", length = 100, nullable = false, unique = true)
     private String tourCode;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_time", nullable = false)
+    private Date createdTime;
 
     @OneToMany(mappedBy = "tour")
     private List<BookedTour> tourInfoList;

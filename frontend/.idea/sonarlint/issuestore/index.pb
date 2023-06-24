@@ -65,22 +65,14 @@ R
 "src/components/admin/HomeAdmin.jsx,4\b\4b927aeeddcd3be682c45add2833950610cd8147
 Q
 !src/components/global/Loading.jsx,2\d\2d0d798daf73ec945766e8fb71688bab17fdebb2
-O
-src/components/global/Login.jsx,b\7\b77cc9ec965ad983c0fb84f9d7305cdaeb51f4a0
 R
 "src/styles/admin/_admin_login.scss,5\8\58a7c3bf288c4d7f5648a97656fa96508f491ed5
-W
-'src/api/global/touristAttraction.api.js,5\f\5f5cc4a520fc2e0b47526e2910a981ba416045d2
-E
-src/constant/route.js,e\5\e587cc110b3e1e5fcac4c8cdbe68d31f0eca31c0
 T
 $src/pages/Global/TourDetailsPage.jsx,e\0\e0f95b5999b3d78b0593e7f0bd95dd150a3af237
 S
 #src/styles/admin/_tour_manager.scss,8\d\8d492acbe8be3cc3c02c4c8f8eef413eb10550a0
 P
  src/components/header/Header.jsx,f\b\fb61ea60bd9a3589a8bd04d22589abf09b75c994
-D
-src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc
 ;
 src/App.jsx,c\0\c0e9e59a467e1546695bfa22746b302540797a4e
 G
@@ -91,8 +83,6 @@ S
 #src/pages/Global/LoginAdminPage.jsx,9\3\93a84a7d6ea0977464f6131ce17de5e2bd64228e
 N
 src/pages/Global/LoginPage.jsx,e\9\e90d90b814c1b148a412b9dc0af52eb99b28c8b5
-W
-'src/containers/global/HomeContainer.jsx,5\b\5b1e9df7c447f10084a0784d225fd3445d2b8dba
 ^
 .src/containers/global/TourDetailsContainer.jsx,6\c\6cb2e0510594f29d2c6fde5b27a9fc7a25b7620c
 _
@@ -111,8 +101,6 @@ L
 src/styles/global/_home.scss,4\5\4545f94f8be4a41cf071e358b540615ba34e1a19
 R
 "src/components/global/TourCard.jsx,a\5\a539c68382beb483cf8491ee2d39d90e7e9953e5
-U
-%src/components/global/TourDetails.jsx,7\c\7c539495ffca5cf9b18a1119c87461c4ac21de51
 [
 +src/components/global/TouristAttraction.jsx,4\1\415eafc82bb4065ed1733c3c8ca6f49b8a1e8d05
 Q
@@ -123,8 +111,6 @@ N
 ,src/components/pagination/CustomPaginate.jsx,4\5\45b0151f724d0ff8933b41b37849a118af00eaf4
 X
 (src/containers/global/ToursContainer.jsx,c\7\c7318dbdf8a2bb719a9cda83bb64416cf109b0ca
-K
-src/api/global/tours.api.js,c\a\ca3291879433505793b34dbcd2028ef1b21b7835
 O
 src/components/global/Tours.jsx,a\0\a0f37cc02575dcf8086b6167c07f8f529cb07ec1
 _
@@ -141,3 +127,7 @@ J
 package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
 P
  src/config/localStorageConfig.js,4\0\406211e2a64e72e0958afa38ab56b209f8a1edce
+D
+src/toaster/index.js,6\8\68abe9097ba6f4f123c9f6f5a0e4856c325aa950
+X
+(src/containers/user/ProfileContainer.jsx,7\c\7ce0b72a7afe99a3e1d935fd8b9b95536afcd67c

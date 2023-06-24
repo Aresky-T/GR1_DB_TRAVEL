@@ -144,6 +144,7 @@ CREATE TABLE
         `price3` INT NOT NULL,
         `tour_guide` INT NULL,
         `tour_code` VARCHAR(100) NOT NULL UNIQUE,
+        `created_time` DATETIME NOT NULL DEFAULT NOW(),
         PRIMARY KEY(id),
         FOREIGN KEY (`tour_guide`) REFERENCES `Tour_guide`(id) ON DELETE
         SET NULL
@@ -195,7 +196,7 @@ CREATE TABLE
         reason VARCHAR(255) NOT NULL,
         request_time DATETIME NOT NULL DEFAULT now(),
         booked_tour_id INT NOT NULL,
-        FOREIGN KEY (`booked_tour_id`) REFERENCES `Booked_tour_information`(id)
+        FOREIGN KEY (`booked_tour_id`) REFERENCES `Booked_tour_information`(id) ON DELETE CASCADE
     );
 
 /*
@@ -211,5 +212,5 @@ CREATE TABLE
         birth_date DATE NOT NULL,
         gender ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
         booked_tour_id INT NOT NULL,
-        FOREIGN KEY (booked_tour_id) REFERENCES `Booked_tour_information`(id)
+        FOREIGN KEY (booked_tour_id) REFERENCES `Booked_tour_information`(id) ON DELETE CASCADE
     );

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FaOpencart } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react'
+import {FaOpencart} from "react-icons/fa";
+import {useNavigate} from 'react-router-dom';
 
-const TourDetails = ({ tour }) => {
+const TourDetails = ({tour}) => {
 
     const navigate = useNavigate();
     const bookingRef = useRef();
@@ -33,16 +33,16 @@ const TourDetails = ({ tour }) => {
                 </div>
                 <div className="tour-detail__images">
                     <div className="tour_image1">
-                        <img src={tour.image1} alt="image1" />
+                        <img src={tour.image1} alt="image1"/>
                     </div>
                     <div className="tour_image2">
-                        <img src={tour.image2} alt="image1" />
+                        <img src={tour.image2} alt="image1"/>
                     </div>
                     <div className="tour_image3">
-                        <img src={tour.image3} alt="image1" />
+                        <img src={tour.image3} alt="image1"/>
                     </div>
                     <div className="tour_image4">
-                        <img src={tour.image4} alt="image1" />
+                        <img src={tour.image4} alt="image1"/>
                     </div>
                 </div>
                 <h3>Danh sách điểm đến: </h3>
@@ -51,34 +51,34 @@ const TourDetails = ({ tour }) => {
                 </div>
                 <h3>Lịch trình tham quan</h3>
                 <div className="tour-detail__info main-2">
-                    {React.createElement('div', { dangerouslySetInnerHTML: { __html: tour.scheduleDescription } })}
+                    {React.createElement('div', {dangerouslySetInnerHTML: {__html: tour.scheduleDescription}})}
                 </div>
             </section>
             <section className={shouldStop ? "tour-detail-item booking booking-fixed" : "tour-detail-item booking"}
-                ref={bookingRef}
+                     ref={bookingRef}
             >
                 <div className="tour-detail__price">
                     <h2>Thông tin giá</h2>
                     <table className="prices-table">
                         <thead>
-                            <tr>
-                                <th>Loại khách</th>
-                                <th>Giá tour</th>
-                            </tr>
+                        <tr>
+                            <th>Loại khách</th>
+                            <th>Giá tour</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Người lớn (Từ 12 tuổi trở lên)</td>
-                                <td>{tour.price1?.toLocaleString('en-US')} đ</td>
-                            </tr>
-                            <tr>
-                                <td>Trẻ em (Từ 2 - 11 tuổi)</td>
-                                <td>{tour.price2 ? `${tour.price2.toLocaleString('en-US')} đ` : "Miễn phí"}</td>
-                            </tr>
-                            <tr>
-                                <td>Em bé (Dưới 2 tuổi)</td>
-                                <td>{tour.price3 ? `${tour.price3.toLocaleString('en-US')} đ` : "Miễn phí"}</td>
-                            </tr>
+                        <tr>
+                            <td>Người lớn (Từ 12 tuổi trở lên)</td>
+                            <td>{tour.price1?.toLocaleString('en-US')} đ</td>
+                        </tr>
+                        <tr>
+                            <td>Trẻ em (Từ 2 - 11 tuổi)</td>
+                            <td>{tour.price2 ? `${tour.price2.toLocaleString('en-US')} đ` : "Miễn phí"}</td>
+                        </tr>
+                        <tr>
+                            <td>Em bé (Dưới 2 tuổi)</td>
+                            <td>{tour.price3 ? `${tour.price3.toLocaleString('en-US')} đ` : "Miễn phí"}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -110,7 +110,8 @@ const TourDetails = ({ tour }) => {
                 <div className="booking-btn">
                     <button
                         onClick={onClickBooking}
-                    ><FaOpencart /> Đặt ngay</button>
+                    ><FaOpencart/> Đặt ngay
+                    </button>
                 </div>
             </section>
         </div>

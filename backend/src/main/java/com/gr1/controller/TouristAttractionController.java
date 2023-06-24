@@ -43,6 +43,13 @@ public class TouristAttractionController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/get-latest-tourist-attractions/{count}")
+    public ResponseEntity<?> getLatestTouristAttractions (@PathVariable int count){
+        List<TouristAttraction> touristAttractions = touristAttractionService.findLatestTouristAttractions(count);
+        List<TouristAttractionResponse> dtos = modelMapper.map(touristAttractions, new TypeToken<List<TouristAttractionResponse>>(){}.getType());
+        return ResponseEntity.ok(dtos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         TouristAttraction touristAttraction = touristAttractionService.findById(id);

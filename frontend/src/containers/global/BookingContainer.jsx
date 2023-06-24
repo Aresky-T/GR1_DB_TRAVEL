@@ -254,7 +254,7 @@ const BookingContainer = () => {
             getBookedTourForUserApi(tour.id, account.accessToken)
                 .then(res => {
                     console.log(res)
-                    warningAlertNoCancel("Cảnh bảo", "Quý khách đã đặt tour này rồi, không thể đặt lại", "Trang chủ")
+                    warningAlertNoCancel("Cảnh báo", "Quý khách đã đặt tour này rồi, không thể đặt lại", "Trang chủ")
                         .then(res => {
                             if (res.isConfirmed) {
                                 navigate(ROUTE.HOME);

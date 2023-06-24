@@ -6,9 +6,12 @@ import com.gr1.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -30,11 +33,22 @@ public class EmailService implements IEmailService{
         mailMessage.setTo(recipient);
         mailMessage.setSubject(subject);
         mailMessage.setText(text);
+        mailMessage.setSentDate(new Date());
         javaMailSender.send(mailMessage);
     }
 
+    public void sendEmailWithHtmlContent (String recipient, String subject, String text) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setTo(recipient);
+        helper.setSubject(subject);
+        helper.setText(text, true);
+        helper.setFrom("gr1projectmailhust@gmail.com");
+        javaMailSender.send(message);
+    }
+
     @Override
-    public void sendForgotPasswordEmail (String email) {
+    public void sendForgotPasswordEmail (String email) throws MessagingException {
         Account account = accountService.findByEmail(email);
         // Format time
         LocalDateTime now = LocalDateTime.now();
@@ -47,12 +61,38 @@ public class EmailService implements IEmailService{
         // Save new random password
         accountService.saveOrUpdate(account);
         // Send email
-        sendEmail(
+//        sendEmail(
+//                email,
+//                "Đặt lại mật khẩu",
+//                "Bạn vừa yêu cầu đặt lại mật khẩu cho tài khoản của mình lúc " + formattedDateTime +".\n\n" +
+//                        "Mật khẩu mới của bạn là: " + passwordRandom + "\n\n" +
+//                        "Vui lòng quay lại trang đăng nhập và đổi lại mật khẩu để đảm bảo an toàn cho bạn:\n"
+//        );
+        sendEmailWithHtmlContent(
                 email,
                 "Đặt lại mật khẩu",
-                "Bạn vừa yêu cầu đặt lại mật khẩu cho tài khoản của mình lúc " + formattedDateTime +".\n\n" +
-                        "Mật khẩu mới của bạn là: " + passwordRandom + "\n\n" +
-                        "Vui lòng quay lại trang đăng nhập và đổi lại mật khẩu để đảm bảo an toàn cho bạn:\n"
+                "<html>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "    <h1>Yêu cầu lấy lại mật khẩu!</h1>\n" +
+                        "    <p class=\"text-message\">\n" +
+                        "        Bạn vừa yêu cầu đặt lại mật khẩu cho tài khoản của mình lúc\n" +
+                        "        <span style=\"font-weight: 600;\">\n" + formattedDateTime +
+                        "        </span>\n" +
+                        "        <br />\n" +
+                        "        Mật khẩu mới của bạn là:\n" +
+                        "        <span style=\"font-weight: 600;\">\n" + passwordRandom +
+                        "        </span><br />Vui lòng quay lại trang đăng nhập và đổi lại mật khẩu để đảm bảo an toàn cho bạn!\n" +
+                        "    </p>\n" +
+                        "    <p><a href=\"http://localhost:3000/login\">\n" +
+                        "            <button style=\"background-color: #4CAF50; color: white; padding: 10px 20px;\n" +
+                        "                text-align: center; text-decoration: none; display: inline-block; border-radius: 5px; border: none;\n" +
+                        "                cursor: pointer;\">\n" +
+                        "                Quay lại đăng nhập\n" +
+                        "            </button></a></p>\n" +
+                        "</body>\n" +
+                        "\n" +
+                        "</html>"
         );
     }
 

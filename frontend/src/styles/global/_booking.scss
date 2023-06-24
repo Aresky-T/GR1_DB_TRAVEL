@@ -24,6 +24,7 @@
       background-color: var(--primary-color);
       border-radius: 20px;
       color: #fff;
+      width: fit-content;
 
       font-family: "Island Moments", cursive;
       font-size: 30px;
@@ -289,7 +290,6 @@
     padding: 20px;
 
     .tour-summary {
-      width: 100%;
 
       .tour-summary__details {
         display: flex;
@@ -591,8 +591,6 @@
     .tour-info {
       .tour-summary {
         .tour-summary__title {
-          //font-size: 23px;
-          //text-align: center;
           align-self: center;
           background-color: var(--primary-color);
           border-radius: 20px;

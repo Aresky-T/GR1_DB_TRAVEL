@@ -13,4 +13,7 @@ public interface TouristAttractionRepository extends JpaRepository<TouristAttrac
 
     @Query("SELECT t from TouristAttraction t WHERE t.name LIKE %:search%")
     List<TouristAttraction> findByNameLike(@Param("search") String search);
+
+    @Query("SELECT t from TouristAttraction t ORDER BY t.createdTime DESC")
+    List<TouristAttraction> findLatestTouristAttractions();
 }

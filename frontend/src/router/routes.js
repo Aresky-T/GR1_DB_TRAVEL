@@ -21,7 +21,8 @@ import LayoutAdmin from "../components/layout/LayoutAdmin";
 import TouristAttractionPage from "../pages/Global/TouristAttractionPage";
 import TouristAttractionManagerContainer from "../containers/admin/TouristAttractionManagerContainer";
 import BlogPage from "../pages/Global/BlogPage";
-import BookingPage from "../pages/User/BookingPage";
+import BookingPage from "../pages/Global/BookingPage";
+import ForgotPasswordPage from "../pages/Global/ForgotPasswordPage";
 
 export const routes = [
     {
@@ -53,6 +54,7 @@ export const routes = [
             {path: ROUTE.REGISTER, element: <RegisterPage/>},
             {path: ROUTE.TOUR_SEARCH, element: <SearchResultListPage/>},
             {path: ROUTE.BOOKING, element: <BookingPage/>},
+            {path: ROUTE.FORGOT_PASSWORD, element: <ForgotPasswordPage/>}
         ]
     },
     {
@@ -67,7 +69,7 @@ export const routes = [
     {path: ROUTE.LOGIN_ADMIN, element: <LoginAdminPage/>, isPrivate: false},
     {path: '*', element: <NotFoundPage/>, title: '404', is404: true}
 ].map((route) => {
-    if (route.isPrivate){
+    if (route.isPrivate) {
         return {
             ...route,
             element: (

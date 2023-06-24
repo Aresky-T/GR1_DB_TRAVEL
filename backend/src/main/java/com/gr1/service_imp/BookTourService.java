@@ -102,6 +102,8 @@ public class BookTourService implements IBookTourService {
             t.setBookedTour(newBookedTour);
         });
         touristListRepository.saveAll(touristLists);
+        tour.setAvailableSeats(tour.getAvailableSeats() - newBookedTour.getTotalPersons());
+        tourService.saveTour(tour);
     }
 
     @Override

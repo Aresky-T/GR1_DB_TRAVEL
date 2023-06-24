@@ -17,3 +17,7 @@ export const getDataBySearchApi = (search) => {
 export const getTouristAttractionDetailsApi = (id) => {
     return axios.get(`${tourAttURL}/${id}`)
 }
+
+export const getLatestTouristAttractionsApi = (count) => {
+    return axios.get(`${tourAttURL}/get-latest-tourist-attractions/${count}`)
+}

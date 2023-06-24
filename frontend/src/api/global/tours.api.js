@@ -6,6 +6,10 @@ export const getAllToursApi = () => {
     return axios.get(tourURL)
 }
 
+export const getLatestToursApi = (count) => {
+    return axios.get(`${tourURL}/get-latest-tours/${count}`)
+}
+
 export const getAllToursByFilterApi = (fields) => {
     return axios.get(`${tourURL}/filter`, {
         params: fields

@@ -11,9 +11,11 @@ import java.util.Map;
 
 public interface ITourService {
     List<Tour> findAll();
+    List<Tour> getLatestTours(int count);
     Page<Tour> fillAllAndFilter(Pageable pageable, TourFilter filter);
     Tour findById(int id);
     Tour getTourByTourCode(String tourCode);
+    void saveTour(Tour tour);
     void createTour(TourRequest request);
     void deleteTour(int id);
     void updateTourByFields (Integer tourId, Map<String, Object> fields);

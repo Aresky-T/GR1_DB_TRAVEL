@@ -48,6 +48,13 @@ public class TourController {
         return ResponseEntity.ok(dtosPage);
     }
 
+    @GetMapping("/get-latest-tours/{count}")
+    public ResponseEntity<?> getLatestTours(@PathVariable int count){
+        List<Tour> tours = tourService.getLatestTours(count);
+        List<TourResponse> dtos = modelMapper.map(tours, new TypeToken<List<TourResponse>>(){}.getType());
+        return ResponseEntity.ok(dtos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getTourById(@PathVariable(name = "id", required = true) Integer tourId){
         Tour tour = tourService.findById(tourId);
