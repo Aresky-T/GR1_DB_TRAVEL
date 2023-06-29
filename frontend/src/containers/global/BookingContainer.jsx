@@ -164,7 +164,6 @@ const BookingContainer = () => {
 
                 if (name === "adultNumber" && bookingFormik.values.adultNumber <= 1) {
                     customToast("Phải có ít nhất 1 hành khách là người lớn", "⚠️")
-                    alert("Phải có ít nhất 1 hành khách là người lớn")
                     return;
                 }
 
