@@ -23,9 +23,10 @@
       display: grid;
       gap: 15px;
       grid-template-rows: repeat(3, 200px);
+      grid-template-rows: repeat(2, 200px) 300px;
       grid-template-areas: "a b" "a c" "d d";
 
-      &>div {
+      & > div {
         overflow: hidden;
         border-radius: 7px;
         box-shadow: 3px 0 10px 0 rgba(130, 130, 130, 0.5);
@@ -48,12 +49,16 @@
       }
       .tour_image4 {
         grid-area: d;
+
+        img {
+          object-fit: fill;
+        }
       }
     }
     .tour-detail__info {
       display: flex;
     }
-    &>h3 {
+    & > h3 {
       margin-top: 30px;
       color: var(--font-color);
     }
@@ -80,7 +85,7 @@
         font-size: 15px;
         font-style: italic;
         margin: 10px;
-        color: var(--primary-color)
+        color: var(--primary-color);
       }
 
       p {
@@ -116,7 +121,8 @@
 
       .prices-table {
         width: 100%;
-        th, td {
+        th,
+        td {
           text-align: left;
           padding: 10px 0;
         }
@@ -152,7 +158,7 @@
     }
     .booking-btn {
       width: 90%;
-      margin-top: 30px;
+      margin-top: 10px;
 
       button {
         display: flex;
@@ -165,7 +171,7 @@
         background-color: var(--secondary-color);
         color: #fff;
         font-size: 18px;
-        transition: all .2s linear;
+        transition: all 0.2s linear;
         cursor: pointer;
 
         &:hover {

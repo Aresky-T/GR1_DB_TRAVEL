@@ -26,14 +26,19 @@ public class TourResponse {
     private Integer price3;
     private String tourCode;
     private String createdTime;
+    private Integer tourGuideId;
     private TourGuideDTO tourGuide;
 
     @Data
     @NoArgsConstructor
     public static class TourGuideDTO {
+        private Integer id;
         private String fullName;
         private String avatarUrl;
-        private Integer age;
+        private String birthDate;
+        private String gender;
         private String description;
+        private String phone;
+        private String address;
     }
 }

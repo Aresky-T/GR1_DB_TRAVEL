@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
@@ -21,8 +22,12 @@ public class TourGuide implements Serializable {
     @Column(name = "avatar_url", nullable = false)
     private String avatarUrl;
 
-    @Column(name = "age", nullable = false)
-    private Integer age;
+    @Column(name = "birth_date", nullable = false)
+    private Date birthDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
+    private EGender gender;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -32,6 +37,10 @@ public class TourGuide implements Serializable {
 
     @Column(name = "address", length = 200, nullable = false)
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ETourGuideStatus status;
 
     @OneToOne(mappedBy = "tourGuide")
     private Tour tour;

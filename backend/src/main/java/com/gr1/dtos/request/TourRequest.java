@@ -5,6 +5,9 @@ import com.gr1.utils.TourUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 
 @Getter
 @NoArgsConstructor
@@ -14,11 +17,10 @@ public class TourRequest {
     private String image2;
     private String image3;
     private String image4;
-    private String startTime;
+    private Date startTime;
     private String time;
     private String startAddress;
     private String destinationList;
-    private Integer availableSeats;
     private Integer totalSeats;
     private String vehicle;
     private String scheduleDescription;
@@ -37,7 +39,6 @@ public class TourRequest {
         tour.setTime(this.time);
         tour.setStartAddress(this.startAddress);
         tour.setDestinationList(this.destinationList);
-        tour.setAvailableSeats(this.availableSeats);
         tour.setTotalSeats(this.totalSeats);
         tour.setVehicle(this.vehicle);
         tour.setScheduleDescription(this.scheduleDescription);

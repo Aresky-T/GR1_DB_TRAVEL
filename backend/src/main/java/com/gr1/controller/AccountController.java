@@ -5,9 +5,9 @@ import com.gr1.dtos.response.AccountResponse;
 import com.gr1.email.IEmailService;
 import com.gr1.entity.Account;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import com.gr1.service.IAccountService;
 
 import javax.mail.MessagingException;
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -29,11 +28,11 @@ public class AccountController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/get-all-accounts")
-    public ResponseEntity<?> getAllAccounts(){
-        List<Account> result = accountService.findAllUsers();
-        List<AccountResponse> responses = modelMapper.map(result, new TypeToken<List<AccountResponse>>(){}.getType());
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<?> getAllAccounts(Pageable pageable){
+        Page<Account> entities = accountService.findAllUsers(pageable);
+        Page<AccountResponse> dtos = entities.map(a -> modelMapper.map(a, AccountResponse.class));
+        return ResponseEntity.ok(dtos);
     }
 
     @PutMapping("/upgrade-to-admin")
@@ -42,21 +41,21 @@ public class AccountController {
         return ResponseEntity.ok("upgrade role success");
     }
 
-    @PutMapping("/lock-account")
-    public ResponseEntity<?> lockAccount(@RequestParam(name = "account_id") Integer accountId){
-        accountService.lockAccount(accountId);
+    @PutMapping("/lock-account/{id}")
+    public ResponseEntity<?> lockAccount(@PathVariable Integer id){
+        accountService.lockAccount(id);
         return ResponseEntity.ok("lock account success");
     }
 
-    @PutMapping("/activate-account")
-    public ResponseEntity<?> activeAccount(@RequestParam(name = "account_id") Integer accountId){
-        accountService.activateAccount(accountId);
+    @PutMapping("/activate-account/{id}")
+    public ResponseEntity<?> activeAccount(@PathVariable Integer id){
+        accountService.activateAccount(id);
         return ResponseEntity.ok("lock account success");
     }
 
-    @DeleteMapping()
-    public ResponseEntity<?> deleteAccount(@RequestParam(name = "account_id") Integer accountId){
-        accountService.deleteAccount(accountId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable Integer id){
+        accountService.deleteAccount(id);
         return ResponseEntity.ok("delete success");
     }
 

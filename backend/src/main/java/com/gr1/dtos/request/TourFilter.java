@@ -9,4 +9,6 @@ public class TourFilter {
     private String startAddress;
     private String destination;
     private String vehicle;
+    private Integer minPrice;
+    private Integer maxPrice;
 }

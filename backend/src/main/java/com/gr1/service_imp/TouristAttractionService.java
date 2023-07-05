@@ -10,7 +10,9 @@ import com.gr1.repository.TourAttBlogContentRepository;
 import com.gr1.repository.TouristAttractionRepository;
 import com.gr1.service.ITouristAttractionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +33,21 @@ public class TouristAttractionService implements ITouristAttractionService {
     private TourAttBlogContentService tourAttBlogContentService;
 
     @Override
-    public List<TouristAttraction> findAll () {
-        return touristAttractionRepository.findAll();
+    public Page<TouristAttraction> findAll (Pageable pageable) {
+        return touristAttractionRepository.findAll(pageable);
     }
 
     @Override
     public List<TouristAttraction> searchByName (String search) {
         return touristAttractionRepository.findByNameLike(search);
+    }
+
+    @Override
+    public Page<TouristAttraction> searchByName (String search, Pageable pageable) {
+        if(search == null){
+            return touristAttractionRepository.findAll(pageable);
+        }
+        return touristAttractionRepository.findByNameLike(search, pageable);
     }
 
     @Override
@@ -85,6 +95,14 @@ public class TouristAttractionService implements ITouristAttractionService {
 
         List<TourAttBlogContent> listContents = request.getListContents()
                 .stream().map(dto -> {
+                    if(dto.getId() == null){
+                        TourAttBlogContent t = new TourAttBlogContent();
+                        t.setContent(dto.getContent());
+                        t.setSubTitle(dto.getSubTitle());
+                        t.setImage(dto.getImage());
+                        t.setTouristAttraction(touristAttraction);
+                        return t;
+                    }
             TourAttBlogContent entity = dto.buildEntity();
             entity.setTouristAttraction(touristAttraction);
             return entity;

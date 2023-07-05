@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/v1/tours/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/v1/tours/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/tours/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/tours/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/v1/tours/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/v1/book-tour/**").hasAuthority("USER")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/book-tour/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/v1/book-tour/get-all").hasAuthority("ADMIN")

@@ -1,10 +1,10 @@
 import React from 'react'
-import ToursContainer from '../../containers/global/ToursContainer'
+import ToursContainer from '../../containers/global/Tour/ToursContainer'
 
 const TourPage = () => {
-  return (
-    <ToursContainer/>
-  )
+    return (
+        <ToursContainer/>
+    )
 }
 
 export default TourPage

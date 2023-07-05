@@ -2,7 +2,7 @@
     from {
         width: 0;
     }
-    
+
     to {
         width: 100%;
     }
@@ -15,5 +15,15 @@
 
     to {
         transform: translateX(0) scaleX(1);
+    }
+}
+
+@keyframes hideToShow {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }

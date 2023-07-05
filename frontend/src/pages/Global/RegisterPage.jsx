@@ -1,10 +1,10 @@
 import React from 'react'
-import RegisterContainer from '../../containers/global/RegisterContainer'
+import RegisterContainer from '../../containers/global/Auth/RegisterContainer'
 
 const RegisterPage = () => {
-  return (
-    <RegisterContainer/>
-  )
+    return (
+        <RegisterContainer/>
+    )
 }
 
 export default RegisterPage

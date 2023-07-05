@@ -111,10 +111,12 @@ CREATE TABLE
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         `full_name` VARCHAR(100) NOT NULL,
         `avatar_url` VARCHAR(255) NOT NULL,
-        `age` INT NOT NULL,
+        `birthDate` DATE NOT NULL,
+        `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
         `description` VARCHAR(255) NOT NULL,
         `phone` VARCHAR(20) NOT NULL,
-        `address` VARCHAR(200) NOT NULL
+        `address` VARCHAR(200) NOT NULL,
+        `status` ENUM('BUSY','AVAILABLE') NOT NULL
     );
 
 /*

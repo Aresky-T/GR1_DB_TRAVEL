@@ -1,8 +1,6 @@
-import HomeAdminContainer from "../containers/admin/HomeAdminContainer";
-import TourManagerContainer from "../containers/admin/TourManagerContainer";
-import BookingManager from "../components/admin/BookingManager";
-import AccountManager from "../components/admin/AccountManager";
-import StaffManager from "../components/admin/StaffManager";
+import HomeAdminContainer from "../containers/admin/Home/HomeAdminContainer";
+import TourManagerContainer from "../containers/admin/Tour/TourManagerContainer";
+import BookingManager from "../components/admin/Booking/BookingManager";
 import LoginAdminPage from "../pages/Global/LoginAdminPage";
 import Layout from "../components/layout/Layout";
 import HomePage from "../pages/Global/HomePage";
@@ -13,16 +11,25 @@ import RegisterPage from "../pages/Global/RegisterPage";
 import SearchResultListPage from "../pages/Global/SearchResultListPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import {ROLE} from "../constant/role";
+import {ROUTE} from "../constant/route";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import ProfilePage from "../pages/User/ProfilePage";
-import {ROUTE} from "../constant/route";
 import LayoutAdmin from "../components/layout/LayoutAdmin";
 import TouristAttractionPage from "../pages/Global/TouristAttractionPage";
-import TouristAttractionManagerContainer from "../containers/admin/TouristAttractionManagerContainer";
+import TouristAttractionManagerContainer from "../containers/admin/TouristAttraction/TouristAttractionManagerContainer";
 import BlogPage from "../pages/Global/BlogPage";
 import BookingPage from "../pages/Global/BookingPage";
 import ForgotPasswordPage from "../pages/Global/ForgotPasswordPage";
+import TouristAttractionDetailAdminContainer
+    from "../containers/admin/TouristAttraction/TouristAttractionDetailAdminContainer";
+import TouristAttractionCreateContainer from "../containers/admin/TouristAttraction/TouristAttractionCreateContainer";
+import TourDetailsAdminContainer from "../containers/admin/Tour/TourDetailsAdminContainer";
+import TourCreateContainer from "../containers/admin/Tour/TourCreateContainer";
+import TourGuideManagerContainer from "../containers/admin/TourGuide/TourGuideManagerContainer";
+import TourGuideDetailsContainer from "../containers/admin/TourGuide/TourGuideDetailsContainer";
+import TourGuideCreateContainer from "../containers/admin/TourGuide/TourGuideCreateContainer";
+import AccountManagerContainer from "../containers/admin/Account/AccountManagerContainer";
 
 export const routes = [
     {
@@ -36,8 +43,14 @@ export const routes = [
             {path: ROUTE.TOUR_MANAGER, element: <TourManagerContainer/>},
             {path: ROUTE.TOURIST_ATTRACTION_MANAGER, element: <TouristAttractionManagerContainer/>},
             {path: ROUTE.BOOKING_MANAGER, element: <BookingManager/>},
-            {path: ROUTE.ACCOUNT_MANAGER, element: <AccountManager/>},
-            {path: ROUTE.STAFF_MANAGER, element: <StaffManager/>}
+            {path: ROUTE.ACCOUNT_MANAGER, element: <AccountManagerContainer/>},
+            {path: ROUTE.TOURIST_ATTRACTION_DETAIL_ADMIN, element: <TouristAttractionDetailAdminContainer/>},
+            {path: ROUTE.TOURIST_ATTRACTION_CREATE, element: <TouristAttractionCreateContainer/>},
+            {path: ROUTE.TOUR_DETAILS_ADMIN, element: <TourDetailsAdminContainer/>},
+            {path: ROUTE.TOUR_CREATE, element: <TourCreateContainer/>},
+            {path: ROUTE.STAFF_MANAGER, element: <TourGuideManagerContainer/>},
+            {path: ROUTE.TOUR_GUIDE_DETAILS, element: <TourGuideDetailsContainer/>},
+            {path: ROUTE.TOUR_GUIDE_CREATE, element: <TourGuideCreateContainer/>},
         ],
     },
     {

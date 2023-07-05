@@ -9,8 +9,11 @@ import com.gr1.jwt.JwtUtil;
 import com.gr1.repository.AccountRepository;
 import com.gr1.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,6 +77,11 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public Page<Account> findAllUsers(Pageable pageable) {
+        return accountRepository.findAll(pageable);
+    }
+
+    @Override
     public void upgradeRole (Integer accountId) {
         Optional<Account> optional = accountRepository.findById(accountId);
         if (optional.isPresent()) {
@@ -101,6 +109,7 @@ public class AccountService implements IAccountService {
         accountRepository.save(account);
     }
 
+    @Transactional
     @Override
     public void activateAccount (Integer accountId) {
         Account account = findById(accountId);
@@ -114,6 +123,7 @@ public class AccountService implements IAccountService {
         accountRepository.save(account);
     }
 
+    @Transactional
     @Override
     public void deleteAccount (Integer accountId) {
         Account account = findById(accountId);

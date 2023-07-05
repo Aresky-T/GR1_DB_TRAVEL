@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Tour implements Serializable {
     private String image4;
 
     @Column(name = "start_time", nullable = false)
-    private String startTime;
+    private Date startTime;
 
     @Column(name = "time", length = 100, nullable = false)
     private String time;

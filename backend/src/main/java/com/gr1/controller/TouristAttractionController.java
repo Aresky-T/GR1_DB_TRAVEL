@@ -8,7 +8,11 @@ import com.gr1.service.ITouristAttractionService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +28,9 @@ public class TouristAttractionController {
     private ModelMapper modelMapper;
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchByName(@RequestParam String search){
-        List<TouristAttraction> result = touristAttractionService.searchByName(search);
-        List<TouristAttractionResponse> dtos = modelMapper.map(result, new TypeToken<List<TouristAttractionResponse>>(){}.getType());
+    public ResponseEntity<?> searchByName(Pageable pageable, @RequestParam(required = false) String search){
+        Page<TouristAttraction> result = touristAttractionService.searchByName(search, pageable);
+        Page<TouristAttractionResponse> dtos = result.map(touristAttraction -> modelMapper.map(touristAttraction, TouristAttractionResponse.class));
         return ResponseEntity.ok(dtos);
     }
 
@@ -37,9 +41,10 @@ public class TouristAttractionController {
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> getAllTouristAttractions(){
-        List<TouristAttraction> touristAttractions = touristAttractionService.findAll();
-        List<TouristAttractionResponse> dtos = modelMapper.map(touristAttractions, new TypeToken<List<TouristAttractionResponse>>(){}.getType());
+    public ResponseEntity<?> getAllTouristAttractions(Pageable pageable){
+        Page<TouristAttraction> touristAttractions = touristAttractionService.findAll(pageable);
+//        List<TouristAttractionResponse> dtos = modelMapper.map(touristAttractions, new TypeToken<List<TouristAttractionResponse>>(){}.getType());
+        Page<TouristAttractionResponse> dtos = touristAttractions.map(t -> modelMapper.map(t, TouristAttractionResponse.class));
         return ResponseEntity.ok(dtos);
     }
 
@@ -57,7 +62,7 @@ public class TouristAttractionController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping
+    @PutMapping()
     public ResponseEntity<?> updateTouristAttraction(@RequestBody TourAttBlogContentUpdateRequest request){
         touristAttractionService.updateTouristAttraction(request);
         return ResponseEntity.ok("success");

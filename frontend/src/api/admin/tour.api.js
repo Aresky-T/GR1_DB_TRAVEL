@@ -4,8 +4,10 @@ import { configAPI } from "../index";
 // const tourURL = "https://gr1travelbackend-production.up.railway.app/api/v1/tours"
 const tourURL = "http://localhost:8080/api/v1/tours"
 
-export const getAllToursApi = () => {
-    return axios.get(tourURL);
+export const getAllToursForAdminApi = (fields) => {
+    return axios.get(tourURL, {
+        params: fields
+    })
 }
 
 export const createTourApi = (data, token) => {
@@ -13,6 +15,12 @@ export const createTourApi = (data, token) => {
     return axios.post(tourURL, data, config);
 }
 
-export const getTourByTourCodeApi = (tourCode) => {
-    return axios.get(`${tourURL}/get-tour-by-tour-code/${tourCode}`);
+export const updateTourWithPatchMethodApi = (tourId, fields, token) => {
+    const config = configAPI(token);
+    return axios.patch(`${tourURL}/${tourId}`, fields, config)
+}
+
+export const deleteTourByIdApi = (tourId, token) => {
+    const config = configAPI(token);
+    return axios.delete(`${tourURL}/${tourId}`, config);
 }

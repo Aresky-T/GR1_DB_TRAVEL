@@ -1,5 +1,7 @@
 package com.gr1.specification;
 
+import com.gr1.dtos.request.PriceFilter;
+import com.gr1.dtos.request.TourFilter;
 import com.gr1.entity.Tour;
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,9 +14,9 @@ import javax.persistence.criteria.Root;
 public class CustomSpecification implements Specification<Tour> {
 
     @NonNull
-    private String field;
+    private final String field;
     @NonNull
-    private Object value;
+    private final Object value;
 
     @Override
     public Predicate toPredicate (Root<Tour> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -29,6 +31,15 @@ public class CustomSpecification implements Specification<Tour> {
         if(field.equalsIgnoreCase("vehicle")){
             return criteriaBuilder.like(root.get("vehicle"), "%" + value.toString() + "%");
         }
+
+        if(field.equalsIgnoreCase("price1")){
+            PriceFilter priceFilter = (PriceFilter) value;
+            if(priceFilter.getMaxPrice() == null){
+                return criteriaBuilder.greaterThanOrEqualTo(root.get("price1"), priceFilter.getMinPrice());
+            }
+            return criteriaBuilder.between(root.get("price1"), priceFilter.getMinPrice(), priceFilter.getMaxPrice());
+        }
+
         return null;
     }
 

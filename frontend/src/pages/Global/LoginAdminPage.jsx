@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginAdminContainer from "../../containers/global/LoginAdminContainer";
+import LoginAdminContainer from "../../containers/admin/Auth/LoginAdminContainer";
 
 const LoginAdminPage = () => {
-  return <LoginAdminContainer/>
+    return <LoginAdminContainer/>
 }
 export default LoginAdminPage

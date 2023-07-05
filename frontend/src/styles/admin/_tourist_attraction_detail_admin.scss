@@ -1,0 +1,19 @@
+.tourist-attraction-detail-admin {
+    width: 100%;
+    height: calc(100vh - 100px);
+    padding-block: 30px;
+    overflow-y: scroll;
+
+    .tad-admin-form {
+        width: 100%;
+
+        .admin-form__btn--delete {
+            color: red;
+
+            &:hover {
+                background-color: red;
+                color: #fff;
+            }
+        }
+    }
+}

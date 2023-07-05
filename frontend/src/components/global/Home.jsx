@@ -3,11 +3,11 @@ import vnImage from '../../assets/image/Flag-map_of_Vietnam.png'
 import video1 from '../../assets/video/video1.mp4'
 import video2 from '../../assets/video/video2.mp4'
 import video3 from '../../assets/video/video3.mp4'
-import TourCard from "./TourCard";
-import TouristAttractionCard from "./TouristAttractionCard";
-import LoadingIndicator from './LoadingIndicator'
+import TourCard from "./Tour/TourCard";
+import TouristAttractionCard from "./TouristAttraction/TouristAttractionCard";
+import LoadingIndicator from './Loading/LoadingIndicator'
 
-const Home = ({ featuredTours, touristAttractions }) => {
+const Home = ({featuredTours, touristAttractions}) => {
 
     return (
         <div className='main-session home-container'>
@@ -17,24 +17,24 @@ const Home = ({ featuredTours, touristAttractions }) => {
                         <span className="title">
                             Đưa bạn đến mọi miền đất nước
                         </span>
-                        <img src={vnImage} alt="vn" />
+                        <img src={vnImage} alt="vn"/>
                     </div>
                     <h1>Du lịch mở ra cánh cửa để đem lại những <span className="highlight">kỷ niệm</span></h1>
                     <p>
-                        Việt Nam - đất nước thiên nhiên tuyệt đẹp, con người thân thiện.<br />
+                        Việt Nam - đất nước thiên nhiên tuyệt đẹp, con người thân thiện.<br/>
                         Hãy đi và khám phá vẻ đẹp của núi rừng, biển cả và cảnh quan từ phố thị tới đồng quê.
                         Trải nghiệm văn hóa và sự ấm áp từ người dân mọi miền.
                     </p>
                 </div>
                 <div className="home_header_right">
                     <div className="hero_image-box">
-                        <video src={video1} className='video_1' autoPlay={true} loop />
+                        <video src={video1} className='video_1' autoPlay={true} loop/>
                     </div>
                     <div className="hero_image-box">
-                        <video src={video2} className='video_2' autoPlay={true} loop />
+                        <video src={video2} className='video_2' autoPlay={true} loop/>
                     </div>
                     <div className="hero_image-box">
-                        <video src={video3} className='video_3' autoPlay={true} loop />
+                        <video src={video3} className='video_3' autoPlay={true} loop/>
                     </div>
                 </div>
             </section>
@@ -47,11 +47,11 @@ const Home = ({ featuredTours, touristAttractions }) => {
                     {featuredTours.length > 0 ?
                         <div className="featured-list featured__list-1">
                             {[...featuredTours].map(tour => (
-                                <TourCard tour={tour} key={tour.id} />
+                                <TourCard tour={tour} key={tour.id}/>
                             ))}
                         </div>
                         :
-                        <LoadingIndicator />
+                        <LoadingIndicator/>
                     }
                 </div>
                 <div className="featured tourist_attraction">
@@ -61,11 +61,11 @@ const Home = ({ featuredTours, touristAttractions }) => {
                     {touristAttractions.length > 0 ?
                         <div className="featured-list featured__list-2">
                             {[...touristAttractions].map(item => (
-                                <TouristAttractionCard data={item} key={item.id} />
+                                <TouristAttractionCard data={item} key={item.id}/>
                             ))}
                         </div>
                         :
-                        <LoadingIndicator />
+                        <LoadingIndicator/>
                     }
                 </div>
             </section>

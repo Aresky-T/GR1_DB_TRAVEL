@@ -12,10 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -34,9 +36,9 @@ public class TourController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllTours() {
-        List<Tour> entities = tourService.findAll();
-        List<TourResponse> dtos = modelMapper.map(entities, new TypeToken<List<TourResponse>>(){}.getType());
+    public ResponseEntity<?> getAllToursWithPaginate(Pageable pageable) {
+        Page<Tour> entities = tourService.findAll(pageable);
+        Page<TourResponse> dtos = entities.map(entity -> modelMapper.map(entity, TourResponse.class));
         return ResponseEntity.ok(dtos);
     }
 
@@ -69,6 +71,7 @@ public class TourController {
         return ResponseEntity.ok(dto);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateTour(@PathVariable(name = "id") Integer tourId, @RequestBody Map<String, Object> fields) {
         tourService.updateTourByFields(tourId, fields);

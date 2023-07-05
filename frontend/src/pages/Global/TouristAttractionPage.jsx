@@ -1,10 +1,10 @@
 import React from 'react'
-import TouristAttractionContainer from '../../containers/global/TouristAttractionContainer'
+import TouristAttractionContainer from '../../containers/global/TouristAttraction/TouristAttractionContainer'
 
 const TouristAttractionPage = () => {
-  return (
-    <TouristAttractionContainer/>
-  )
+    return (
+        <TouristAttractionContainer/>
+    )
 }
 
 export default TouristAttractionPage

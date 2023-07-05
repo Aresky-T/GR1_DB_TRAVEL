@@ -1,12 +1,4 @@
 
-W
-'src/components/admin/AccountManager.jsx,7\8\78b228f25882178a752cfa2650c16c745cb689cc
-W
-'src/components/admin/BookingManager.jsx,b\6\b6313d68c4c3d2fb7e2c640c1c43ed9335613c82
-U
-%src/components/admin/StaffManager.jsx,6\2\629c8ab40b2efca0b5894f87cb2fbb8a30a516c6
-N
-src/components/admin/Login.jsx,a\b\ab4cbba9cf9c54dc4d57cabd038f1daa888679b6
 N
 src/styles/admin/_sidebar.scss,2\4\2456690ba7db6020e834d7ed7bda332496351510
 Q
@@ -15,30 +7,14 @@ Q
 !src/styles/admin/_home_admin.scss,d\8\d86013d38a3e4f42cc616856cda2e3157114e010
 S
 #src/styles/admin/_navbar_admin.scss,e\f\ef1a1f236ee7b481147cf8616cc019a390e261a8
-T
-$src/components/admin/TourManager.jsx,a\7\a72f0a35968860a8074b00a911e560fe89c794fc
-]
--src/containers/admin/TourManagerContainer.jsx,1\e\1e249a9e5b3758bf666158a84d7fec332b440db7
 D
 src/constant/role.js,2\1\2109b9fece05ddea544a4636216b10e0b6b12408
 N
 src/pages/user/ProfilePage.jsx,e\c\ec7e59f81d4ad9600aaac2b6a28ec4fec83d851b
-[
-+src/containers/admin/HomeAdminContainer.jsx,7\c\7c17f8e05f4dfbc1147ff08aa5b73232d5feb764
-P
- src/components/admin/Sidebar.jsx,c\f\cf24b80ba1bc0232ba6486475fa12b7c839c0d07
-Y
-)src/containers/admin/SidebarContainer.jsx,1\9\19f55b2cedc0c0293d5164ed591faa3fb7625d44
 U
 %src/components/layout/LayoutAdmin.jsx,e\1\e188160385822ef7e26af4d3f1735d9092280005
-O
-src/components/admin/Navbar.jsx,4\8\4802675423fa4356a2806b3392773e3ecd636eed
 Y
 )src/pages/Global/SearchResultListPage.jsx,8\2\82b3de282f4748419f149c01471d399e76a7ea0f
-]
--src/containers/global/LoginAdminContainer.jsx,b\a\bafede3ae75c021daeda2f2de6c9ea05d67f3f2c
-X
-(src/containers/global/LoginContainer.jsx,1\f\1f8c46465567fe9b3ca19503d54c78fd36d74938
 <
 src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d
 N
@@ -47,30 +23,18 @@ W
 'src/pages/NotFoundPage/NotFoundPage.jsx,9\8\987f07cde8b18d59c8962ef0b7cd44c8bf5e8056
 V
 &src/styles/global/_not_found_page.scss,1\0\1072305a5107c1fa382d9690a8bc32e6cfb42dd1
-X
-(src/containers/admin/NavbarContainer.jsx,3\5\35e57bf7fddd0a20333a26cd3d2ff70bb874a14d
 P
  src/components/layout/Layout.jsx,c\3\c36cde0040e68c233c872ea332161c032754fa77
-j
-:src/containers/admin/TouristAttractionManagerContainer.jsx,6\0\6080c37c3f5236aac284781265d6620e9401e33b
 P
  src/components/Header/Header.jsx,c\1\c190362ff4dd89e9c16838b502ca303aeecc3db4
 P
  src/components/Footer/Footer.jsx,8\4\84de595dd37f8f39153190e1cdc83f3b03a3975f
-a
-1src/components/admin/TouristAttractionManager.jsx,6\4\6403603962ad0e7a2be2eba9d3ff313cdec58413
 P
  src/components/footer/Footer.jsx,5\e\5eda6efab9e547ce04f5d8f675aa206592e76d42
-R
-"src/components/admin/HomeAdmin.jsx,4\b\4b927aeeddcd3be682c45add2833950610cd8147
-Q
-!src/components/global/Loading.jsx,2\d\2d0d798daf73ec945766e8fb71688bab17fdebb2
 R
 "src/styles/admin/_admin_login.scss,5\8\58a7c3bf288c4d7f5648a97656fa96508f491ed5
 T
 $src/pages/Global/TourDetailsPage.jsx,e\0\e0f95b5999b3d78b0593e7f0bd95dd150a3af237
-S
-#src/styles/admin/_tour_manager.scss,8\d\8d492acbe8be3cc3c02c4c8f8eef413eb10550a0
 P
  src/components/header/Header.jsx,f\b\fb61ea60bd9a3589a8bd04d22589abf09b75c994
 ;
@@ -83,12 +47,6 @@ S
 #src/pages/Global/LoginAdminPage.jsx,9\3\93a84a7d6ea0977464f6131ce17de5e2bd64228e
 N
 src/pages/Global/LoginPage.jsx,e\9\e90d90b814c1b148a412b9dc0af52eb99b28c8b5
-^
-.src/containers/global/TourDetailsContainer.jsx,6\c\6cb2e0510594f29d2c6fde5b27a9fc7a25b7620c
-_
-/src/components/global/TouristAttractionCard.jsx,5\b\5b36aed7955a37fd94f32545143b3304e93c8f86
-d
-4src/containers/global/TouristAttractionContainer.jsx,b\f\bff3a2acbf87658260b70e89953c2e3582b6734e
 Z
 *src/pages/Global/TouristAttractionPage.jsx,8\0\8066be1ff056c7fbd9098b0e011853e4a3e310a4
 T
@@ -99,20 +57,12 @@ N
 src/pages/Global/ToursPage.jsx,6\3\63ae27d9c12b7f0a0e0e53c623cda3263aef78c1
 L
 src/styles/global/_home.scss,4\5\4545f94f8be4a41cf071e358b540615ba34e1a19
-R
-"src/components/global/TourCard.jsx,a\5\a539c68382beb483cf8491ee2d39d90e7e9953e5
-[
-+src/components/global/TouristAttraction.jsx,4\1\415eafc82bb4065ed1733c3c8ca6f49b8a1e8d05
 Q
 !src/styles/global/_tour_card.scss,5\0\5078933f25e6e567220c362c199e2ed57e30b5c6
 N
 src/config/paginationConfig.js,a\9\a95cf2cf8d38ec07a333452870331fdfacb32d54
 \
 ,src/components/pagination/CustomPaginate.jsx,4\5\45b0151f724d0ff8933b41b37849a118af00eaf4
-X
-(src/containers/global/ToursContainer.jsx,c\7\c7318dbdf8a2bb719a9cda83bb64416cf109b0ca
-O
-src/components/global/Tours.jsx,a\0\a0f37cc02575dcf8086b6167c07f8f529cb07ec1
 _
 /src/styles/global/_tourist_attraction_page.scss,e\7\e7ecf3c111f0595abd10b16e8ddcff7e6b3561ba
 M
@@ -127,53 +77,45 @@ J
 package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
 P
  src/config/localStorageConfig.js,4\0\406211e2a64e72e0958afa38ab56b209f8a1edce
-D
-src/toaster/index.js,6\8\68abe9097ba6f4f123c9f6f5a0e4856c325aa950
 X
 (src/containers/user/ProfileContainer.jsx,7\c\7ce0b72a7afe99a3e1d935fd8b9b95536afcd67c
 O
 src/styles/global/_booking.scss,1\2\12516bf5916d5df44aa2fd18af63152442a96296
-W
-'src/components/booking/CustomerInfo.jsx,b\4\b42fe42574399e5b3ea3e1a6836ec8cb130f06f3
 J
 src/api/global/file.api.js,9\b\9b551a85704e30fbb18d63fb0a1f3baecfabc2be
-U
-%src/components/global/TourDetails.jsx,7\c\7c539495ffca5cf9b18a1119c87461c4ac21de51
-S
-#src/components/booking/TourInfo.jsx,d\5\d5abdcb2873f56fcd8ffd1f8cf149c517af94dc2
-W
-'src/api/global/touristAttraction.api.js,5\f\5f5cc4a520fc2e0b47526e2910a981ba416045d2
 K
 src/api/global/tours.api.js,c\a\ca3291879433505793b34dbcd2028ef1b21b7835
-Q
-!src/components/global/Booking.jsx,9\0\902e5e05622c0d990e88c60836ddaf37957bfbfa
-Z
-*src/containers/global/BookingContainer.jsx,b\e\be5b11e56a843d475e9135c82bf8443382757a26
-W
-'src/containers/global/HomeContainer.jsx,5\b\5b1e9df7c447f10084a0784d225fd3445d2b8dba
 P
  src/pages/Global/BookingPage.jsx,5\d\5d63fb7077411903ad6612a457402da298cb8b00
 W
 'src/pages/Global/ForgotPasswordPage.jsx,b\a\ba961efc31f3294fa57e6cf092db1e0ccb7e88d7
 E
 src/constant/route.js,e\5\e587cc110b3e1e5fcac4c8cdbe68d31f0eca31c0
-D
-src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc
-O
-src/components/global/Login.jsx,b\7\b77cc9ec965ad983c0fb84f9d7305cdaeb51f4a0
 L
 src/styles/global/_auth.scss,2\5\25b93cdc9c07633ca75c8d308a79d56d904286ec
-W
-'src/styles/global/_forgot_password.scss,e\b\ebe3785628009fa5545a30a4abdaa2086e74f290
 N
 src/config/sweetAlertConfig.js,6\2\62695b807cde9826699e0a5357200eedd781751c
 M
 src/api/global/account.api.js,e\e\ee096ea19cb8432726a130b14561ae7af3d37d44
-a
-1src/containers/global/ForgotPasswordContainer.jsx,c\c\cca592c8b931b3862df6dd58602d9d9008fe31fa
 J
 src/api/global/auth.api.js,3\6\36d187947f05d7cd8547630ce52f42116e7fbb03
 E
 src/styles/index.scss,4\1\41e30fba9abaa1ac1dfe02388867cd3b5883c5d3
-X
-(src/components/global/ForgotPassword.jsx,c\e\ce6cb83809b89b0fa5d71eae3b92f33457dbe871
+f
+6src/containers/global/Auth/ForgotPasswordContainer.jsx,c\6\c634e59fc389cafc23de74f6c34cfc4dd2e6b533
+`
+0src/components/global/TouristAttraction/Blog.jsx,4\5\45eba642f59183ed950208777cbe7aa09e882e66
+m
+=src/components/global/TouristAttraction/TouristAttraction.jsx,a\1\a1610fcfd444f9ba452071f05c666a2baa8766c9
+D
+src/toaster/index.js,6\8\68abe9097ba6f4f123c9f6f5a0e4856c325aa950
+_
+/src/components/global/Booking/TouristFields.jsx,b\b\bb155d6ede479f273e9a3be85c912a61e990898f
+W
+'src/styles/global/_forgot_password.scss,e\b\ebe3785628009fa5545a30a4abdaa2086e74f290
+h
+8src/containers/admin/Account/AccountManagerContainer.jsx,f\4\f4f53dc4ba1a4286905e300e9962d96d88f0d97f
+_
+/src/components/admin/Account/AccountManager.jsx,7\d\7daff338018e8702c41c0b5c575205d474d1c9d8
+D
+src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc

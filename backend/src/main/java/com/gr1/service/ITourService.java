@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ITourService {
-    List<Tour> findAll();
+    Page<Tour> findAll(Pageable pageable);
     List<Tour> getLatestTours(int count);
     Page<Tour> fillAllAndFilter(Pageable pageable, TourFilter filter);
     Tour findById(int id);

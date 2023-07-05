@@ -62,6 +62,7 @@ a {
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 // 
 :root {
   --animation-speed: 1;
@@ -131,8 +132,8 @@ body {
 @import url("./admin/_navbar_admin.scss");
 @import url("./admin/_admin_main.scss");
 @import url("./admin/_admin_login.scss");
-@import url("./admin/_tour_manager.scss");
-@import url("./admin/_admin_modal.scss");
+@import url("./admin/_tourist_attraction_detail_admin.scss");
+@import url("./admin/_tour_create_container.scss");
 
 // global style
 @import url("./global/_loading.scss");
@@ -150,6 +151,9 @@ body {
 @import url("./global/_blog.scss");
 @import url("./global/_booking.scss");
 @import url("./global/_forgot_password.scss");
+@import url("./global/_price_range_slider.scss");
+@import url("./global/_custom_alert.scss");
+@import url("./global/_react_qill.scss");
 
 // responsive 
 @media screen and (max-width: 855px) {

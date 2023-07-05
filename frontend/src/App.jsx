@@ -1,12 +1,12 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
-import { Toaster } from "react-hot-toast";
-import Loading from "./components/global/Loading";
+import {Toaster} from "react-hot-toast";
+import Loading from "./components/global/Loading/Loading";
 import AppRouter from "./router/AppRouter";
 import {useDispatch, useSelector} from "react-redux";
 import {authSelector} from "./redux/selector";
 import {logout} from "./redux/slices/auth.slice";
-import { validateTokenApi } from "./api/global/auth.api";
+import {validateTokenApi} from "./api/global/auth.api";
 
 function App() {
 
@@ -21,15 +21,15 @@ function App() {
             })
     }, [account, navigate, dispatch])
 
-  return (
-    <>
-        <AppRouter/>
-        <Toaster
-            position="top center"
-        />
-        <Loading/>
-    </>
-  );
+    return (
+        <>
+            <AppRouter/>
+            <Toaster
+                position="top center"
+            />
+            <Loading/>
+        </>
+    );
 }
 
 export default App;

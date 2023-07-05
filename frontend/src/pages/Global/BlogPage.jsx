@@ -1,9 +1,9 @@
 import React from 'react'
-import BlogContainer from '../../containers/global/BlogContainer'
+import BlogContainer from '../../containers/global/TouristAttraction/BlogContainer'
 
 const BlogPage = () => {
     return (
-        <BlogContainer />
+        <BlogContainer/>
     )
 }
 
