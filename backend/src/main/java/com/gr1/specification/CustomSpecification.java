@@ -2,6 +2,7 @@ package com.gr1.specification;
 
 import com.gr1.dtos.request.PriceFilter;
 import com.gr1.dtos.request.TourFilter;
+import com.gr1.entity.ETourStatus;
 import com.gr1.entity.Tour;
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,6 +21,12 @@ public class CustomSpecification implements Specification<Tour> {
 
     @Override
     public Predicate toPredicate (Root<Tour> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+
+        if (field.equalsIgnoreCase("status")){
+            ETourStatus status = (ETourStatus) value;
+            return criteriaBuilder.equal(root.get("status"), status);
+        }
+
         if(field.equalsIgnoreCase("startAddress")){
             return criteriaBuilder.like(root.get("startAddress"), "%" + value.toString() + "%");
         }

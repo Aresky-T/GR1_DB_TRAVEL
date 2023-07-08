@@ -46,6 +46,7 @@ export const validateTour = yup.object().shape({
     price1: yup.number().min(0, 'Giá cho người lớn phải lớn hơn hoặc bằng 0').required("Yêu cầu nhập giá cho người lớn"),
     price2: yup.number().min(0, 'Giá cho trẻ em phải lớn hơn hoặc bằng 0').required("Yêu cầu nhập giá cho trẻ em"),
     price3: yup.number().min(0, 'Giá cho em bé phải lớn hơn hoặc bằng 0').required("Yêu cầu nhập giá cho em bé"),
+    status: validateString('status'),
 })
 
 export const validateTourGuide = yup.object().shape({

@@ -3,6 +3,7 @@ package com.gr1.service_imp;
 import com.gr1.dtos.request.TourFilter;
 import com.gr1.dtos.request.TourRequest;
 import com.gr1.entity.ETourGuideStatus;
+import com.gr1.entity.ETourStatus;
 import com.gr1.entity.Tour;
 import com.gr1.entity.TourGuide;
 import com.gr1.exception.CustomException;
@@ -86,6 +87,7 @@ public class TourService implements ITourService {
     @Override
     public void createTour (TourRequest request) {
         Tour tour = request.buildEntity();
+        tour.setStatus(ETourStatus.NOT_STARTED);
         tour.setAvailableSeats(request.getTotalSeats());
         tourRepository.save(tour);
     }
@@ -128,6 +130,10 @@ public class TourService implements ITourService {
                 case "startTime":
                     Date startTime = ConvertUtils.convertStringToDate((String) value);
                     tour.setStartTime(startTime);
+                    break;
+                case "status":
+                    ETourStatus status = ETourStatus.valueOf((String) value);
+                    tour.setStatus(status);
                     break;
                 default:
                     Field field = ReflectionUtils.findField(Tour.class, key);

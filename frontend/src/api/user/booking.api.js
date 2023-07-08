@@ -10,7 +10,15 @@ export const bookTourForUserApi = (data, token, dispatch) => {
     return axios.post(baseURL, data, config);
 }
 
+export const getAllBookedToursApi = (token) => {
+    return axios.get(`${baseURL}/user`, configAPI(token));
+}
+
 export const getBookedTourForUserApi = (tourId, token) => {
     const config = configAPI(token);
     return axios.get(`${baseURL}/get-by-tour/${tourId}`, config);
+}
+
+export const sendRequestCancelBookedTourApi = (form, token) => {
+    return axios.post(`${baseURL}/request-cancel-booked-tour/send`, form, configAPI(token));
 }

@@ -1,6 +1,7 @@
 package com.gr1.service_imp;
 
 import com.gr1.dtos.request.BookTourRequest;
+import com.gr1.dtos.request.BookedTourUpdate;
 import com.gr1.dtos.request.TouristListRequest;
 import com.gr1.entity.*;
 import com.gr1.exception.CustomException;
@@ -10,6 +11,8 @@ import com.gr1.service.IAccountService;
 import com.gr1.service.IBookTourService;
 import com.gr1.service.ITourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,6 +41,11 @@ public class BookTourService implements IBookTourService {
     @Override
     public List<BookedTour> findAll () {
         return bookTourRepository.findAll();
+    }
+
+    @Override
+    public Page<BookedTour> findAll (Pageable pageable) {
+        return bookTourRepository.findAll(pageable);
     }
 
     @Override
@@ -95,7 +103,7 @@ public class BookTourService implements IBookTourService {
         bt.setTotalPrice(totalPrice);
         bt.setTour(tour);
         bt.setAccount(account);
-        bt.setStatus(EBookedTour.WAITING);
+        bt.setStatus(EBookedTour.NOT_PAY);
 
         BookedTour newBookedTour = bookTourRepository.save(bt);
         touristLists.forEach(t -> {
@@ -106,8 +114,17 @@ public class BookTourService implements IBookTourService {
         tourService.saveTour(tour);
     }
 
+    @Transactional
     @Override
     public void changeStatusBookedTour (BookedTour bookedTour, EBookedTour status) {
+        if(bookedTour.getStatus().equals(EBookedTour.REJECTED)){
+            throw new CustomException("Trạng thái đặt tour đã bị từ chối nên không thể cập nhật!");
+        }
+        Tour tour = bookedTour.getTour();
+        if(status.equals(EBookedTour.REJECTED)){
+            tour.setAvailableSeats(tour.getAvailableSeats() + bookedTour.getTotalPersons());
+            tourService.saveTour(tour);
+        }
         bookedTour.setStatus(status);
         bookTourRepository.save(bookedTour);
     }

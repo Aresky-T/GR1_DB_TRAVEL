@@ -1,5 +1,6 @@
 package com.gr1.dtos.response;
 
+import com.gr1.entity.ETourStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,7 @@ public class TourResponse {
     private Integer price3;
     private String tourCode;
     private String createdTime;
+    private ETourStatus status;
     private Integer tourGuideId;
     private TourGuideDTO tourGuide;
 

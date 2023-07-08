@@ -42,7 +42,7 @@ public class AccountService implements IAccountService {
     public Account findByUsername (String username) {
         Optional<Account> optional = accountRepository.findByUsername(username);
         if (optional.isEmpty()){
-            throw new AccountException("Invalid account");
+            throw new AccountException("Tài khoản không tồn tại!");
         }
         return optional.get();
     }

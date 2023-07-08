@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import TouristAttraction from '../../../components/global/TouristAttraction/TouristAttraction'
-import {getDataBySearchApi} from '../../../api/global/tourist_attraction.api';
+import { getDataBySearchApi } from '../../../api/global/tourist_attraction.api';
 
 const TouristAttractionContainer = () => {
     const [data, setData] = useState([]);
@@ -9,10 +9,17 @@ const TouristAttractionContainer = () => {
         pageNumber: 1,
         search: ''
     })
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleOffLoading = () => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000)
+    }
 
     const handleChangeFields = (e) => {
         if (e.target) {
-            const {name, value} = e.target;
+            const { name, value } = e.target;
             setFields({
                 ...fields,
                 [name]: value
@@ -20,33 +27,38 @@ const TouristAttractionContainer = () => {
         }
     }
 
-    const handleClickToSearch = () => {
-        const newFields = {...fields};
-        if (fields.search.trim().length === 0) {
-            delete newFields['search'];
-        }
-        getDataBySearchApi(newFields)
+    const getData = (fields) => {
+        setIsLoading(true);
+        getDataBySearchApi(fields)
             .then(res => {
+                handleOffLoading();
                 setData(res.data);
             })
             .catch(err => {
-                console.log(err)
+                handleOffLoading();
             })
+    }
+
+    const handleClickToSearch = () => {
+        const newFields = { ...fields };
+        if (fields.search.trim().length === 0) {
+            delete newFields['search'];
+        }
+        setIsLoading(true)
+        getData(newFields);
     }
 
 
     useEffect(() => {
-        getDataBySearchApi({
-            size: 20,
-            pageNumber: 1
-        })
-            .then(res => {
-                setData(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [])
+        const newFields = {
+            ...fields,
+        };
+        if (newFields.search.trim() === "") {
+            delete newFields['search'];
+        }
+        getData({ ...newFields });
+        //eslint-disable-next-line
+    }, [fields.search])
 
     return (
         <TouristAttraction
@@ -54,6 +66,7 @@ const TouristAttractionContainer = () => {
             fields={fields}
             handleClickToSearch={handleClickToSearch}
             handleChangeFields={handleChangeFields}
+            isLoading={isLoading}
         />
     )
 }

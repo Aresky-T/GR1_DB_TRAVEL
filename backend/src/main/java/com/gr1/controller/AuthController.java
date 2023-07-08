@@ -7,6 +7,8 @@ import com.gr1.dtos.response.MessageResponse;
 import com.gr1.entity.Account;
 import com.gr1.entity.ERole;
 import com.gr1.entity.EStatus;
+import com.gr1.exception.AccountException;
+import com.gr1.exception.CustomException;
 import com.gr1.jwt.JwtUtil;
 import com.gr1.security.CustomUserDetailsService;
 import com.gr1.service.IAccountService;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +44,7 @@ public class AuthController {
     private CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUpUser(@RequestBody SignUpForm form) throws Exception {
+    public ResponseEntity<?> signUpUser(@RequestBody SignUpForm form) {
         if(accountService.existsByUsername(form.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username id already"));
         }
@@ -70,7 +73,11 @@ public class AuthController {
         Account account = accountService.findByUsername(username);
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())){
-            throw new BadCredentialsException("Invalid password!");
+            throw new BadCredentialsException("Mật khẩu không đúng, hãy kiểm tra lại!");
+        }
+
+        if(account.getStatus().equals(EStatus.BLOCKED)){
+            throw new CustomException("Tài khoản của bạn đã bị khóa, không thể đăng nhập!");
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = 
@@ -91,6 +98,19 @@ public class AuthController {
     @GetMapping("/validate-token")
     public ResponseEntity<?> validateToken(@RequestParam String token){
         accountService.validateJwt(token);
+        return ResponseEntity.ok("Valid");
+    }
+
+    @GetMapping("/validate-account")
+    public ResponseEntity<?> validateAccount(Authentication authentication){
+        if(authentication == null){
+            throw new AccountException("Tài khoản của bạn đã hết quyền truy cập, hãy đăng nhập lại!");
+        }
+        String username = authentication.getName();
+        Account account = accountService.findByUsername(username);
+        if(account.getStatus().equals(EStatus.BLOCKED)){
+            throw new AccountException("Tài khoản của bạn đã bị khóa, không thể tiếp tục truy cập!");
+        }
         return ResponseEntity.ok("Valid");
     }
 }

@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authSelector} from '../../../redux/selector';
 import {ROUTE} from '../../../constant/route';
 import {errorAlert, successAlert, warningAlertNoCancel, warningAlertWithCancel} from '../../../config/sweetAlertConfig';
-import {bookTourForUserApi, getBookedTourForUserApi} from '../../../api/user/book_tour.api';
+import {bookTourForUserApi, getBookedTourForUserApi} from '../../../api/user/booking.api';
 import {offLoading} from '../../../redux/slices/loading.slice';
 import {customToast} from "../../../toaster";
 import {getTourByTourCodeApi} from '../../../api/global/tours.api';

@@ -1,17 +1,17 @@
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {authSelector} from "../../../redux/selector";
-import {useNavigate} from "react-router-dom";
-import {ROUTE} from "../../../constant/route";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelector } from "../../../redux/selector";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "../../../constant/route";
 import Login from "../../../components/global/Auth/Login";
 import * as yup from 'yup';
-import {CUSTOM_REGEX} from "../../../constant/regex";
-import {useFormik} from "formik";
-import {loginUserApi} from "../../../api/global/auth.api";
-import {saveAccountInfo} from "../../../redux/slices/auth.slice";
-import {customToast} from "../../../toaster";
-import {ROLE} from '../../../constant/role';
-import {warningAlertNoCancel} from "../../../config/sweetAlertConfig";
+import { CUSTOM_REGEX } from "../../../constant/regex";
+import { useFormik } from "formik";
+import { loginUserApi } from "../../../api/global/auth.api";
+import { saveAccountInfo } from "../../../redux/slices/auth.slice";
+import { customToast } from "../../../toaster";
+import { ROLE } from '../../../constant/role';
+import { errorAlert, warningAlertNoCancel } from "../../../config/sweetAlertConfig";
 
 const yupSchema = yup.object().shape({
     username: yup.string()
@@ -46,7 +46,10 @@ const LoginContainer = () => {
                 navigate(ROUTE.HOME);
             })
             .catch(err => {
-                customToast('Tài khoản hoặc mật khẩu không hợp lệ!', '❌')
+                const message = err.response.data.message;
+                if (message) {
+                    errorAlert("Đăng nhập thất bại", message);
+                }
             })
     }
 

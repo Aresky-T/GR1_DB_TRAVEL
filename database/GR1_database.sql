@@ -146,6 +146,12 @@ CREATE TABLE
         `price3` INT NOT NULL,
         `tour_guide` INT NULL,
         `tour_code` VARCHAR(100) NOT NULL UNIQUE,
+        `status` ENUM(
+            'NOT_STARTED',
+            'ON_GOING',
+            'FINISHED',
+            'CANCELED'
+        ) NOT NULL DEFAULT 'NOT_STARTED',
         `created_time` DATETIME NOT NULL DEFAULT NOW(),
         PRIMARY KEY(id),
         FOREIGN KEY (`tour_guide`) REFERENCES `Tour_guide`(id) ON DELETE
@@ -173,12 +179,10 @@ CREATE TABLE
         `total_price` INT NOT NULL,
         `book_time` DATETIME NOT NULL DEFAULT now(),
         `status` ENUM(
-            'WAITING',
-            'NOT_STARTED',
-            'ON_GOING',
-            'FINISHED',
-            'CANCELLED'
-        ),
+            'NOT_PAY',
+            'PAY_UP',
+            'REJECTED',
+        ) NOT NULL DEFAULT 'NOT_PAY',
         `account_id` INT NOT NULL,
         `tour_id` INT NOT NULL,
         UNIQUE KEY uk_account_tour (`account_id`, `tour_id`),

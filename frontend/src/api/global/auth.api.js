@@ -1,5 +1,6 @@
 import axios from "axios";
 import { onLoading } from "../../redux/slices/loading.slice";
+import { configAPI } from "..";
 
 // const authURL = 'https://gr1travelbackend-production.up.railway.app/api/v1/auth'
 const authURL = 'http://localhost:8080/api/v1/auth'
@@ -23,4 +24,8 @@ export const validateTokenApi = (accessToken) => {
             token: accessToken
         }
     })
+}
+
+export const validateAccount = (accessToken) => {
+    return axios.get(`${authURL}/validate-account`, configAPI(accessToken));
 }

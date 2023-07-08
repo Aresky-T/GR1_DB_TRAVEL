@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {offLoading} from '../../../redux/slices/loading.slice'
 import {authSelector} from '../../../redux/selector'
 import {ROUTE} from '../../../constant/route'
+import { ROLE } from '../../../constant/role'
 
 const yupSchema = yup.object().shape({
     email: yup.string()
@@ -86,7 +87,7 @@ const RegisterContainer = () => {
     };
 
     useEffect(() => {
-        if (accountInfo.role && accountInfo.accessToken) {
+        if (accountInfo.role === ROLE.USER && accountInfo.accessToken) {
             navigate(ROUTE.HOME);
         }
     }, [navigate, accountInfo])

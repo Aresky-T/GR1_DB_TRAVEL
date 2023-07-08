@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class TouristAttractionService implements ITouristAttractionService {
         if(search == null){
             return touristAttractionRepository.findAll(pageable);
         }
-        return touristAttractionRepository.findByNameLike(search, pageable);
+        return touristAttractionRepository.findByNameLike("%" + search + "%", pageable);
     }
 
     @Override
@@ -93,7 +94,9 @@ public class TouristAttractionService implements ITouristAttractionService {
         touristAttraction.setImageUrl(request.getImageUrl());
         touristAttraction.setIntro(request.getIntro());
 
-        List<TourAttBlogContent> listContents = request.getListContents()
+        List<TourAttBlogContent> oldContents = touristAttraction.getContents();
+
+        List<TourAttBlogContent> newContents = request.getListContents()
                 .stream().map(dto -> {
                     if(dto.getId() == null){
                         TourAttBlogContent t = new TourAttBlogContent();
@@ -108,8 +111,13 @@ public class TouristAttractionService implements ITouristAttractionService {
             return entity;
         }).collect(Collectors.toList());
 
+        List<TourAttBlogContent> notExistItems = oldContents.stream()
+                .filter(item -> !newContents.contains(item))
+                .collect(Collectors.toList());
+
         touristAttractionRepository.save(touristAttraction);
-        tourAttBlogContentRepository.saveAll(listContents);
+        tourAttBlogContentRepository.deleteAll(notExistItems);
+        tourAttBlogContentRepository.saveAll(newContents);
     }
 
     @Transactional

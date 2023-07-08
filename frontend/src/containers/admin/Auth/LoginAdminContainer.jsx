@@ -38,7 +38,7 @@ const LoginAdminContainer = () => {
                 if (res.data.role === "ADMIN") {
                     setAccount(res.data)
                 } else {
-                    toast.error("Account role is not admin!")
+                    toast.error("Bạn không phải admin!")
                 }
             })
             .catch(err => {

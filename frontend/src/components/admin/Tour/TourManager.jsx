@@ -26,7 +26,7 @@ const TourManager = ({ data, fields, handleChangeCurrentPage }) => {
                             <th>Địa điểm khởi hành</th>
                             <th>Số chỗ trống</th>
                             <th>Giá người lớn (VND)</th>
-                            <th>Thời gian tạo</th>
+                            <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@ const TourManager = ({ data, fields, handleChangeCurrentPage }) => {
                                 <td>{item.startAddress}</td>
                                 <td>{item.availableSeats}</td>
                                 <td>{Number(item.price1).toLocaleString("vi-VN")}</td>
-                                <td>{new Date(item.createdTime).toLocaleString()}</td>
+                                <td>{item.status}</td>
                                 <td className='admin-table-data__action'>
                                     <button
                                         onClick={() => {

@@ -1,11 +1,9 @@
 package com.gr1.entity;
 
 public enum EBookedTour {
-    WAITING("Chờ xác nhận"),
-    NOT_STARTED("Chưa diễn ra"),
-    ON_GOING("Đang diễn ra"),
-    FINISHED("Đã hoàn thành"),
-    CANCELLED("Đã hủy");
+    NOT_PAY("Chưa thanh toán"),
+    PAY_UP("Đã thanh toán"),
+    REJECTED("Bị từ chối");
 
     private final String status;
 

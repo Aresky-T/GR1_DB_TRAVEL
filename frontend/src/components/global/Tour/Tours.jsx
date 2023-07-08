@@ -1,23 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {MdLocationOn, MdDirectionsBus} from 'react-icons/md'
-import {FiSearch} from 'react-icons/fi'
-import {GiMoneyStack} from 'react-icons/gi'
-import {IoIosArrowDown} from 'react-icons/io'
+import React, { useEffect, useRef, useState } from 'react'
+import { MdLocationOn, MdDirectionsBus } from 'react-icons/md'
+import { FiSearch } from 'react-icons/fi'
+import { GiMoneyStack } from 'react-icons/gi'
+import { IoIosArrowDown } from 'react-icons/io'
 import toursHeaderImage from '../../../assets/image/tours-header-image.jpeg'
 import TourCard from "./TourCard";
 import CustomPaginate from "../../pagination/CustomPaginate";
 import PriceRangeSlider from '../Slider/PriceRangeSlider'
+import RollerLoading from '../Loading/RollerLoading'
 
 const Tours = ({
-                   fields,
-                   handleChangeFilter,
-                   handleChangePrices,
-                   handleSubmitFilter,
-                   prices,
-                   tours,
-                   totalPages,
-                   handleChangeCurrentPage
-               }) => {
+    fields,
+    handleChangeFilter,
+    handleChangePrices,
+    handleSubmitFilter,
+    prices,
+    tours,
+    totalPages,
+    handleChangeCurrentPage,
+    isLoading,
+}) => {
 
     const [isShow, setIsShow] = useState(false);
     const pricesRef = useRef();
@@ -42,14 +44,14 @@ const Tours = ({
         <div className='main-session tours-container'>
             <section className="main-session-header tours-header">
                 <div className='header-item tours-header__image'>
-                    <img src={toursHeaderImage} alt='tours-header'/>
+                    <img src={toursHeaderImage} alt='tours-header' />
                     <h1>Khám phá Tour</h1>
                 </div>
                 <div className='header-filter tours-filter'>
                     <div className='filter-bar'>
                         <div className='filter-item'>
                             <div className="filter-icon">
-                                <MdLocationOn/>
+                                <MdLocationOn />
                             </div>
                             <div className='filter-field'>
                                 <label htmlFor="destination">Điểm đến</label>
@@ -65,7 +67,7 @@ const Tours = ({
                         </div>
                         <div className='filter-item'>
                             <div className="filter-icon">
-                                <MdLocationOn/>
+                                <MdLocationOn />
                             </div>
                             <div className="filter-field">
                                 <label htmlFor="start-address">Điểm bắt đầu</label>
@@ -81,12 +83,12 @@ const Tours = ({
                         </div>
                         <div className='filter-item filter-by-vehicle'>
                             <div className='filter-icon'>
-                                <MdDirectionsBus/>
+                                <MdDirectionsBus />
                             </div>
                             <div className='filter-field'>
                                 <label>Phương tiện</label>
                                 <select name='vehicle' value={fields?.vehicle}
-                                        onChange={handleChangeFilter}
+                                    onChange={handleChangeFilter}
                                 >
                                     <option defaultChecked={true} value=''>Bấm chọn</option>
                                     <option value="Máy bay">Máy bay</option>
@@ -97,11 +99,11 @@ const Tours = ({
                         </div>
                         <div className="filter-item filter-by-price">
                             <div className="filter-icon">
-                                <GiMoneyStack/>
+                                <GiMoneyStack />
                             </div>
                             <div className='filter-field'>
                                 <label>Giá</label>
-                                <p onClick={handleChangeIsShow}>{prices.minPrice.toLocaleString('vi-VN')} - {prices.maxPrice.toLocaleString('vi-VN')}đ <IoIosArrowDown/>
+                                <p onClick={handleChangeIsShow}>{prices.minPrice.toLocaleString('vi-VN')} - {prices.maxPrice.toLocaleString('vi-VN')}đ <IoIosArrowDown />
                                 </p>
                                 {isShow && <PriceRangeSlider
                                     prices={prices}
@@ -112,9 +114,9 @@ const Tours = ({
                         </div>
                         <div className='filter-item filter-submit'>
                             <div className='submit-icon'
-                                 onClick={handleSubmitFilter}
+                                onClick={handleSubmitFilter}
                             >
-                                <FiSearch/>
+                                <FiSearch />
                                 <span>Tìm kiếm</span>
                             </div>
                         </div>
@@ -122,22 +124,30 @@ const Tours = ({
                 </div>
             </section>
             <section className='tours-main'>
-                {tours && tours.length > 0 ?
-                    <div className='tours-list'>
-                        {tours.map(tour => (
-                            <TourCard tour={tour} key={tour.id}/>
-                        ))}
+                {isLoading ?
+                    <div className='tours-main__loading'>
+                        <RollerLoading />
                     </div>
                     :
-                    "Không có kết quả"
+                    <>
+                        {tours && tours.length > 0 ?
+                            <div className='tours-list'>
+                                {tours.map(tour => (
+                                    <TourCard tour={tour} key={tour.id} />
+                                ))}
+                            </div>
+                            :
+                            <div className='tours-list--empty'>Không có kết quả!</div>
+                        }
+                        <CustomPaginate
+                            currentPage={fields?.pageNumber}
+                            firstLabel="Đầu"
+                            lastLabel="Cuối"
+                            setCurrentPage={handleChangeCurrentPage}
+                            totalPages={totalPages}
+                        />
+                    </>
                 }
-                <CustomPaginate
-                    currentPage={fields?.pageNumber}
-                    firstLabel="Đầu"
-                    lastLabel="Cuối"
-                    setCurrentPage={handleChangeCurrentPage}
-                    totalPages={totalPages}
-                />
             </section>
         </div>
     )

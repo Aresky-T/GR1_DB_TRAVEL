@@ -1,25 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const loadPages = (currentPage, totalPages, firstLabel, lastLabel) => {
-    const loadPages = [];
-    const startIndex = Math.max(currentPage - 5, 1);
-    const endIndex = Math.min(startIndex + 9, totalPages);
-
-    if (startIndex > 1) {
-        loadPages.unshift(firstLabel);
-    }
-
-    for (let i = startIndex; i <= endIndex; i++) {
-        loadPages.push(i);
-    }
-
-    if (endIndex < totalPages) {
-        loadPages.push(lastLabel);
-    }
-
-    return loadPages;
-}
-
 const CustomPaginate = ({ currentPage, totalPages, setCurrentPage, firstLabel, lastLabel }) => {
     const [pages, setPages] = useState([1]);
     const handleChangeCurrentPage = (page) => {
@@ -30,6 +10,27 @@ const CustomPaginate = ({ currentPage, totalPages, setCurrentPage, firstLabel, l
             setCurrentPage(totalPages);
         }
         typeof (page) === "number" && setCurrentPage(page);
+    }
+
+
+    const loadPages = (currentPage, totalPages, firstLabel, lastLabel) => {
+        const loadPages = [];
+        const startIndex = Math.max(currentPage - 5, 1);
+        const endIndex = Math.min(startIndex + 4, totalPages);
+
+        if (startIndex > 1) {
+            loadPages.unshift(firstLabel);
+        }
+
+        for (let i = startIndex; i <= endIndex; i++) {
+            loadPages.push(i);
+        }
+
+        if (endIndex < totalPages) {
+            loadPages.push(lastLabel);
+        }
+
+        return loadPages;
     }
 
     useEffect(() => {

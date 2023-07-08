@@ -19,12 +19,22 @@
   .tours-main {
     padding-inline: 10vw;
     margin: 50px 0;
+    min-height: 500px;
 
     .tours-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, max-content));
-      grid-template-rows: repeat(auto-fill, 570px);
+      grid-template-rows: repeat(auto-fill, minmax(570px, 600px));
       gap: 20px;
+    }
+
+    .tours-list--empty {
+      text-align: center;
+      padding: 50px 0;
+      color: var(--font-color);
+      font-style: italic;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     .paginate {
@@ -56,6 +66,14 @@
         background-color: var(--secondary-color);
         color: #fff;
       }
+    }
+
+    .tours-main__loading {
+      min-height: inherit;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

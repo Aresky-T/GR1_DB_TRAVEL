@@ -52,6 +52,15 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    min-height: 500px;
+
+    .tourist-attraction-main__loading {
+      width: 100%;
+      min-height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .tourist-attraction-list {
       width: 100%;
@@ -78,10 +87,8 @@
         width: 80vw;
 
         input {
-          width: 80%
+          width: 80%;
         }
-
-        ;
       }
     }
   }

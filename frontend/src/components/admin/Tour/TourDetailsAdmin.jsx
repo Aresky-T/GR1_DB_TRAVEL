@@ -247,7 +247,7 @@ const TourDetailsAdmin = ({ tour, tourGuides, handleDeleteTour }) => {
                 />
                 <Box sx={{
                     display: 'grid',
-                    gridTemplateColumns: '3fr 1fr',
+                    gridTemplateColumns: '2fr 1fr 1fr',
                     columnGap: '20px'
                 }}>
                     <TextField
@@ -285,6 +285,22 @@ const TourDetailsAdmin = ({ tour, tourGuides, handleDeleteTour }) => {
                                     <span>{item.fullName} - (ID: {item.id})</span>
                                 </MenuItem>
                             ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin='normal'>
+                        <InputLabel id="td-admin-form__tour-guide-id">Trạng thái Tour</InputLabel>
+                        <Select
+                            name='status'
+                            labelId='td-admin-form__tour-guide-id'
+                            label="Người dẫn đoàn"
+                            value={tour.values.status || ''}
+                            onChange={tour.handleChange}
+                        >
+                            <MenuItem value="">None</MenuItem>
+                            <MenuItem value="NOT_STARTED">Chưa diễn ra</MenuItem>
+                            <MenuItem value="ON_GOING">Đang diễn ra</MenuItem>
+                            <MenuItem value="FINISHED">Đã hoàn thành</MenuItem>
+                            <MenuItem value="CANCELED">Đã bị hủy</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>

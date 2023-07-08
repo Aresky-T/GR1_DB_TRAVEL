@@ -9,6 +9,12 @@ const Blog = ({ touristAttraction }) => {
         setContents(touristAttraction.listContents)
     }, [touristAttraction])
 
+    useEffect(() => {
+        if(touristAttraction.title){
+            document.title = `BK Travel | ${touristAttraction.title}`
+        }
+    }, [touristAttraction])
+
     return (
         <div className='main-session blog-container'>
             <section className='blog-header'>

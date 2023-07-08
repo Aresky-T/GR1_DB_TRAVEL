@@ -1,4 +1,5 @@
 export const ROUTE = {
+    LAYOUT: '/',
     HOME: '/',
     LOGIN: '/login',
     PROFILE: '/profile',
@@ -23,4 +24,5 @@ export const ROUTE = {
     STAFF_MANAGER: '/admin/staffs-manager',
     TOUR_GUIDE_DETAILS: '/admin/tour-guide/detail/:id',
     TOUR_GUIDE_CREATE: '/admin/tour-guide/create',
+    BOOKED_TOUR_DETAILS_ADMIN: '/admin/booking/details/:id',
 }

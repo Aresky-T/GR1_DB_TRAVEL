@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../../constant/route'
 import BlogContentForm from './BlogContentForm'
 
-const TouristAttractionDetailAdmin = ({formik, handleDeleteTouristAttraction, addBlogContent, removeBlogContent}) => {
+const TouristAttractionDetailAdmin = ({formik, handleDeleteTouristAttraction, addBlogContent, removeBlogContent, handleRestoreOriginal}) => {
 
     const navigate = useNavigate()
 
@@ -76,6 +76,12 @@ const TouristAttractionDetailAdmin = ({formik, handleDeleteTouristAttraction, ad
                         onClick={addBlogContent}
                 >
                     Thêm nội dung
+                </Button>
+                <Button type='button'
+                        className='admin-form__btn'
+                        onClick={handleRestoreOriginal}
+                >
+                    Phục hồi lại
                 </Button>
                 <Button type='button'
                         className='admin-form__btn'

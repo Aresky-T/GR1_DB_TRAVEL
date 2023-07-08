@@ -9,9 +9,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function CustomDateTimePicker({ label, value, setValue }) {
-
-    console.log(value);
-
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <MobileDateTimePicker

@@ -44,6 +44,7 @@ const TourDetailsAdminContainer = () => {
             price2: 0,
             price3: 0,
             tourCode: '',
+            status: '',
             tourGuideId: 0,
             tourGuide: null
         },
@@ -71,6 +72,7 @@ const TourDetailsAdminContainer = () => {
                 })
         }
     })
+    console.log(tour.values)
 
     const handleDeleteTour = () => {
         const id = param.id;

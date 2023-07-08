@@ -15,9 +15,6 @@ const Sidebar = ({ adminLinks, location, handleLogout }) => {
                             to={link.path}
                             key={link.name}
                             className={location.pathname === link.path ? 'sidebar-links-item active' : 'sidebar-links-item'}
-                            onClick={() => {
-                                document.title = link.name
-                            }}
                         >
                             <span className='link-icon'>{link.icon}</span>
                             <span className='link-name'>{link.name}</span>

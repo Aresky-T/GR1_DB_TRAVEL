@@ -1,12 +1,9 @@
 package com.gr1.dtos.response;
 
-import com.gr1.entity.BookedTourPK;
-import com.gr1.entity.EGender;
+import com.gr1.entity.EBookedTour;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,6 +21,8 @@ public class BookedTourResponse {
     private String note;
     private Integer totalPrice;
     private Integer tourId;
+    private EBookedTour status;
+    private String bookTime;
     private List<TouristListDTO> touristList;
 
     @Data

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Tours from '../../../components/global/Tour/Tours'
-import {getAllToursByFilterApi} from "../../../api/global/tours.api";
-import {createCustomStorage} from "../../../config/localStorageConfig";
+import { getAllToursByFilterApi } from "../../../api/global/tours.api";
+import { createCustomStorage } from "../../../config/localStorageConfig";
 
 const PAGE_SIZE = 12;
 const TOUR_STORAGE = "tour_storage"
@@ -24,14 +24,24 @@ const ToursContainer = () => {
         maxPrice: maxPrice
     })
 
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleOffLoading = () => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 500)
+    }
+
     const getAllToursByFilter = (fields) => {
+        setIsLoading(true);
         getAllToursByFilterApi(fields)
             .then(res => {
                 setTours(res.data.content)
                 setTotalPages(res.data.totalPages)
+                handleOffLoading()
             })
             .catch(err => {
-                console.log(err)
+                handleOffLoading();
             });
     }
 
@@ -76,7 +86,7 @@ const ToursContainer = () => {
 
     const handleChangeFilter = (e) => {
         if (e.target) {
-            const {name, value} = e.target;
+            const { name, value } = e.target;
             setFields({
                 ...fields,
                 [name]: value
@@ -123,6 +133,7 @@ const ToursContainer = () => {
             handleChangeFilter={handleChangeFilter}
             handleChangePrices={handleChangePrices}
             handleSubmitFilter={handleSubmitFilter}
+            isLoading={isLoading}
         />
     )
 }

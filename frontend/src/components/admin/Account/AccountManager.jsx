@@ -37,17 +37,17 @@ const AccountManager = ({ accounts, paginate, handleChangeCurrentPage, handleAct
                                 <td className='admin-table-data__action'>
                                     {account.role === "USER" && <>
                                         {account.status === "BLOCKED" ?
-                                            <span className='action--active-acc'
+                                            <button className='action--active-acc'
                                                 onClick={() => {
                                                     handleActivateAccount(account.id)
                                                 }}
-                                            >Activate</span>
+                                            >Activate</button>
                                             :
-                                            <span className='action--lock-acc'
+                                            <button className='action--lock-acc'
                                                 onClick={() => {
                                                     handleLockAccount(account.id)
                                                 }}
-                                            >Lock</span>}
+                                            >Lock</button>}
                                     </>
                                     }
                                 </td>

@@ -1,6 +1,5 @@
 import HomeAdminContainer from "../containers/admin/Home/HomeAdminContainer";
 import TourManagerContainer from "../containers/admin/Tour/TourManagerContainer";
-import BookingManager from "../components/admin/Booking/BookingManager";
 import LoginAdminPage from "../pages/Global/LoginAdminPage";
 import Layout from "../components/layout/Layout";
 import HomePage from "../pages/Global/HomePage";
@@ -8,7 +7,6 @@ import TourPage from "../pages/Global/ToursPage";
 import TourDetailsPage from "../pages/Global/TourDetailsPage";
 import LoginPage from "../pages/Global/LoginPage";
 import RegisterPage from "../pages/Global/RegisterPage";
-import SearchResultListPage from "../pages/Global/SearchResultListPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import {ROLE} from "../constant/role";
 import {ROUTE} from "../constant/route";
@@ -30,6 +28,8 @@ import TourGuideManagerContainer from "../containers/admin/TourGuide/TourGuideMa
 import TourGuideDetailsContainer from "../containers/admin/TourGuide/TourGuideDetailsContainer";
 import TourGuideCreateContainer from "../containers/admin/TourGuide/TourGuideCreateContainer";
 import AccountManagerContainer from "../containers/admin/Account/AccountManagerContainer";
+import BookingManagerContainer from "../containers/admin/Booking/BookingManagerContainer";
+import BookedTourDetailsAdminContainer from "../containers/admin/Booking/BookedTourDetailsAdminContainer";
 
 export const routes = [
     {
@@ -39,10 +39,10 @@ export const routes = [
         isPrivate: true,
         role: [ROLE.ADMIN],
         children: [
-            {path: '', element: <HomeAdminContainer/>},
+            {path: '', element: <HomeAdminContainer/>, title: "Home"},
             {path: ROUTE.TOUR_MANAGER, element: <TourManagerContainer/>},
             {path: ROUTE.TOURIST_ATTRACTION_MANAGER, element: <TouristAttractionManagerContainer/>},
-            {path: ROUTE.BOOKING_MANAGER, element: <BookingManager/>},
+            {path: ROUTE.BOOKING_MANAGER, element: <BookingManagerContainer/>},
             {path: ROUTE.ACCOUNT_MANAGER, element: <AccountManagerContainer/>},
             {path: ROUTE.TOURIST_ATTRACTION_DETAIL_ADMIN, element: <TouristAttractionDetailAdminContainer/>},
             {path: ROUTE.TOURIST_ATTRACTION_CREATE, element: <TouristAttractionCreateContainer/>},
@@ -51,27 +51,27 @@ export const routes = [
             {path: ROUTE.STAFF_MANAGER, element: <TourGuideManagerContainer/>},
             {path: ROUTE.TOUR_GUIDE_DETAILS, element: <TourGuideDetailsContainer/>},
             {path: ROUTE.TOUR_GUIDE_CREATE, element: <TourGuideCreateContainer/>},
+            {path: ROUTE.BOOKED_TOUR_DETAILS_ADMIN, element: <BookedTourDetailsAdminContainer/>}
         ],
     },
     {
-        path: ROUTE.HOME,
+        path: ROUTE.LAYOUT,
         element: <Layout/>,
         isPrivate: false,
         children: [
-            {path: '', element: <HomePage/>},
+            {path: ROUTE.HOME, element: <HomePage/>},
             {path: ROUTE.TOUR, element: <TourPage/>},
             {path: ROUTE.TOUR_DETAIL, element: <TourDetailsPage/>},
             {path: ROUTE.TOURIST_ATTRACTION, element: <TouristAttractionPage/>},
             {path: ROUTE.TOURIST_ATTRACTION_DETAIL, element: <BlogPage/>},
             {path: ROUTE.LOGIN, element: <LoginPage/>},
             {path: ROUTE.REGISTER, element: <RegisterPage/>},
-            {path: ROUTE.TOUR_SEARCH, element: <SearchResultListPage/>},
             {path: ROUTE.BOOKING, element: <BookingPage/>},
             {path: ROUTE.FORGOT_PASSWORD, element: <ForgotPasswordPage/>}
         ]
     },
     {
-        path: ROUTE.HOME,
+        path: ROUTE.LAYOUT,
         element: <Layout/>,
         isPrivate: true,
         role: [ROLE.USER],
@@ -95,7 +95,7 @@ export const routes = [
     return {
         ...route,
         element: (
-            <PublicRoute>
+            <PublicRoute title={route.title}>
                 {route.element}
             </PublicRoute>
         )

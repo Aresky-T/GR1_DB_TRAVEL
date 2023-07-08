@@ -32,7 +32,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             }
         }
 
-        throw new BadCredentialsException("Invalid username or password");
+        throw new BadCredentialsException("Invalid username or password!");
     }
 
     @Override

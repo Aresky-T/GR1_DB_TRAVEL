@@ -96,6 +96,11 @@
     }
 
     .admin-main__body {
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
         .admin-main__body__table {
             width: 100%;
 
@@ -294,12 +299,12 @@
 }
 
 .account-manager-container {
-    .action--lock-acc:hover {
-        color: red;
+    .action--lock-acc {
+        background-color: rgb(199, 0, 0) !important;
     }
 
-    .action--active-acc:hover {
-        color: var(--fourth-color);
+    .action--active-acc {
+        background-color: var(--fourth-color) !important;
     }
 
     .admin-table-data__status {
@@ -311,6 +316,14 @@
             display: flex;
             align-items: center;
             margin-right: 5px;
+        }
+    }
+}
+
+.booking-manager-container {
+    .admin-main__body__table {
+        .booking-manager__head--total-persons {
+            width: 10%;
         }
     }
 }

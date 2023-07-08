@@ -22,7 +22,6 @@ const TourGuideManagerContainer = () => {
                 setData(res.data);
             })
             .catch(err => {
-                console.log(err.response)
             })
     }, [account, paginate])
 

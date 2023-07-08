@@ -76,6 +76,10 @@ public class Tour implements Serializable {
     @Column(name = "tour_code", length = 100, nullable = false, unique = true)
     private String tourCode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ETourStatus status;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time", nullable = false)

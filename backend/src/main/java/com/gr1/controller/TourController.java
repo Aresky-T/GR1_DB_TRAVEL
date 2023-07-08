@@ -29,6 +29,7 @@ public class TourController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping()
     public ResponseEntity<?> createTour(@RequestBody TourRequest request) {
         tourService.createTour(request);
@@ -72,12 +73,19 @@ public class TourController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTour(@PathVariable Integer id){
+        return ResponseEntity.ok("success");
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateTour(@PathVariable(name = "id") Integer tourId, @RequestBody Map<String, Object> fields) {
         tourService.updateTourByFields(tourId, fields);
         return ResponseEntity.ok("success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTourById(@PathVariable(name = "id") Integer tourId){
         tourService.deleteTour(tourId);
