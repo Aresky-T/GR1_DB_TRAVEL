@@ -1,4 +1,5 @@
 import striptags from 'striptags'
+import { CUSTOM_REGEX } from '../constant/regex'
 
 const yup = require('yup')
 
@@ -57,4 +58,66 @@ export const validateTourGuide = yup.object().shape({
     address: validateString('address'),
     avatarUrl: validateString('avatarUrl'),
     description: validateString('description'),
+})
+
+export const validateTourist = yup.object().shape({
+    fullName: yup.string().required("Required fullName").matches(CUSTOM_REGEX.REGEX_STRING, "Invalid fullName"),
+    birthDate: yup.date().required("Required birthDate"),
+    gender: yup.string().required('Required gender').matches(CUSTOM_REGEX.REGEX_STRING, "Invalid gender")
+})
+
+export const validateBooking = yup.object().shape({
+    fullName: yup.string().required("Required fullName").matches(CUSTOM_REGEX.REGEX_STRING, 'Invalid fullName!'),
+    email: yup.string().required('Required email').matches(CUSTOM_REGEX.EMAIL, "Invalid email!"),
+    phone: yup.string().required("Required phone").matches(CUSTOM_REGEX.PHONE, "Invalid phone!"),
+    address: yup.string().required("Required address").matches(CUSTOM_REGEX.REGEX_STRING, "Invalid address!"),
+    adultNumber: yup.number().required("Required adultNumber").min(1, "Adult number must be greater than 1!"),
+    childrenNumber: yup.number().required("Required childrenNumber").min(0, "Children number must be greater than 0!"),
+    babyNumber: yup.number().required("Required babyNumber").min(0, "Baby number must be greater than 0!"),
+    note: yup.string(),
+    tourId: yup.number(),
+    touristList: yup.array().of(validateTourist)
+        .test("Tourist-list-length", 'Tourist List length must be equal to the sum of adultNumber, childrenNumber and babyNumber',
+            function (value) {
+                const {adultNumber, childrenNumber, babyNumber} = this.parent;
+                return value.length === adultNumber + childrenNumber + babyNumber
+            }).required("Tourist List must be a array!"),
+    adults: yup.array().of(yup.mixed())
+        .test('adults-length', 'Adults length must be equal to adultNumber!', function (value) {
+            const {adultNumber} = this.parent;
+            return value.length === adultNumber;
+        }).required("Adults must be a array!"),
+    children: yup.array().of(yup.mixed())
+        .test('children-length', 'Children length must be equal to childrenNumber!', function (value) {
+            const {childrenNumber} = this.parent;
+            return value.length === childrenNumber;
+        }).required("Children must be a array!"),
+    babies: yup.array().of(yup.mixed())
+        .test('babies-length', 'Babies length must be equal to babyNumber!', function (value) {
+            const {babyNumber} = this.parent;
+            return value.length === babyNumber;
+        }).required("Babies must be a array!"),
+})
+
+export const validateLoginForm = yup.object().shape({
+    username: yup.string()
+        .required('Tên tài khoản không được để trống!')
+        .matches(CUSTOM_REGEX.USERNAME2, 'Tên tài khoản không được chứa dấu cách'),
+    password: yup.string()
+        .required('Mật khẩu không được để trống!')
+})
+
+
+export const validateRegisterForm = yup.object().shape({
+    email: yup.string()
+        .required('Email không được để trống'),
+    username: yup.string()
+        .required('Tên tài khoản không được để trống!')
+        .matches(CUSTOM_REGEX.USERNAME2, 'Tên tài khoản không được chứa dấu cách'),
+    password: yup.string()
+        .required('Mật khẩu không được để trống!')
+        .matches(CUSTOM_REGEX.PASSWORD, 'Mật khẩu từ 8 đến 20 ký tự, bao gồm các chữ in hoa, chữ thường, các số và ký tự đặc biệt!'),
+    confirmPassword: yup.string()
+        .required('Mật khẩu không được để trống!')
+        .oneOf([yup.ref('password'), null], 'Mật khẩu xác nhận không khớp!')
 })

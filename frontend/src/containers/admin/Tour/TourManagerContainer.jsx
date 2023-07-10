@@ -1,6 +1,8 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import TourManager from "../../../components/admin/Tour/TourManager";
-import {getAllToursForAdminApi} from "../../../api/admin/tour.api";
+import { getAllToursForAdminApi } from "../../../api/admin/tour.api";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../../redux/selector"
 
 const TourManagerContainer = () => {
 
@@ -9,6 +11,7 @@ const TourManagerContainer = () => {
         pageNumber: 1,
         size: 5
     })
+    const account = useSelector(authSelector)
 
     const handleChangeCurrentPage = (page) => {
         setFields({
@@ -18,15 +21,17 @@ const TourManagerContainer = () => {
     }
 
     useEffect(() => {
-        getAllToursForAdminApi(fields)
-            .then(res => {
-                const tours = res.data;
-                setTours(tours)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [fields])
+        if (account.accessToken) {
+            getAllToursForAdminApi(fields, account.accessToken)
+                .then(res => {
+                    const tours = res.data;
+                    setTours(tours)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }, [fields, account])
 
     return (
         <TourManager

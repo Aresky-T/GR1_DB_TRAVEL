@@ -4,9 +4,10 @@ import { configAPI } from "../index";
 // const tourURL = "https://gr1travelbackend-production.up.railway.app/api/v1/tours"
 const tourURL = "http://localhost:8080/api/v1/tours"
 
-export const getAllToursForAdminApi = (fields) => {
+export const getAllToursForAdminApi = (fields, token) => {
     return axios.get(tourURL, {
-        params: fields
+        params: fields,
+        headers: configAPI(token).headers
     })
 }
 

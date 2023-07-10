@@ -4,23 +4,13 @@ import { authSelector } from "../../../redux/selector";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../../constant/route";
 import Login from "../../../components/global/Auth/Login";
-import * as yup from 'yup';
-import { CUSTOM_REGEX } from "../../../constant/regex";
 import { useFormik } from "formik";
 import { loginUserApi } from "../../../api/global/auth.api";
 import { saveAccountInfo } from "../../../redux/slices/auth.slice";
 import { customToast } from "../../../toaster";
 import { ROLE } from '../../../constant/role';
 import { errorAlert, warningAlertNoCancel } from "../../../config/sweetAlertConfig";
-
-const yupSchema = yup.object().shape({
-    username: yup.string()
-        .required('Tên tài khoản không được để trống!')
-        .matches(CUSTOM_REGEX.USERNAME2, 'Tên tài khoản không được chứa dấu cách'),
-    password: yup.string()
-        .required('Mật khẩu không được để trống!')
-})
-
+import { validateLoginForm } from "../../../validation";
 
 const LoginContainer = () => {
     const accountInfo = useSelector(authSelector);
@@ -58,7 +48,7 @@ const LoginContainer = () => {
             username: '',
             password: ''
         },
-        validationSchema: yupSchema,
+        validationSchema: validateLoginForm,
         onSubmit: values => {
             handleLoginUser({
                 username: values.username,

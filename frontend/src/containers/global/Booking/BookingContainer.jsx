@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react'
 import Booking from '../../../components/global/Booking/Booking'
 import {useNavigate, useParams} from 'react-router-dom';
 import {useFormik} from 'formik';
-import * as yup from 'yup';
-import {CUSTOM_REGEX} from '../../../constant/regex';
 import {useDispatch, useSelector} from 'react-redux';
 import {authSelector} from '../../../redux/selector';
 import {ROUTE} from '../../../constant/route';
@@ -13,57 +11,13 @@ import {offLoading} from '../../../redux/slices/loading.slice';
 import {customToast} from "../../../toaster";
 import {getTourByTourCodeApi} from '../../../api/global/tours.api';
 import {ROLE} from '../../../constant/role';
+import { validateBooking } from '../../../validation';
 
 const initTourist = {
     fullName: '',
     birthDate: '',
     gender: '',
 }
-
-const validationTourist = yup.object().shape({
-    fullName: yup.string().required("Required fullName").matches(CUSTOM_REGEX.REGEX_STRING, "Invalid fullName"),
-    birthDate: yup.date().required("Required birthDate"),
-    gender: yup.string().required('Required gender').matches(CUSTOM_REGEX.REGEX_STRING, "Invalid gender")
-})
-
-const validationBooking = yup.object().shape({
-    fullName: yup.string().required("Required fullName").matches(CUSTOM_REGEX.REGEX_STRING, 'Invalid fullName!'),
-    email: yup.string().required('Required email').matches(CUSTOM_REGEX.EMAIL, "Invalid email!"),
-    phone: yup.string().required("Required phone").matches(CUSTOM_REGEX.PHONE, "Invalid phone!"),
-    address: yup.string().required("Required address").matches(CUSTOM_REGEX.REGEX_STRING, "Invalid address!"),
-    adultNumber: yup.number().required("Required adultNumber").min(1, "Adult number must be greater than 1!"),
-    childrenNumber: yup.number().required("Required childrenNumber").min(0, "Children number must be greater than 0!"),
-    babyNumber: yup.number().required("Required babyNumber").min(0, "Baby number must be greater than 0!"),
-    note: yup.string(),
-    tourId: yup.number(),
-    touristList: yup.array().of(validationTourist)
-        .test("Tourist-list-length", 'Tourist List length must be equal to the sum of adultNumber, childrenNumber and babyNumber',
-            function (value) {
-                const {adultNumber, childrenNumber, babyNumber} = this.parent;
-                return value.length === adultNumber + childrenNumber + babyNumber
-            }).required("Tourist List must be a array!"),
-    adults: yup.array().of(yup.mixed())
-        .test('adults-length', 'Adults length must be equal to adultNumber!', function (value) {
-            const {adultNumber} = this.parent;
-            return value.length === adultNumber;
-        }).required("Adults must be a array!"),
-    children: yup.array().of(yup.mixed())
-        .test('children-length', 'Children length must be equal to childrenNumber!', function (value) {
-            const {childrenNumber} = this.parent;
-            return value.length === childrenNumber;
-        }).required("Children must be a array!"),
-    babies: yup.array().of(yup.mixed())
-        .test('babies-length', 'Babies length must be equal to babyNumber!', function (value) {
-            const {babyNumber} = this.parent;
-            return value.length === babyNumber;
-        }).required("Babies must be a array!"),
-})
-
-// const validateArray = async (array) => {
-//     const objectSchema = validationTourist;
-//     const arraySchema = yup.array().of(objectSchema);
-//     return await arraySchema.validate(array, { abortEarly: true })
-// }
 
 const BookingContainer = () => {
     const [tour, setTour] = useState();
@@ -90,9 +44,8 @@ const BookingContainer = () => {
         },
         onSubmit: values => {
             values.touristList = [...values.adults, ...values.children, ...values.babies]
-            console.log(account)
             if (account.accessToken && account.role === ROLE.USER) {
-                validationBooking.validate(values)
+                validateBooking.validate(values)
                     .then((data) => {
                         console.log(data)
                         const {

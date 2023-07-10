@@ -84,7 +84,7 @@ public class EmailService implements IEmailService{
                         "        <span style=\"font-weight: 600;\">\n" + passwordRandom +
                         "        </span><br />Vui lòng quay lại trang đăng nhập và đổi lại mật khẩu để đảm bảo an toàn cho bạn!\n" +
                         "    </p>\n" +
-                        "    <p><a href=\"http://localhost:3000/login\">\n" +
+                        "    <p><a href=\"https://bk-travel.vercel.app/login\">\n" +
                         "            <button style=\"background-color: #4CAF50; color: white; padding: 10px 20px;\n" +
                         "                text-align: center; text-decoration: none; display: inline-block; border-radius: 5px; border: none;\n" +
                         "                cursor: pointer;\">\n" +

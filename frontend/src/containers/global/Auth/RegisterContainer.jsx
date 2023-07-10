@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import Register from '../../../components/global/Auth/Register'
-import * as yup from 'yup'
-import {CUSTOM_REGEX} from '../../../constant/regex'
 import {useFormik} from 'formik'
 import {registerUserApi} from '../../../api/global/auth.api'
 import {customToast} from '../../../toaster'
@@ -12,21 +10,7 @@ import {offLoading} from '../../../redux/slices/loading.slice'
 import {authSelector} from '../../../redux/selector'
 import {ROUTE} from '../../../constant/route'
 import { ROLE } from '../../../constant/role'
-
-const yupSchema = yup.object().shape({
-    email: yup.string()
-        .required('Email không được để trống'),
-    username: yup.string()
-        .required('Tên tài khoản không được để trống!')
-        .matches(CUSTOM_REGEX.USERNAME2, 'Tên tài khoản không được chứa dấu cách'),
-    password: yup.string()
-        .required('Mật khẩu không được để trống!')
-        .matches(CUSTOM_REGEX.PASSWORD, 'Mật khẩu từ 8 đến 20 ký tự, bao gồm các chữ in hoa, chữ thường, các số và ký tự đặc biệt!'),
-    confirmPassword: yup.string()
-        .required('Mật khẩu không được để trống!')
-        .oneOf([yup.ref('password'), null], 'Mật khẩu xác nhận không khớp!')
-})
-
+import { validateRegisterForm } from '../../../validation'
 
 const RegisterContainer = () => {
 
@@ -42,7 +26,7 @@ const RegisterContainer = () => {
             password: '',
             confirmPassword: ''
         },
-        validationSchema: yupSchema,
+        validationSchema: validateRegisterForm,
         onSubmit: values => {
             const {email, username, password} = values;
             registerUserApi({email, username, password}, dispatch)

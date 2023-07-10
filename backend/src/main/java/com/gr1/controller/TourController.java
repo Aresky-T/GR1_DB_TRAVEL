@@ -36,6 +36,7 @@ public class TourController {
         return ResponseEntity.ok("success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping()
     public ResponseEntity<?> getAllToursWithPaginate(Pageable pageable) {
         Page<Tour> entities = tourService.findAll(pageable);

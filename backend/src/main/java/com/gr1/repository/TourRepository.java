@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface TourRepository extends JpaRepository<Tour, Integer>, JpaSpecificationExecutor<Tour> {
     Optional<Tour> getTourByTourCode(String tourCode);
 
-    @Query("SELECT T FROM Tour AS T ORDER BY T.createdTime DESC")
+    @Query("SELECT T FROM Tour AS T WHERE T.status = 'NOT_STARTED' ORDER BY T.createdTime DESC")
     List<Tour> getToursOrderByCreatedTime(int count);
 }
