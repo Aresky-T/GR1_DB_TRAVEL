@@ -23,9 +23,10 @@
 
     .tours-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, max-content));
-      grid-template-rows: repeat(auto-fill, minmax(570px, 600px));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      // grid-template-rows: repeat(auto-fill, minmax(570px, 600px));
+      grid-template-rows: auto;
+      gap: 40px 20px;
     }
 
     .tours-list--empty {

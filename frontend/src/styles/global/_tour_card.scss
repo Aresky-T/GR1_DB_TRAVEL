@@ -5,8 +5,10 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  min-width: 290px;
   height: 100%;
   overflow: hidden;
+  justify-self: center;
 
   .tour-card__image {
     width: 100%;
@@ -62,21 +64,23 @@
           font-size: 14px;
           color: var(--font-color);
           font-style: italic;
-          line-height: 1.3;
+          // line-height: 1.3;
 
           .tour-card__subtitle {
-            display: inline-flex;
-            align-items: center;
+            // display: inline-flex;
+            // align-items: center;
             margin-right: 5px;
 
             svg {
               margin-right: 5px;
+              vertical-align: middle;
             }
           }
 
           .content {
             font-weight: bold;
             font-style: normal;
+            line-height: 1.3;
           }
 
           .content.available-seats {

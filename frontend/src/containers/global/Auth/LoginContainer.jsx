@@ -7,7 +7,6 @@ import Login from "../../../components/global/Auth/Login";
 import { useFormik } from "formik";
 import { loginUserApi } from "../../../api/global/auth.api";
 import { saveAccountInfo } from "../../../redux/slices/auth.slice";
-import { customToast } from "../../../toaster";
 import { ROLE } from '../../../constant/role';
 import { errorAlert, warningAlertNoCancel } from "../../../config/sweetAlertConfig";
 import { validateLoginForm } from "../../../validation";
@@ -27,13 +26,13 @@ const LoginContainer = () => {
                             accessToken: account.token,
                             role: account.role
                         }));
+                        navigate(ROUTE.HOME);
                         break;
                     case ROLE.ADMIN:
-                        customToast('Bạn không thể đăng nhập bằng tài khoản admin!', '❌')
+                        warningAlertNoCancel("Cảnh báo", "Bạn không thể đăng nhập bằng tài khoản admin!", "OK")
                         break;
                     default:
                 }
-                navigate(ROUTE.HOME);
             })
             .catch(err => {
                 const message = err.response.data.message;

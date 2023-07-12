@@ -57,8 +57,11 @@
     .footer-item.contact{
 
         .contact-item{
-            display: flex;
-            align-items: center;
+            display: inline;
+
+            span {
+                vertical-align: middle;
+            }
         }
 
         .contact-item.facebook{
@@ -68,7 +71,7 @@
         }
 
         .contact-icon {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
             color: var(--secondary-color);
@@ -95,6 +98,15 @@
             span, a {
                 text-align: center;
                 margin: 10px 0;
+            }
+        }
+
+        .footer-item.contact {
+            .contact-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
         }
     }

@@ -4,6 +4,7 @@ import { BsTicket } from 'react-icons/bs'
 import { BiMap } from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
 import { IoBus } from 'react-icons/io5'
+import { MdOutlinePeopleAlt } from 'react-icons/md'
 
 const TourCard = ({ tour }) => {
     const navigate = useNavigate();
@@ -74,7 +75,10 @@ const TourCard = ({ tour }) => {
                         </p>
                     </div>
                     <div className="tour-card-item">
-                        <p className="text">Số chỗ còn trống:
+                        <p className="text">
+                            <span className="tour-card__subtitle">
+                                <MdOutlinePeopleAlt /> Số chỗ còn trống:
+                            </span>
                             <span className="content available-seats">{tour.availableSeats}</span>
                         </p>
                     </div>

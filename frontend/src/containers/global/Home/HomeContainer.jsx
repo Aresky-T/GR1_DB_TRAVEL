@@ -17,7 +17,7 @@ const HomeContainer = () => {
             })
     }, [])
     useEffect(() => {
-        getLatestTouristAttractionsApi(5)
+        getLatestTouristAttractionsApi(4)
             .then(res => {
                 setFeaturedTouristAtt(res.data)
             })
