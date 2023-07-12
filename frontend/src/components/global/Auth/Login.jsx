@@ -59,7 +59,7 @@ const Login = ({loginFormik, activeError, handleIconMouseEnter, handleIconMouseL
                                  navigate(ROUTE.FORGOT_PASSWORD)
                              }}
                         >
-                            quên mật khẩu?
+                            Quên mật khẩu?
                         </div>
                         <input
                             type="submit"
