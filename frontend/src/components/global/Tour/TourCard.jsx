@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaOpencart, FaRegClock } from 'react-icons/fa'
-import { BsTicket } from 'react-icons/bs'
+import { BsTicket, BsHourglassSplit } from 'react-icons/bs'
 import { BiMap } from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
 import { IoBus } from 'react-icons/io5'
@@ -37,7 +37,12 @@ const TourCard = ({ tour }) => {
                                 color: "var(--primary-color)"
                             }}
                         >
-                            {tour.time}
+                            <span className="tour-card__subtitle">
+                                <BsHourglassSplit />
+                            </span>
+                            <span className="content">
+                                {tour.time}
+                            </span>
                         </p>
                     </div>
                     <div className="tour-card-item">
