@@ -1,9 +1,10 @@
 import React from 'react'
 import { FaOpencart, FaRegClock } from 'react-icons/fa'
-import { BsTicket } from 'react-icons/bs'
+import { BsTicket, BsHourglassSplit } from 'react-icons/bs'
 import { BiMap } from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
 import { IoBus } from 'react-icons/io5'
+import { MdOutlinePeopleAlt } from 'react-icons/md'
 
 const TourCard = ({ tour }) => {
     const navigate = useNavigate();
@@ -36,7 +37,12 @@ const TourCard = ({ tour }) => {
                                 color: "var(--primary-color)"
                             }}
                         >
-                            {tour.time}
+                            <span className="tour-card__subtitle">
+                                <BsHourglassSplit />
+                            </span>
+                            <span className="content">
+                                {tour.time}
+                            </span>
                         </p>
                     </div>
                     <div className="tour-card-item">
@@ -74,7 +80,10 @@ const TourCard = ({ tour }) => {
                         </p>
                     </div>
                     <div className="tour-card-item">
-                        <p className="text">Số chỗ còn trống:
+                        <p className="text">
+                            <span className="tour-card__subtitle">
+                                <MdOutlinePeopleAlt /> Số chỗ còn trống:
+                            </span>
                             <span className="content available-seats">{tour.availableSeats}</span>
                         </p>
                     </div>
