@@ -1,40 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Profile = () => {
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    // Fake data
-    const fakeProfile = {
-      avatar_url:
-        'https://i.pinimg.com/736x/7c/b5/49/7cb5492889809cb8303b76b80759f0df.jpg',
-      full_name: 'Nguyen Van A',
-      email: 'nguyenvana@example.com',
-      phone: '0123456789',
-      address: '123 Nguyen Van Cu, Quan 5, TP HCM',
-      date_of_birth: '1990-01-01',
-      gender: 'Nam',
-      bookedTours: [
-        {
-          id: 1,
-          name: 'Tour Du Lịch Miền Trung',
-          date: '2023-08-01',
-          price: '5000000',
-        },
-        {
-          id: 2,
-          name: 'Tour Du Lịch Nha Trang',
-          date: '2023-09-01',
-          price: '8000000',
-        },
-      ],
-    };
-
-    // Set profile state
-    setProfile(fakeProfile);
-  }, []);
-
+const Profile = ({ profile, bookedTours }) => {
   if (!profile) {
     return <div>Loading...</div>;
   }
@@ -49,12 +16,14 @@ const Profile = () => {
             <img src={profile.avatar_url} alt='avatar' />
           </div>
 
-          <p className='card-text'>Họ tên: {profile.full_name}</p>
+          <p className='card-text'>Họ tên: {profile.fullName}</p>
           <p className='card-text'>Email: {profile.email}</p>
           <p className='card-text'>Số điện thoại: {profile.phone}</p>
           <p className='card-text'>Địa chỉ: {profile.address}</p>
-          <p className='card-text'>Ngày sinh: {profile.date_of_birth}</p>
-          <p className='card-text'>Giới tính: {profile.gender}</p>
+          <p className='card-text'>Ngày sinh: {profile.dateOfBirth}</p>
+          <p className='card-text'>
+            Giới tính: {profile.gender == 'MALE' ? 'Nam' : 'Nữ'}
+          </p>
         </div>
 
         <div className='card-body' style={{ width: '60%' }}>
@@ -62,19 +31,24 @@ const Profile = () => {
           <table className='table'>
             <thead>
               <tr>
-                <th className='center'>#</th>
+                <th className='center'>STT</th>
                 <th className='center'>Tên tour</th>
                 <th className='center'>Ngày đặt</th>
                 <th className='center'>Giá tiền</th>
               </tr>
             </thead>
             <tbody>
-              {profile.bookedTours.map((tour) => (
+              {bookedTours.map((tour, index) => (
                 <tr key={tour.id}>
-                  <td className='id'>{tour.id}</td>
-                  <td>{tour.name}</td>
-                  <td>{tour.date}</td>
-                  <td>{tour.price}</td>
+                  <td className='id'>{index + 1}</td>
+                  <td>{tour.name || 'abc'}</td>
+                  <td>
+                    {new Date(tour.bookTime).toLocaleString('vi-VN', {
+                      dateStyle: 'short',
+                      timeStyle: 'medium',
+                    })}
+                  </td>
+                  <td>{tour.totalPrice}</td>
                 </tr>
               ))}
             </tbody>

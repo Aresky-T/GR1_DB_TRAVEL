@@ -111,7 +111,7 @@ CREATE TABLE
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         `full_name` VARCHAR(100) NOT NULL,
         `avatar_url` VARCHAR(255) NOT NULL,
-        `birthDate` DATE NOT NULL,
+        `birth_date` DATE NOT NULL,
         `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
         `description` VARCHAR(255) NOT NULL,
         `phone` VARCHAR(20) NOT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE
         `status` ENUM(
             'NOT_PAY',
             'PAY_UP',
-            'REJECTED',
+            'REJECTED'
         ) NOT NULL DEFAULT 'NOT_PAY',
         `account_id` INT NOT NULL,
         `tour_id` INT NOT NULL,
