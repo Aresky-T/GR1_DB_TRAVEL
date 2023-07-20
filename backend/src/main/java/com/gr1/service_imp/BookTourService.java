@@ -63,7 +63,7 @@ public class BookTourService implements IBookTourService {
         Tour tour = tourService.findById(tourId);
         Optional<BookedTour> optional = bookTourRepository.findByTourAndAccount(tour, account);
         if(optional.isEmpty()){
-            throw new CustomException("TourId không hợp lệ");
+            throw new CustomException("Tour này chưa được đặt");
         }
         return optional.get();
     }
@@ -127,5 +127,10 @@ public class BookTourService implements IBookTourService {
         }
         bookedTour.setStatus(status);
         bookTourRepository.save(bookedTour);
+    }
+
+    @Override
+    public Boolean isBookedTourByUser (Account account, Tour tour) {
+        return bookTourRepository.existByAccountAndTour(account, tour);
     }
 }

@@ -69,19 +69,19 @@ const TourInfo = ({tour, bookingFormik}) => {
                         <p className="ts__price__type">
                             Người lớn
                         </p>
-                        <span>{bookingFormik.values.adultNumber} x {tour?.price1.toLocaleString('en-US')}₫</span>
+                        <span>{bookingFormik.values.adultNumber} x {tour.price1?.toLocaleString('en-US')}₫</span>
                     </div>
                     <div className="ts__price__item">
                         <p className="ts__price__type">
                             Trẻ em
                         </p>
-                        <span>{bookingFormik.values.childrenNumber} x {tour?.price2.toLocaleString('en-US')}₫</span>
+                        <span>{bookingFormik.values.childrenNumber} x {tour.price2?.toLocaleString('en-US')}₫</span>
                     </div>
                     <div className="ts__price__item">
                         <p className="ts__price__type">
                             Em bé
                         </p>
-                        <span>{bookingFormik.values.babyNumber} x {tour?.price3.toLocaleString('en-US')}₫</span>
+                        <span>{bookingFormik.values.babyNumber} x {tour.price3?.toLocaleString('en-US')}₫</span>
                     </div>
                 </div>
             </div>

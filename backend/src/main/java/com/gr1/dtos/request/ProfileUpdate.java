@@ -2,8 +2,7 @@ package com.gr1.dtos.request;
 
 import java.util.Date;
 
-import lombok.NonNull;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.gr1.entity.EGender;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ public class ProfileUpdate {
     private String fullName;
     private String address;
     private String phone;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
-    private String gender;
+    private EGender gender;
 }

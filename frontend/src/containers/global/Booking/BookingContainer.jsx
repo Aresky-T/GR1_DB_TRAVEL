@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Booking from '../../../components/global/Booking/Booking'
-import {useNavigate, useParams} from 'react-router-dom';
-import {useFormik} from 'formik';
-import {useDispatch, useSelector} from 'react-redux';
-import {authSelector} from '../../../redux/selector';
-import {ROUTE} from '../../../constant/route';
-import {errorAlert, successAlert, warningAlertNoCancel, warningAlertWithCancel} from '../../../config/sweetAlertConfig';
-import {bookTourForUserApi, getBookedTourForUserApi} from '../../../api/user/booking.api';
-import {offLoading} from '../../../redux/slices/loading.slice';
-import {customToast} from "../../../toaster";
-import {getTourByTourCodeApi} from '../../../api/global/tours.api';
-import {ROLE} from '../../../constant/role';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { authSelector } from '../../../redux/selector';
+import { ROUTE } from '../../../constant/route';
+import { errorAlert, successAlert, warningAlertNoCancel, warningAlertWithCancel } from '../../../config/sweetAlertConfig';
+import { bookTourForUserApi, checkTourIsBookedByUser } from '../../../api/user/booking.api';
+import { offLoading } from '../../../redux/slices/loading.slice';
+import { customToast } from "../../../toaster";
+import { getTourByTourCodeApi } from '../../../api/global/tours.api';
+import { ROLE } from '../../../constant/role';
 import { validateBooking } from '../../../validation';
 
 const initTourist = {
@@ -20,9 +20,9 @@ const initTourist = {
 }
 
 const BookingContainer = () => {
-    const [tour, setTour] = useState();
+    const [tour, setTour] = useState({});
     const param = useParams();
-    const account = useSelector(authSelector)
+    const { accessToken, role } = useSelector(authSelector)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ const BookingContainer = () => {
         },
         onSubmit: values => {
             values.touristList = [...values.adults, ...values.children, ...values.babies]
-            if (account.accessToken && account.role === ROLE.USER) {
+            if (accessToken && role === ROLE.USER) {
                 validateBooking.validate(values)
                     .then((data) => {
                         console.log(data)
@@ -57,7 +57,7 @@ const BookingContainer = () => {
                             fullName, email, phone, address,
                             adultNumber, childrenNumber, babyNumber, note,
                             touristList, tourId
-                        }, account.accessToken, dispatch)
+                        }, accessToken, dispatch)
                             .then(res => {
                                 dispatch(offLoading());
                                 console.log(res.data)
@@ -77,10 +77,10 @@ const BookingContainer = () => {
                     })
                     .catch(err => {
                         console.log(err);
-                        warningAlertNoCancel("Cảnh báo", "Hãy nhập đầy đủ thông tin người đại diện và khách hàng", "OK");
+                        warningAlertNoCancel("Cảnh báo", "Hãy nhập đầy đủ thông tin người đại diện và khách hàng!", "OK");
                     })
             } else {
-                warningAlertWithCancel("Cảnh báo đăng nhập", "Quý khách vui lòng đăng nhập trước khi đặt tour", "Đăng nhập", "Để sau")
+                warningAlertWithCancel("Cảnh báo đăng nhập", "Quý khách vui lòng đăng nhập trước khi đặt tour!", "Đăng nhập", "Để sau")
                     .then((res) => {
                         if (res.isConfirmed) {
                             navigate(ROUTE.LOGIN)
@@ -142,7 +142,7 @@ const BookingContainer = () => {
         if (typeof (adultNumber) === "number" && adultNumber > 0) {
             for (let i = 1; i <= adultNumber; i++) {
                 if (bookingFormik.values.adults.length < i) {
-                    adults.push({...initTourist})
+                    adults.push({ ...initTourist })
                 }
 
                 if (bookingFormik.values.adults.length > adultNumber) {
@@ -154,7 +154,7 @@ const BookingContainer = () => {
         if (typeof (childrenNumber) === "number" && childrenNumber >= 0) {
             for (let i = 0; i <= childrenNumber; i++) {
                 if (bookingFormik.values.children.length < i) {
-                    children.push({...initTourist})
+                    children.push({ ...initTourist })
                 }
 
                 if (bookingFormik.values.children.length > childrenNumber) {
@@ -166,7 +166,7 @@ const BookingContainer = () => {
         if (typeof (babyNumber) === "number" && babyNumber >= 0) {
             for (let i = 0; i <= babyNumber; i++) {
                 if (bookingFormik.values.babies.length < i) {
-                    babies.push({...initTourist})
+                    babies.push({ ...initTourist })
                 }
 
                 if (bookingFormik.values.babies.length > babyNumber) {
@@ -203,22 +203,25 @@ const BookingContainer = () => {
     }, [tour])
 
     useEffect(() => {
-        if (tour && tour.id && account.accessToken) {
-            getBookedTourForUserApi(tour.id, account.accessToken)
+        if (tour.id && accessToken) {
+            checkTourIsBookedByUser(accessToken, tour.id)
                 .then(res => {
-                    console.log(res)
-                    warningAlertNoCancel("Cảnh báo", "Quý khách đã đặt tour này rồi, không thể đặt lại", "Trang chủ")
-                        .then(res => {
-                            if (res.isConfirmed) {
-                                navigate(ROUTE.HOME);
-                            }
-                        })
+                    const bool = res.data;
+                    if (bool) {
+                        warningAlertNoCancel("Cảnh báo", "Quý khách đã đặt tour này rồi, không thể đặt lại", "Trang chủ")
+                            .then(res => {
+                                if (res.isConfirmed) {
+                                    navigate(ROUTE.HOME);
+                                }
+                            })
+                    }
                 })
                 .catch(err => {
+                    console.log(err)
                 })
         }
         //eslint-disable-next-line
-    }, [tour, account])
+    }, [tour, accessToken])
 
     return (
         <Booking

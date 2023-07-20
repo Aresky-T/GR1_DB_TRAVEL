@@ -66,6 +66,7 @@ public class AccountService implements IAccountService {
         return accountRepository.existsByEmail(email);
     }
 
+    @Transactional
     @Override
     public Account saveOrUpdate (Account account) {
         return accountRepository.save(account);

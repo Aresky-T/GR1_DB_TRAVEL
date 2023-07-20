@@ -46,11 +46,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUpUser(@RequestBody SignUpForm form) {
         if(accountService.existsByUsername(form.getUsername())){
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username id already"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username already exists"));
         }
 
         if (accountService.existsByEmail(form.getEmail())){
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email already exists"));
         }
 
         Account account = new Account();
@@ -60,7 +60,7 @@ public class AuthController {
         account.setStatus(EStatus.ACTIVE);
         account.setRole(ERole.USER);
         Account accountResponse = accountService.saveOrUpdate(account);
-        profileService.addProfile(accountResponse.getUsername());
+        profileService.addProfile(accountResponse);
         return new ResponseEntity<>("Sign up success", HttpStatus.OK);
     }
 

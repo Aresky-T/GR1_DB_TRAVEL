@@ -5,13 +5,11 @@ import com.gr1.dtos.request.CancelBookedTourForm;
 import com.gr1.dtos.request.ChangeStatusBookedTour;
 import com.gr1.dtos.response.BookedTourResponse;
 import com.gr1.email.IEmailService;
-import com.gr1.entity.Account;
-import com.gr1.entity.BookedTour;
-import com.gr1.entity.EBookedTour;
-import com.gr1.entity.RequestCancelBookedTour;
+import com.gr1.entity.*;
 import com.gr1.service.IAccountService;
 import com.gr1.service.IBookTourService;
 import com.gr1.service.IRequestService;
+import com.gr1.service.ITourService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,8 @@ public class BookTourController {
     private IBookTourService bookTourService;
     @Autowired
     private IAccountService accountService;
+    @Autowired
+    private ITourService tourService;
     @Autowired
     private IRequestService requestService;
     @Autowired
@@ -118,5 +118,15 @@ public class BookTourController {
         EBookedTour status = form.getStatus();
         bookTourService.changeStatusBookedTour(bookedTour, status);
         return ResponseEntity.ok("success");
+    }
+
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/is-booked-tour-by-user/{tourId}")
+    public ResponseEntity<?> isBookedTourByUser(Authentication authentication, @PathVariable Integer tourId) {
+        String username = authentication.getName();
+        Account account = accountService.findByUsername(username);
+        Tour tour = tourService.findById(tourId);
+        Boolean isBookedTour = bookTourService.isBookedTourByUser(account, tour);
+        return ResponseEntity.ok(isBookedTour);
     }
 }

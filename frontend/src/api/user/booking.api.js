@@ -22,3 +22,7 @@ export const getBookedTourForUserApi = (tourId, token) => {
 export const sendRequestCancelBookedTourApi = (form, token) => {
     return axios.post(`${baseURL}/request-cancel-booked-tour/send`, form, configAPI(token));
 }
+
+export const checkTourIsBookedByUser = (token, tourId) => {
+    return axios.get(`${baseURL}/is-booked-tour-by-user/${tourId}`, configAPI(token));
+}

@@ -13,4 +13,12 @@ public class ProfileResponse {
     private String phone;
     private String dateOfBirth;
     private String gender;
+    private AccountDTO account;
+
+    @Data
+    @NoArgsConstructor
+    public static class AccountDTO {
+        private String username;
+        private String email;
+    }
 }

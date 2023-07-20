@@ -6,10 +6,9 @@ import com.gr1.entity.EGender;
 import com.gr1.entity.Profile;
 import com.gr1.exception.CustomException;
 import com.gr1.exception.ProfileException;
-import com.gr1.repository.AccountRepository;
 import com.gr1.repository.ProfileRepository;
+import com.gr1.service.IAccountService;
 import com.gr1.service.IProfileService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -23,67 +22,37 @@ public class ProfileService implements IProfileService {
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private AccountRepository accountRepository;
+    private IAccountService accountService;
 
     @Override
-    public Optional<Profile> findByAccount (Account account) {
-        return profileRepository.findByAccount(account);
-    }
-
-    @Override
-    public Boolean existsByAccountId (int accountId) {
-        boolean accountExists = accountRepository.existsById(accountId);
-        if (accountExists) {
-            var acc = accountRepository.findById(accountId);
-            return profileRepository.existsByAccount(acc.get());
+    public Profile findByAccount (Account account) {
+        Optional<Profile> optional = profileRepository.findByAccount(account);
+        if(optional.isEmpty()) {
+            throw new ProfileException("Profile not found by accountId = " + account.getId());
         }
-        return false;
+        return optional.get();
     }
 
     @Override
-    public Profile findByAccountUsername(String username) {
-        Optional<Account> optional = accountRepository.findByUsername(username);
-        if (optional.isPresent()) {
-            Optional<Profile> profileOptional = profileRepository.findByAccount(optional.get());
-            return profileOptional.orElse(null);
-        }
-        return null;
-    }
-
-    @Override
-    public void addProfile(String username) throws ProfileException {
-        Profile profile = new Profile();
-        Optional<Account> optional = accountRepository.findByUsername(username);
-        if (optional.isPresent()){
-            Account account = optional.get();
+    public void addProfile(Account account) {
+        Optional<Profile> optional = profileRepository.findByAccount(account);
+        if (optional.isEmpty()){
+            Profile profile = new Profile();
             profile.setAccount(account);
             profileRepository.save(profile);
-        } else {
-            throw new ProfileException("username is not exists");
         }
     }
 
     @Override
-    public Profile updateProfile (ProfileUpdate form, String username) throws ProfileException {
-        Optional<Account> optional = accountRepository.findByUsername(username);
-        if (optional.isPresent()){
-            Account account = optional.get();
-            Optional<Profile> optionalProfile = profileRepository.findByAccount(account);
-            if(optionalProfile.isPresent()){
-                Profile profile = optionalProfile.get();
-                profile.setAddress(form.getAddress());
-                profile.setAvatarUrl(form.getAvatarUrl());
-                profile.setPhone(form.getPhone());
-                profile.setFullName(form.getFullName());
-                profile.setDateOfBirth(form.getDateOfBirth());
-                setGenderProfile(profile, form.getGender());
-                return profileRepository.save(profile);
-            } else {
-                throw new ProfileException("Profile is not exist");
-            }
-        } else {
-            throw new ProfileException("Invalid username");
-        }
+    public Profile updateProfile (ProfileUpdate form, Account account) throws ProfileException {
+            Profile profile = findByAccount(account);
+            profile.setAddress(form.getAddress());
+            profile.setAvatarUrl(form.getAvatarUrl());
+            profile.setPhone(form.getPhone());
+            profile.setFullName(form.getFullName());
+            profile.setDateOfBirth(form.getDateOfBirth());
+            profile.setGender(form.getGender());
+            return profileRepository.save(profile);
     }
 
     @Override
@@ -93,6 +62,12 @@ public class ProfileService implements IProfileService {
             if(Objects.isNull(field)){
                 throw new CustomException("Field not found: " + "[" + key + "]");
             }
+
+            if(key.equalsIgnoreCase("gender")){
+                setGenderProfile(profile, (String) value);
+                return;
+            }
+
             ReflectionUtils.makeAccessible(field);
             ReflectionUtils.setField(field, profile, value);
         });

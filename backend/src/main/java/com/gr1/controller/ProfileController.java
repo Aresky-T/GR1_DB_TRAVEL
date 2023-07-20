@@ -2,7 +2,6 @@ package com.gr1.controller;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import com.gr1.exception.ProfileException;
 import org.modelmapper.ModelMapper;
@@ -15,12 +14,9 @@ import com.gr1.dtos.request.ProfileUpdate;
 import com.gr1.dtos.response.MessageResponse;
 import com.gr1.dtos.response.ProfileResponse;
 import com.gr1.entity.Account;
-import com.gr1.entity.EGender;
 import com.gr1.entity.Profile;
 import com.gr1.service.IAccountService;
 import com.gr1.service.IProfileService;
-
-import javax.validation.constraints.Null;
 
 @CrossOrigin("*")
 @RestController
@@ -39,18 +35,7 @@ public class ProfileController {
     public ResponseEntity<?> getProfile(Authentication authentication) {
         String username = authentication.getName();
         Account account = accountService.findByUsername(username);
-        if (account == null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Invalid account"));
-        }
-        Optional<Profile> result = profileService.findByAccount(account);
-        if (result.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("No profile for account_id = " + account.getId()));
-        }
-        var profile = result.get();
-        if (profile.getAvatarUrl() == null || profile.getDateOfBirth() == null || profile.getFullName() == null
-                || profile.getGender() == null || profile.getPhone() == null) {
-            return  ResponseEntity.badRequest().body(new MessageResponse("Please update your profile"));
-        }
+        var profile = profileService.findByAccount(account);
         ProfileResponse profileDTO = modelMapper.map(profile, ProfileResponse.class);
         return ResponseEntity.ok(profileDTO);
     }
@@ -59,7 +44,8 @@ public class ProfileController {
     public ResponseEntity<?> update(@RequestBody ProfileUpdate form, Authentication authentication) {
         try {
             String username = authentication.getName();
-            Profile profile = profileService.updateProfile(form, username);
+            Account account = accountService.findByUsername(username);
+            Profile profile = profileService.updateProfile(form, account);
             ProfileResponse profileDTO = modelMapper.map(profile, ProfileResponse.class);
             return ResponseEntity.ok(profileDTO);
         } catch (ProfileException ex) {
@@ -72,10 +58,8 @@ public class ProfileController {
     @PatchMapping()
     public ResponseEntity<?> updateByFields(@RequestBody Map<String, Object> fields, Authentication authentication) {
         String username = authentication.getName();
-        Profile profile = profileService.findByAccountUsername(username);
-        if(Objects.isNull(profile)){
-           return ResponseEntity.badRequest().body(new MessageResponse("profile is not exist"));
-        }
+        Account account = accountService.findByUsername(username);
+        Profile profile = profileService.findByAccount(account);
         profileService.updateProfileByFields(profile, fields);
         return ResponseEntity.ok("success");
     }
