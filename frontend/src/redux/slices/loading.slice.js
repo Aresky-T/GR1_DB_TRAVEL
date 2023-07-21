@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const loadingSlice = createSlice({
     name: 'loading',
     initialState: {
-        status: false
+        status: false,
+        ellipsis: false,
     },
     reducers: {
         onLoading: (state) => {
@@ -11,9 +12,15 @@ const loadingSlice = createSlice({
         },
         offLoading: (state) => {
             state.status = false;
+        },
+        onEllipsis: (state) => {
+            state.ellipsis = true;
+        },
+        offEllipsis: (state) => {
+            state.ellipsis = false;
         }
     }
 })
 
-export const { offLoading, onLoading } = loadingSlice.actions;
+export const { offLoading, onLoading, offEllipsis, onEllipsis } = loadingSlice.actions;
 export default loadingSlice.reducer;

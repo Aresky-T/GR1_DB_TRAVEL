@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProfileUpdate {
-    private String avatarUrl;
     private String fullName;
     private String address;
     private String phone;

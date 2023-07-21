@@ -47,7 +47,6 @@ public class ProfileService implements IProfileService {
     public Profile updateProfile (ProfileUpdate form, Account account) throws ProfileException {
             Profile profile = findByAccount(account);
             profile.setAddress(form.getAddress());
-            profile.setAvatarUrl(form.getAvatarUrl());
             profile.setPhone(form.getPhone());
             profile.setFullName(form.getFullName());
             profile.setDateOfBirth(form.getDateOfBirth());

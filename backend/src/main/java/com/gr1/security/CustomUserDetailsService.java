@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
         Optional<Account> optional = accountRepository.findByUsername(username);
         if (optional.isEmpty()){
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new UsernameNotFoundException("Không tìm thấy tài khoản có tên đăng nhập là: " + username);
         }
         Account account = optional.get();
         return CustomUserDetails.buildUserDetails(account);

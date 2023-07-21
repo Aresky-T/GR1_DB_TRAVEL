@@ -21,6 +21,8 @@ public class BookedTourResponse {
     private String note;
     private Integer totalPrice;
     private Integer tourId;
+    private String tourTitle;
+    private String tourTourCode;
     private EBookedTour status;
     private String bookTime;
     private List<TouristListDTO> touristList;
