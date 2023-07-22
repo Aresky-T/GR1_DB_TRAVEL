@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfileContainer from '../../containers/user/ProfileContainer'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 const ProfilePage = () => {
   return (

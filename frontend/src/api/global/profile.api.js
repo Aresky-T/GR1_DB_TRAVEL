@@ -12,3 +12,10 @@ export const getProfileApi = async (token) => {
 export const updateProfileApi = async (token, form) => {
     return await axios.put(profileURL, form, configAPI(token));
 }
+
+export const updateAvatarApi = (token, newAvatar) => {
+    return axios.patch(`${profileURL}/avatar`, null, {
+        headers: configAPI(token).headers,
+        params: { newAvatar: newAvatar },
+    })
+}

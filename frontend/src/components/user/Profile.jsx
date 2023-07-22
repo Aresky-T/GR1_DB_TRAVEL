@@ -2,7 +2,7 @@ import React from 'react'
 import UserInfo from './Profile/UserInfo'
 import BookedTourList from './Profile/BookedTourList'
 
-const Profile = ({ profile, bookedTours, formik }) => {
+const Profile = ({ profile, bookedTours, formik, setMessage }) => {
   return (
     <div className='main-session profile-container'>
       {/* <div className='card'>
@@ -51,8 +51,8 @@ const Profile = ({ profile, bookedTours, formik }) => {
           </table>
         </div>
       </div> */}
-      <UserInfo profile={profile} formik={formik} />
-      <BookedTourList bookedTours={bookedTours}/>
+      <UserInfo profile={profile} formik={formik} setMessage={setMessage} />
+      <BookedTourList bookedTours={bookedTours} />
     </div>
   )
 }

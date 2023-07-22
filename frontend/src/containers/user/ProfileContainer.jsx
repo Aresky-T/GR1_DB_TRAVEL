@@ -78,6 +78,7 @@ const ProfileContainer = () => {
       bookedTours={bookedTours}
       formik={formik}
       profile={profile}
+      setMessage={setMessage}
     />
   )
 }

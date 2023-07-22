@@ -1,15 +1,27 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import defaultAvatar from '../../../assets/image/avatar.jpg'
 import ProfileField from './ProfileField'
 import ProfileFieldSelect from './ProfileFieldSelect'
+import UpdateAvatarModal from './UpdateAvatarModal'
 
 const initGenders = [
     { id: 1, name: "Nam", value: "MALE" },
     { id: 2, name: "Nữ", value: "FEMALE" },
 ]
 
-const UserInfo = ({ profile, formik }) => {
+const UserInfo = ({ profile, formik, setMessage }) => {
+    const [isShowModal, setIsShowModal] = useState(false);
     const genderOptions = useRef(initGenders);
+    const avatarRef = useRef();
+
+    const handleShowModal = () => {
+        setIsShowModal(true);
+    }
+
+    const handleCloseModal = () => {
+        setIsShowModal(false);
+    }
+
     const renderGender = (gender) => {
         let g;
         switch (gender) {
@@ -30,9 +42,22 @@ const UserInfo = ({ profile, formik }) => {
             <div className="user-info__1">
                 <div className="user-info__avatar">
                     <img src={profile.avatarUrl || defaultAvatar} alt="" />
-                    <div className="user-info__change-avatar">
+                    <div className="user-info__change-avatar"
+                        onClick={handleShowModal}
+                    >
                         Thay đổi
                     </div>
+                    <input type="file" name="" id=""
+                        ref={avatarRef}
+                        multiple={false}
+                        style={{
+                            display: "none"
+                        }}
+                    />
+                    {isShowModal && <UpdateAvatarModal
+                        handleCloseModal={handleCloseModal}
+                        setMessage={setMessage}
+                    />}
                 </div>
                 {profile.account &&
                     <div className="user-info__account">
