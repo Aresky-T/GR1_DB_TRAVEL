@@ -141,13 +141,13 @@ const UpdateAvatarModal = ({ handleCloseModal, setMessage }) => {
                         toast.success('Cập nhật ảnh đại diện thành công thành công!')
                     })
                     .catch(err => {
-                        console.log(err);
                         handleCloseModal();
                         toast.error('Cập nhật ảnh đại diện thất bại!')
                     })
             })
             .catch(err => {
-                console.log(err);
+                handleCloseModal();
+                toast.error('Cập nhật ảnh đại diện thất bại!')
                 dispatch(offLoading());
             })
     }
@@ -165,7 +165,7 @@ const UpdateAvatarModal = ({ handleCloseModal, setMessage }) => {
                     <div className="update-avatar__choose-file"
                         onClick={handleClickChooseFile}
                     >
-                        Choose file
+                        Click để chọn file
                     </div>
                 }
                 <input type="file" name="" id=""
