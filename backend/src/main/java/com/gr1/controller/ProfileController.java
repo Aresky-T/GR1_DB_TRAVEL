@@ -7,6 +7,7 @@ import com.gr1.exception.ProfileException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,14 @@ public class ProfileController {
         Account account = accountService.findByUsername(username);
         Profile profile = profileService.findByAccount(account);
         profileService.updateProfileByFields(profile, fields);
+        return ResponseEntity.ok("success");
+    }
+
+    @PatchMapping("/avatar")
+    public ResponseEntity<?> updateAvatar(@RequestParam String newAvatar, Authentication authentication){
+        String username = authentication.getName();
+        Account account = accountService.findByUsername(username);
+        profileService.updateAvatar(account, newAvatar);
         return ResponseEntity.ok("success");
     }
 }

@@ -11,6 +11,7 @@ import com.gr1.service.IAccountService;
 import com.gr1.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -70,6 +71,14 @@ public class ProfileService implements IProfileService {
             ReflectionUtils.makeAccessible(field);
             ReflectionUtils.setField(field, profile, value);
         });
+        profileRepository.save(profile);
+    }
+
+    @Transactional
+    @Override
+    public void updateAvatar (Account account, String newAvatar){
+        Profile profile = findByAccount(account);
+        profile.setAvatarUrl(newAvatar);
         profileRepository.save(profile);
     }
 

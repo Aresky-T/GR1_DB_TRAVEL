@@ -11,4 +11,5 @@ public interface IProfileService {
     void addProfile(Account account);
     Profile updateProfile(ProfileUpdate form, Account account);
     void updateProfileByFields (Profile profile, Map<String, Object> fields);
+    void updateAvatar (Account account, String newAvatar);
 }
