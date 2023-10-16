@@ -52,4 +52,7 @@ public class Account implements Serializable {
 
     @OneToMany(mappedBy = "account")
     private List<BookedTour> bookedTourList;
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    private List<Review> reviewList;
 }

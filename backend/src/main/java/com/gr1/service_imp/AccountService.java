@@ -1,12 +1,11 @@
 package com.gr1.service_imp;
 
 import com.gr1.dtos.request.UpdatePasswordForm;
-import com.gr1.entity.Account;
-import com.gr1.entity.ERole;
-import com.gr1.entity.EStatus;
+import com.gr1.entity.*;
 import com.gr1.exception.AccountException;
 import com.gr1.jwt.JwtUtil;
 import com.gr1.repository.AccountRepository;
+import com.gr1.repository.EmployeeRepository;
 import com.gr1.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +23,8 @@ public class AccountService implements IAccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -83,15 +84,17 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void upgradeRole (Integer accountId) {
+    public void upgradeRoleToEmployee (Integer accountId) {
         Optional<Account> optional = accountRepository.findById(accountId);
         if (optional.isPresent()) {
             Account account = optional.get();
-            if (account.getRole() == ERole.ADMIN){
-                throw new AccountException("This account is already an admin");
+            if (account.getRole() == ERole.EMPLOYEE){
+                throw new AccountException("This account is already an employee");
             }
-            account.setRole(ERole.ADMIN);
+            account.setRole(ERole.EMPLOYEE);
+            Employee employee = new Employee(EEmployeeStatus.OFFLINE, account);
             accountRepository.save(account);
+            employeeRepository.save(employee);
         } else {
             throw new AccountException("Invalid account");
         }

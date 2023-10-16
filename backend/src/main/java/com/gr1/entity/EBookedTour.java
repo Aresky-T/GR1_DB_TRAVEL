@@ -1,5 +1,8 @@
 package com.gr1.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum EBookedTour {
     NOT_PAY("Chưa thanh toán"),
     PAY_UP("Đã thanh toán"),
@@ -11,7 +14,4 @@ public enum EBookedTour {
         this.status = status;
     }
 
-    public String getStatus(){
-        return status;
-    }
 }

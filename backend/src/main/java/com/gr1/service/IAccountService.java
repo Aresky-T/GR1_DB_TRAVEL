@@ -16,7 +16,7 @@ public interface IAccountService {
     Account saveOrUpdate(Account account);
     List<Account> findAllUsers();
     Page<Account> findAllUsers(Pageable pageable);
-    void upgradeRole(Integer accountId);
+    void upgradeRoleToEmployee(Integer accountId);
     void lockAccount(Integer accountId);
     void activateAccount(Integer accountId);
     void deleteAccount(Integer accountId);

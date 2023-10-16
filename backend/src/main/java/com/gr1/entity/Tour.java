@@ -3,6 +3,7 @@ package com.gr1.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.Persistent;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -87,4 +88,7 @@ public class Tour implements Serializable {
 
     @OneToMany(mappedBy = "tour")
     private List<BookedTour> tourInfoList;
+
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
 }

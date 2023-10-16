@@ -34,12 +34,6 @@ public class TouristAttractionController {
         return ResponseEntity.ok(dtos);
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody TouristAttRequest touristAttRequest){
-        touristAttractionService.createTouristAttraction(touristAttRequest, touristAttRequest.getListContents());
-        return ResponseEntity.ok("success");
-    }
-
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllTouristAttractions(Pageable pageable){
         Page<TouristAttraction> touristAttractions = touristAttractionService.findAll(pageable);
@@ -62,12 +56,21 @@ public class TouristAttractionController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody TouristAttRequest touristAttRequest){
+        touristAttractionService.createTouristAttraction(touristAttRequest, touristAttRequest.getListContents());
+        return ResponseEntity.ok("success");
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping()
     public ResponseEntity<?> updateTouristAttraction(@RequestBody TourAttBlogContentUpdateRequest request){
         touristAttractionService.updateTouristAttraction(request);
         return ResponseEntity.ok("success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTouristAttraction(@PathVariable Integer id){
         touristAttractionService.deleteTouristAttraction(id);

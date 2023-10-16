@@ -21,6 +21,7 @@ import com.gr1.service.IProfileService;
 
 @CrossOrigin("*")
 @RestController
+@PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'EMPLOYEE')")
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
 

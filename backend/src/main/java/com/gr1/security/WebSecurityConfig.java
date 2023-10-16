@@ -42,7 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             // for Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+
+            // for rest controller
+            "/api/v1/auth/**",
+            "/api/v1/account/forgot-password",
+            "/api/v1/reviews/tour/{tourId}"
     };
 
     @Bean
@@ -60,20 +65,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/**").permitAll()
+//                .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/api/v1/profile/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/account/update-password").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST, "/api/v1/account/forgot-password").permitAll()
+//                .antMatchers("/api/v1/profile/**").hasAnyAuthority("ADMIN", "USER", "EMPLOYEE")
+//                .antMatchers(HttpMethod.PUT, "/api/v1/account/update-password").hasAnyAuthority("ADMIN", "USER")
+//                .antMatchers(HttpMethod.POST, "/api/v1/account/forgot-password").permitAll()
                 .antMatchers("/api/v1/account/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/tour_guide/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/v1/tourist-attraction/**").permitAll()
-                .antMatchers("/api/v1/tourist-attraction/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/v1/tours/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/v1/tours/**").hasAuthority("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/api/v1/tours/**").hasAuthority("ADMIN")
 //                .antMatchers(HttpMethod.PATCH, "/api/v1/tours/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/v1/files/**").hasAnyAuthority("ADMIN", "USER")
+//                .antMatchers(HttpMethod.POST, "/api/v1/files/**").hasAnyAuthority("ADMIN", "USER", "EMPLOYEE")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

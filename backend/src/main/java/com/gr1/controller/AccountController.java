@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,9 +36,9 @@ public class AccountController {
         return ResponseEntity.ok(dtos);
     }
 
-    @PutMapping("/upgrade-to-admin")
-    public ResponseEntity<?> upgradeRole(@RequestParam(name = "account_id") Integer accountId){
-        accountService.upgradeRole(accountId);
+    @PutMapping("/upgrade-to-employee")
+    public ResponseEntity<?> upgradeRoleToEmployee(@RequestParam(name = "account_id") Integer accountId){
+        accountService.upgradeRoleToEmployee(accountId);
         return ResponseEntity.ok("upgrade role success");
     }
 
@@ -59,6 +60,7 @@ public class AccountController {
         return ResponseEntity.ok("delete success");
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'EMPLOYEE')")
     @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordForm form, Authentication authentication){
         String username = authentication.getName();
