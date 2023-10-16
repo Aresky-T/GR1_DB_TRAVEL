@@ -87,8 +87,8 @@ public class Tour implements Serializable {
     private Date createdTime;
 
     @OneToMany(mappedBy = "tour")
-    private List<BookedTour> tourInfoList;
+    private List<BookedTour> bookedList;
 
-    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tour")
     private List<Review> reviewList;
 }
