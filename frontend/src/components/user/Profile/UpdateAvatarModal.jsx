@@ -122,11 +122,25 @@ const UpdateAvatarModal = ({ handleCloseModal, setMessage }) => {
 
     const handleChangeFile = (e) => {
         const file = e.target.files[0];
-        file.url = URL.createObjectURL(file);
-        setSelectedFile(file);
+        if (file) {
+            const fileType = file.name.split(".").pop().toLowerCase();
+            if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg' && fileType !== 'avif') {
+                toast.error('Chỉ cho phép tệp tin định dạng PNG, JPG, JPEG hoặc AVIF.');
+                e.target.value = null;
+                return;
+            }
+
+            file.url = URL.createObjectURL(file);
+            setSelectedFile(file);
+        }
     }
 
     const handleSubmit = () => {
+        if (!selectedFile) {
+            toast('Vui lòng chọn ảnh trước khi cập nhật!', { icon: "⚠️" })
+            return;
+        }
+
         dispatch(onLoading());
         uploadSingleFileApi(selectedFile)
             .then(res => {
@@ -172,6 +186,7 @@ const UpdateAvatarModal = ({ handleCloseModal, setMessage }) => {
                     style={{
                         display: "none"
                     }}
+                    accept='.png, .jpg, .jpeg, .avif'
                     ref={fileRef}
                     onChange={handleChangeFile}
                 />
