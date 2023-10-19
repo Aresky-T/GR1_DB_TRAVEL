@@ -1,6 +1,7 @@
 package com.gr1.service_imp;
 
 import com.gr1.entity.Account;
+import com.gr1.entity.EEmployeeStatus;
 import com.gr1.entity.Employee;
 import com.gr1.repository.EmployeeRepository;
 import com.gr1.service.IEmployeeService;
@@ -14,6 +15,11 @@ public class EmployeeService implements IEmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
+    public boolean existsOnlineEmployee () {
+        return employeeRepository.existsEmployeeByStatusIs(EEmployeeStatus.ONLINE);
+    }
+
+    @Override
     public Employee save (Employee employee) {
         return employeeRepository.save(employee);
     }
@@ -21,6 +27,11 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee findById (int id) {
         return employeeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Employee findByStatus (EEmployeeStatus status) {
+        return employeeRepository.findByStatus(status).orElse(null);
     }
 
     @Override

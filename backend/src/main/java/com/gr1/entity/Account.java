@@ -1,5 +1,6 @@
 package com.gr1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -50,9 +51,14 @@ public class Account implements Serializable {
     @Column(name = "`updated_time`", nullable = false)
     private Date updatedTime;
 
+    @OneToOne(mappedBy = "account")
+    private Profile profile;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<BookedTour> bookedTourList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<Review> reviewList;
 }

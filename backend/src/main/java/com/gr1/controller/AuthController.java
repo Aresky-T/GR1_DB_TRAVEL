@@ -97,8 +97,8 @@ public class AuthController {
 
     @GetMapping("/validate-token")
     public ResponseEntity<?> validateToken(@RequestParam String token){
-        accountService.validateJwt(token);
-        return ResponseEntity.ok("Valid");
+        boolean isValid = accountService.validateJwt(token);
+        return ResponseEntity.ok(isValid);
     }
 
     @GetMapping("/validate-account")

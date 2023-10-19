@@ -29,6 +29,7 @@ public class AccountController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllAccounts(Pageable pageable){
         Page<Account> entities = accountService.findAllUsers(pageable);
@@ -36,24 +37,28 @@ public class AccountController {
         return ResponseEntity.ok(dtos);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/upgrade-to-employee")
     public ResponseEntity<?> upgradeRoleToEmployee(@RequestParam(name = "account_id") Integer accountId){
         accountService.upgradeRoleToEmployee(accountId);
         return ResponseEntity.ok("upgrade role success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/lock-account/{id}")
     public ResponseEntity<?> lockAccount(@PathVariable Integer id){
         accountService.lockAccount(id);
         return ResponseEntity.ok("lock account success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/activate-account/{id}")
     public ResponseEntity<?> activeAccount(@PathVariable Integer id){
         accountService.activateAccount(id);
         return ResponseEntity.ok("lock account success");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAccount(@PathVariable Integer id){
         accountService.deleteAccount(id);

@@ -153,9 +153,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void validateJwt (String jwt) {
-        if (!jwtUtil.validateToken(jwt)){
-            throw new AccountException("Invalid");
-        }
+    public boolean validateJwt (String jwt) {
+        return jwtUtil.validateToken(jwt);
     }
 }

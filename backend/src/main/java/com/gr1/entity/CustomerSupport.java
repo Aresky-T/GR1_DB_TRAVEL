@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +29,7 @@ public class CustomerSupport implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "`type`", nullable = false)
     private ECustomerSupportType type;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    private List<Chat> chatList;
 }
