@@ -7,7 +7,6 @@ import com.gr1.dtos.response.MessageResponse;
 import com.gr1.entity.Account;
 import com.gr1.entity.ERole;
 import com.gr1.entity.EStatus;
-import com.gr1.exception.AccountException;
 import com.gr1.exception.CustomException;
 import com.gr1.jwt.JwtUtil;
 import com.gr1.security.CustomUserDetailsService;
@@ -16,6 +15,7 @@ import com.gr1.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -96,21 +96,19 @@ public class AuthController {
     }
 
     @GetMapping("/validate-token")
-    public ResponseEntity<?> validateToken(@RequestParam String token){
+    public ResponseEntity<Boolean> validateToken(@RequestParam String token){
         boolean isValid = accountService.validateJwt(token);
         return ResponseEntity.ok(isValid);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'EMPLOYEE')")
     @GetMapping("/validate-account")
-    public ResponseEntity<?> validateAccount(Authentication authentication){
-        if(authentication == null){
-            throw new AccountException("Tài khoản của bạn đã hết quyền truy cập, hãy đăng nhập lại!");
-        }
+    public ResponseEntity<Boolean> validateAccount(Authentication authentication){
         String username = authentication.getName();
         Account account = accountService.findByUsername(username);
         if(account.getStatus().equals(EStatus.BLOCKED)){
-            throw new AccountException("Tài khoản của bạn đã bị khóa, không thể tiếp tục truy cập!");
+            return ResponseEntity.ok(false);
         }
-        return ResponseEntity.ok("Valid");
+        return ResponseEntity.ok(true);
     }
 }
