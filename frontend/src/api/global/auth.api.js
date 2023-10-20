@@ -26,6 +26,6 @@ export const validateTokenApi = (accessToken) => {
     })
 }
 
-export const validateAccount = (accessToken) => {
+export const validateAccountApi = (accessToken) => {
     return axios.get(`${authURL}/validate-account`, configAPI(accessToken));
 }
