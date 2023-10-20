@@ -1,15 +1,14 @@
 import React from 'react'
 import BookingContainer from '../../containers/global/Booking/BookingContainer'
-import { Helmet } from 'react-helmet-async'
+import HelmetTitle from "../../components/helmet/HelmetTitle";
 
 const BookingPage = () => {
     return (
         <>
-            <Helmet>
-                <meta charSet='utf-8' />
-                <title>BK Travel - Đặt Tour</title>
-                <meta name="booking-page" content="BK travel application" />
-            </Helmet>
+            <HelmetTitle
+                title={"BK Travel - Đặt Tour"}
+                metaName={"meta-booking"}
+            />
             <BookingContainer />
         </>
     )

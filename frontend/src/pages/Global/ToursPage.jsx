@@ -1,15 +1,14 @@
 import React from 'react'
 import ToursContainer from '../../containers/global/Tour/ToursContainer'
-import { Helmet } from 'react-helmet-async'
+import HelmetTitle from "../../components/helmet/HelmetTitle";
 
 const TourPage = () => {
     return (
         <>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>BK Travel - Tour</title>
-                <meta name="tour-page" content="BK travel application" />
-            </Helmet>
+            <HelmetTitle
+                title={"BK Travel - Tour"}
+                metaName={"meta-tours"}
+            />
             <ToursContainer />
         </>
     )

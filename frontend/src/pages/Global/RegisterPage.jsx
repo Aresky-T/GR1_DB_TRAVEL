@@ -1,15 +1,14 @@
 import React from 'react'
 import RegisterContainer from '../../containers/global/Auth/RegisterContainer'
-import { Helmet } from 'react-helmet-async'
+import HelmetTitle from "../../components/helmet/HelmetTitle";
 
 const RegisterPage = () => {
     return (
         <>
-            <Helmet>
-                <meta charSet='utf-8' />
-                <title>BK Travel - Đăng ký</title>
-                <meta name="register-page" content="BK travel application" />
-            </Helmet>
+            <HelmetTitle
+                title={"BK Travel - Đăng ký"}
+                metaName={"meta-register"}
+            />
             <RegisterContainer />
         </>
     )

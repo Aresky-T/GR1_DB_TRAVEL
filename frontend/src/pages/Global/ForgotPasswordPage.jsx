@@ -1,14 +1,13 @@
-import { Helmet } from "react-helmet-async";
 import ForgotPasswordContainer from "../../containers/global/Auth/ForgotPasswordContainer";
+import HelmetTitle from "../../components/helmet/HelmetTitle";
 
 const ForgotPasswordPage = () => {
     return (
         <>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>BK Travel - Lấy lại mật khẩu</title>
-                <meta name="forgot-password-page" content="BK travel application" />
-            </Helmet>
+            <HelmetTitle
+                title={"BK Travel - Lấy lại mật khẩu"}
+                metaName={"meta-forgot-password"}
+            />
             <ForgotPasswordContainer />
         </>
     )

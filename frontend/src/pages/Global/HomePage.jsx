@@ -1,15 +1,14 @@
 import React from 'react'
 import HomeContainer from '../../containers/global/Home/HomeContainer'
-import { Helmet } from 'react-helmet-async'
+import HelmetTitle from "../../components/helmet/HelmetTitle";
 
 const HomePage = () => {
     return (
         <>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>BK Travel - Trang chủ</title>
-                <meta name="home-page" content="Helmet application" />
-            </Helmet>
+            <HelmetTitle
+                title={"BK Travel - Trang chủ"}
+                metaName={"meta-home"}
+            />
             <HomeContainer />
         </>
     )
