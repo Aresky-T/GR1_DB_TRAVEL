@@ -1,7 +1,7 @@
 package com.gr1.service_imp;
 
 import com.gr1.entity.Chat;
-import com.gr1.entity.CustomerSupport;
+import com.gr1.entity.ChatBox;
 import com.gr1.repository.ChatRepository;
 import com.gr1.service.IChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,14 @@ public class ChatService implements IChatService {
         return chatRepository.save(chat);
     }
 
+    @Transactional
     @Override
-    public List<Chat> findAllByRoom (CustomerSupport room) {
-        return chatRepository.findAllByRoomIs(room);
+    public List<Chat> saveAll (List<Chat> chats) {
+        return chatRepository.saveAll(chats);
+    }
+
+    @Override
+    public List<Chat> findAllByChatBox (ChatBox chatBox) {
+        return chatRepository.findAllByChatBoxOrderBySentAtAsc(chatBox);
     }
 }

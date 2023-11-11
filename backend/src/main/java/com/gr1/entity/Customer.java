@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @Table(name = "Customer")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +22,37 @@ public class Customer implements Serializable {
     @Column(name = "status", nullable = false)
     private ECustomerStatus status;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "`type`", nullable = false)
-    private ECustomerType type;
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+
+    @OneToOne
+    @JoinColumn(name = "account_id", nullable = true, unique = true, foreignKey = @ForeignKey(name = "cus_fk_1"))
+    private Account account;
+
+    public Customer(String fullName, String email){
+        this.fullName = fullName;
+        this.email = email;
+        this.status = ECustomerStatus.ONLINE;
+    }
+
+    public Customer(String fullName, String email, ECustomerStatus status){
+        this.fullName = fullName;
+        this.email = email;
+        this.status = status;
+    }
+
+    public Customer(Account account){
+        this.fullName = account.getProfile().getFullName();
+        this.email = account.getEmail();
+    }
+
+    public Customer(Account account, ECustomerStatus status){
+        this.fullName = account.getProfile().getFullName();
+        this.email = account.getEmail();
+        this.status = status;
+        this.setAccount(account);
+    }
 }

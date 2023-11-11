@@ -2,15 +2,15 @@ package com.gr1.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "Customer_support")
+@MappedSuperclass
 public class CustomerSupport implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -26,10 +26,13 @@ public class CustomerSupport implements Serializable {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "`type`", nullable = false)
-    private ECustomerSupportType type;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
-    private List<Chat> chatList;
+    public CustomerSupport(Customer customer, Employee employee){
+        this.customer = customer;
+        this.employee = employee;
+    }
 }

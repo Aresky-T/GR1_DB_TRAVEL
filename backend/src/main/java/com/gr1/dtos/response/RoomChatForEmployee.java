@@ -9,24 +9,9 @@ import java.util.List;
 @NoArgsConstructor
 public class RoomChatForEmployee {
     private Integer id;
-    private Object customer;
+    private CustomerDTO customer;
+    private Integer newMessagesCount;
+    private ChatResponse latestChat;
+    private String createdAt;
     private List<ChatResponse> chatList;
-
-    @Data
-    @NoArgsConstructor
-    public static class CustomerDTO {
-        private Integer id;
-        private String status;
-        private String type;
-        private String fullName;
-        private String email;
-        private AccountDTO account;
-
-        @Data
-        @NoArgsConstructor
-        private static class AccountDTO {
-            private Integer id;
-            private String email;
-        }
-    }
 }

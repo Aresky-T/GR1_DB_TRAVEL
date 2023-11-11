@@ -47,6 +47,7 @@ public class EmployeeController {
                     .dateOfBirth(profile.getDateOfBirth())
                     .status(employee.getStatus().toString())
                     .accountId(account.getId())
+                    .accountEmail(account.getEmail())
                     .build();
 
         }

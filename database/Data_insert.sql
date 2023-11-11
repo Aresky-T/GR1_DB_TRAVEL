@@ -1,4 +1,4 @@
-USE `gr1_db_travel`;
+USE bk_travel_database;
 
 INSERT INTO `account`
 VALUES (
@@ -22,21 +22,21 @@ VALUES (
     ), (
         3,
         'aresky1105',
-        '$2a$10$q9VfMiIDuRWWISGQ/Pn6zOC1uYJiW6LQyCNV0vMZv8ssiENFezEfW',
+        '$2a$10$AYXWJRkjypcyhs/9U.r0X.zD6M9JIl9xNQ4mFA..Bp9FFIJNhZmlm',
         'tn6354103@gmail.com',
         'ACTIVE',
         'USER',
         '2023-06-02 22:08:35',
-        '2023-07-06 16:15:17'
+        '2023-10-29 20:41:45'
     ), (
         4,
         'username2',
-        '$2a$10$x4WF/DFMZPVzBe.JYannEuJGveIKe5tGnV4GekspVfUaRTLN84rPO',
+        '$2a$10$brTv9ok3h1QIAZB.7/Lyg./6pCmS5eGC0oA.pBrUYEYsGQsWiWA7q',
         'aresky1105@gmail.com',
-        'BLOCKED',
+        'ACTIVE',
         'USER',
         '2023-06-11 11:52:12',
-        '2023-07-06 18:38:08'
+        '2023-11-06 19:26:43'
     ), (
         5,
         'username3',
@@ -86,11 +86,20 @@ VALUES (
         10,
         'anhtuan2000',
         '$2a$10$mnjRgrjC7L5UMPzRK0UEheRWl8s./0u7eMh3tfTh3PBF.9PqWhTXO',
-        'aresky2000@gmail.com',
+        'jetbrains.app.for.aresky@gmail.com',
         'ACTIVE',
         'USER',
         '2023-06-23 23:14:41',
-        '2023-07-06 18:42:46'
+        '2023-10-20 10:31:14'
+    ), (
+        11,
+        'employee',
+        '$2a$10$s77/QbKUdDyOOFUM75XFtutlozH188yVBlWFSJHZtPT6OHhxDCI.i',
+        'employee@gmail.com',
+        'ACTIVE',
+        'EMPLOYEE',
+        '2023-10-16 10:20:48',
+        '2023-10-26 21:49:15'
     );
 
 INSERT INTO `profile`
@@ -114,7 +123,7 @@ VALUES (
         2
     ), (
         3,
-        'avatar_aresky_1105',
+        'https://res.cloudinary.com/dmdozqjdg/image/upload/v1698570558/bk_travel_image/piffbsshhjfdcwlukt3k.jpg',
         'Anh Tuấn Nguyễn',
         'Hà Nội',
         '0966477078',
@@ -123,8 +132,8 @@ VALUES (
         3
     ), (
         4,
-        NULL,
-        NULL,
+        'https://res.cloudinary.com/dmdozqjdg/image/upload/v1699541831/bk_travel_image/mibukpghskhkd6lezf36.png',
+        'Aresky',
         NULL,
         NULL,
         NULL,
@@ -177,83 +186,58 @@ VALUES (
         9
     ), (
         10,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
+        'https://res.cloudinary.com/dmdozqjdg/image/upload/v1697687985/bk_travel_image/lytomuox7gm8sgvyknq9.avif',
+        'Thích đi du lịch',
+        'Mỹ Tho',
+        '0123456789',
+        '1990-02-10',
+        'MALE',
         10
+    ), (
+        11,
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5kbFqGaysUDBk6Llz_6f7WuvQgHp-v5Q_Vkrh0B7G-L81MO-zrDywVpJeZYMgwWYibVk&usqp=CAU',
+        'Heo Con',
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        11
     );
 
-INSERT INTO
-    `tour_guide` (
-        id,
-        full_name,
-        avatar_url,
-        `description`,
-        phone,
-        address,
-        gender,
-        birth_date,
-        `status`
-    )
+INSERT INTO `tour_guide`
 VALUES (
         1,
         'Nguyễn Anh Tuấn',
         'avatar',
+        '2000-05-11',
+        'MALE',
         'đẹp trai, hòa đồng, nhiệt tình',
         '0941556225',
         'string',
-        'MALE',
-        '2000-05-11',
         'BUSY'
     ), (
         3,
         'Tuấn Anh',
         'link1',
+        '2000-11-05',
+        'MALE',
         'dep trai',
         '0966477078',
         'Hà Nội',
-        'MALE',
-        '2000-11-05',
         'AVAILABLE'
     ), (
         4,
         'Nguyễn Văn Anh',
         'link',
+        '1990-07-11',
+        'MALE',
         'Tận tụy, vui tính, hòa đồng',
         '0123456789',
         'TP.Hồ Chí Minh',
-        'MALE',
-        '1990-07-11',
         'BUSY'
     );
 
-INSERT INTO
-    `tour` (
-        id,
-        title,
-        image1,
-        image2,
-        image3,
-        image4,
-        `time`,
-        start_address,
-        destination_list,
-        available_seats,
-        total_seats,
-        vehicle,
-        schedule_description,
-        price1,
-        price2,
-        price3,
-        tour_guide,
-        tour_code,
-        created_time,
-        start_time,
-        `status`
-    )
+INSERT INTO `tour`
 VALUES (
         1,
         'Tour 1: Đà Lạt: Dịch vụ vé máy bay + 2 đêm nghỉ dưỡng tại khách sạn Sandals Camellia 4 sao (Đã gồm Ăn sáng)',
@@ -261,6 +245,7 @@ VALUES (
         'https://gotour.com.vn/wp-content/uploads/2019/08/ho-xuan-huong-da-lat-tp-1.jpg',
         'https://metaeventtravel.vn/wp-content/uploads/2022/12/Tour-Nha-Trang-Da-Lat-5-Ngay-4-Dem.jpg',
         'https://www.danangtodaytravel.com/upload/hinhthem/tourdalattodaytravel-3462.png',
+        '2023-07-10 08:15:30',
         '3 ngày 2 đêm',
         'Hà Nội',
         'Đà Lạt',
@@ -273,9 +258,8 @@ VALUES (
         200000,
         NULL,
         '4DS2BJIWQU-BKTRAVEL-1685610115800',
-        '2023-05-01 14:45:35',
-        '2023-07-10 08:15:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-05-01 14:45:35'
     ), (
         2,
         'Tour 2: Đà Lạt: Dịch vụ vé máy bay + 2 đêm nghỉ dưỡng tại khách sạn Sandals Camellia 4 sao (Đã gồm Ăn sáng)',
@@ -283,6 +267,7 @@ VALUES (
         'https://gotour.com.vn/wp-content/uploads/2019/08/ho-xuan-huong-da-lat-tp-1.jpg',
         'https://metaeventtravel.vn/wp-content/uploads/2022/12/Tour-Nha-Trang-Da-Lat-5-Ngay-4-Dem.jpg',
         'https://www.danangtodaytravel.com/upload/hinhthem/tourdalattodaytravel-3462.png',
+        '2023-07-01 07:45:30',
         '3 ngày 2 đêm',
         'Hà Nội',
         'Đà Lạt',
@@ -295,9 +280,8 @@ VALUES (
         500000,
         1,
         '4DS2BJIWQU-BKTRAVEL-1685610115801',
-        '2023-05-11 14:45:35',
-        '2023-07-01 07:45:30',
-        'ON_GOING'
+        'ON_GOING',
+        '2023-05-11 14:45:35'
     ), (
         3,
         'Tour 3: Hà Nội - Sapa - Fansipan - Ninh Bình - Tràng An - Bái Đính - Tuyệt Tịnh Cốc - Hạ Long - Yên Tử',
@@ -305,6 +289,7 @@ VALUES (
         'https://media.travel.com.vn/tour/tfd_221207045221_161727.jpg',
         'https://media.travel.com.vn/tour/tfd_221207045229_227862.jpg',
         'https://media.travel.com.vn/tour/tfd_221207045258_917314.jpg',
+        '2023-07-04 12:30:30',
         '7 ngày 6 đêm',
         'TP. Hồ Chí Minh',
         'Hà Nội, Lào Cai, Sapa, Fansipan, Bản Cát Cát, Lăng Hồ Chủ Tịch, Ninh Bình, Tràng An, Bái Đính, Hạ Long, Yên Tử',
@@ -317,9 +302,8 @@ VALUES (
         500000,
         NULL,
         'TFP9N0ZU48-BKTRAVEL-1685610593341',
-        '2023-06-05 14:45:35',
-        '2023-07-04 12:30:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-05 14:45:35'
     ), (
         4,
         'Tour 4: Hà Nội - Sapa - Fansipan - Ninh Bình - Tràng An - Bái Đính - Tuyệt Tịnh Cốc - Hạ Long - Yên Tử',
@@ -327,6 +311,7 @@ VALUES (
         'https://media.travel.com.vn/tour/tfd_221207045221_161727.jpg',
         'https://media.travel.com.vn/tour/tfd_221207045229_227862.jpg',
         'https://media.travel.com.vn/tour/tfd_221207045258_917314.jpg',
+        '2023-07-04 20:02:30',
         '7 ngày 6 đêm',
         'TP. Hồ Chí Minh',
         'Hà Nội, Lào Cai, Sapa, Fansipan, Bản Cát Cát, Lăng Hồ Chủ Tịch, Ninh Bình, Tràng An, Bái Đính, Hạ Long, Yên Tử',
@@ -339,9 +324,8 @@ VALUES (
         500000,
         NULL,
         'TFP9N0ZU48-BKTRAVEL-1685610593342',
-        '2023-06-01 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-01 14:45:35'
     ), (
         5,
         'Đông Bắc: Hà Giang - Lũng Cú - Đồng Văn - Mã Pí Lèng - Mèo Vạc - Cao Bằng - Thác Bản Giốc - Hồ Ba Bể | Bay Bamboo Airways',
@@ -349,21 +333,21 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761032/vew20sj17eadjtqx9po4.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761034/qaedryhg4xshww0xbt6x.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761036/xhjy3oeyfowcfiopzizt.jpg',
+        '2023-07-04 20:02:30',
         '6 ngày 5 đêm',
         'TP. Hồ Chí Minh',
         'VỊ XUYÊN - HÀ GIANG - ĐỒNG VĂN - ĐÈO MÃ PÍ LÈNG - MÈO VẠC - CAO BẰNG - THÁC BẢN GIỐC - HỒ BA BỂ - HÀ NỘI',
         20,
         20,
         'Máy bay',
-        '<h3>Ngày 1 - SB NỘI BÀI - HÀ GIANG 02 bữa ăn: (Trưa, Tối)</h3><p><br></p><p>Quý khách tập trung tại sân bay Tân Sơn Nhất (Ga nội địa), hướng dẫn viên hỗ trợ khách làm thủ tục đáp chuyến bay đi Hà Nội. Đến sân bay Nội Bài, xe và HDV Vietravel đón Quý khách đi Hà Giang - nơi có chè Shan Tuyết, rượu mật ong và thắng cố, xứ sở của đào phai, hoa lê, truyền thống và náo nhiệt trong buổi chợ phiên. Đến nơi, Quý khách chụp hình lưu niệm Cột mốc số 0 - đánh dấu điểm khởi công của con đường Hạnh Phúc nối Hà Giang và 4 huyện vùng cao nguyên đá</p><p><br></p><p>Xe đưa Quý khách về khách sạn nhận phòng và dùng cơm chiều, hoặc tự do thưởng thức món Chè Shan Tuyết, mật ong Bạc Hà và ấm bụng với món cháo Ấu Tẩu.</p><p>Nghỉ đêm tại Hà Giang.</p><h3><br></h3><h3>Ngày 2 - HÀ GIANG - QUẢN BẠ - YÊN MINH – ĐỒNG VĂN 03 bữa ăn: (Sáng, Trưa, Tối)</h3><p><br></p><p>Ăn sáng và trả phòng khách sạn. Xe và hướng dẫn viên khởi hành đưa Quý khách khám phá Công viên địa chất toàn cầu Cao nguyên đá Đồng Văn (Bao gồm địa giới hành chính của 4 huyện phía Bắc tỉnh Hà Giang với diện tích 2.356 km2) với những điểm check-in đặc sắc:</p><p><br></p><ul><li><strong>Ngắm Núi Đôi Quản Bạ</strong> - biểu tượng vẻ đẹp của vùng cao nguyên đá, Quý khách đi bộ lên Cổng trời Quản Bạ ngắm toàn bộ vẻ đẹp thơ mộng của thị trấn Tam Sơn và hít thở bầu không khí mát mẻ trong lành quanh năm.</li></ul><p><br></p><p>Sau khi ăn trưa, Quý khách tiếp tục hành trình đi tham quan:</p><p><br></p><ul><li><strong>Dốc Thẩm Mã</strong> – những con đường đèo khúc khuỷu, quanh co tựa như một dải lụa uốn lượn mềm mại trải dài theo triền núi.</li></ul><p><br></p><ul><li><strong>Làng văn hóa Lũng Cẩm – Thung lũng Sủng Là</strong>: được mênh danh là “ đóa hoa hồng” trong lòng cao nguyên đá luôn cuốn hút du khách bởi vẻ đẹp hết sức bình dị, mộc mạc. Nơi đây từng là bối cảnh quay bộ phim đạt giải phim truyện nhựa xuất sắc nhất của Hội điện ảnh Việt Nam - phim “Chuyện của Pao”, du khách tìm hiểu văn hóa người Mông.</li></ul><p><br></p><ul><li><strong>Khu kiến trúc nghệ thuật nhà Vương (Dinh Vua Mèo)</strong>, công trình kiến trúc đẹp, hiếm có và rất độc đáo của vùng cao nguyên núi đá.</li></ul><p><br></p><ul><li><strong>Chinh phục Cột cờ Lũng Cú </strong>hay còn gọi là đỉnh núi Rồng, nơi địa đầu Cực Bắc Tổ Quốc với lá cờ 54m2 tượng trưng cho 54 dân tộc anh em. Từ trên cao, Quý khách sẽ ngắm những mảng xanh mát của ruộng bậc thang và các bản làng Lô Lô Chải, Thèn Pả, xa xa có 2 hồ nước phía xa, nằm đối xứng nhau được người dân nơi đây ví như “mắt rồng”.</li></ul><p><br></p><ul><li>Quý khách dùng cơm chiều và nhận phòng khách sạn nghỉ ngơi.</li><li>Nghỉ đêm tại Đồng Văn hoặc Mèo Vạc</li></ul><p>&nbsp;</p><p><em>Ghi chú:</em> Điểm tham quan Cột Cờ Lũng Cú sẽ không tham quan được trong trường hợp thời tiết không thuận lợi.</p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><h3>Ngày 3 - ĐỒNG VĂN – MÈO VẠC – CAO BẰNG 03 bữa ăn: (Sáng, Trưa, Tối)</h3><p><br></p><p>Quý khách ăn sáng, trả phòng khách sạn. Xe đưa Quý khách đi tham quan:</p><p><br></p><ul><li>Đèo Mã Pì Lè</li></ul><p>ng</p><p><br></p><ul><li>: Một trong Tứ đại đỉnh đèo hùng vĩ của miền Bắc Việt Nam dài 24km, dừng chân nghỉ ngơi, chụp ảnh nơi bị chia cắt về địa hình sâu nhất của Việt Nam. Trên đường dừng chụp hình tại tượng đài Thanh Niên trước Bảo tàng Con Đường Hạnh Phúc,</li></ul><p><br></p><p>Mã Pí Lèng</p><p>café</p><p><br></p><ul><li>(chi phí tự túc), ngắm con đường hạnh phúc và toàn cảnh dòng sông Nho Quế từ trên caoQ.</li></ul><p><br></p><ul><li>Dừng chụp hình lưu niệm tại</li><li>Làng Văn</li><li>hóa Du</li><li>lịch Cộng đ</li></ul><p>ồng Pả Vi</p><p><br></p><p><br></p><p><br></p><ul><li>, nằm dưới chân đèo Mã Pì Lèng, bên cạnh dòng sông xanh nho Quế. Nơi đây thu hút sự quan tâm của du khách bởi thiết kế ấn tượng của cổng chào hình dáng chiếc khèn Mông khổng lồ, những homestay mang đậm nét văn hóa, phong cách của người Mông,…&nbsp;&nbsp;</li></ul><p><br></p><p>Tiếp tục hành trình đến Cao Bằng, Quý khách dừng tại Bảo Lạc dùng cơm trưa tại nhà hàng địa phương. Đến Cao Bằng, Quý khách nhận phòng nghỉ ngơi và dùng cơm tối.</p><p>Nghỉ đêm tại Cao Bằng.</p><p><br></p><h3>Ngày 4 - THÁC BẢN GIỐC – ĐỘNG NGƯỜM NGAO – LÀNG ĐÁ KHUỔI KY 03 bữa ăn: (Sáng, Trưa, chiều)</h3><p><br></p><p>Quý khách ăn sáng, trả phòng khách sạn. Xe khởi hành đưa Quý khách đi tham quan:</p><p><br></p><p>Thác Bản</p><p>Giốc</p><p><br></p><ul><li>- một trong những thác nước đẹp nhất của Việt Nam có đường ranh giới tự nhiên với Trung Quốc. Thác nước đẹp và hùng vỹ với dòng nước cuồn cuộn chảy quanh năm bắt nguồn từ dòng sông Quây Sơn nước xanh ngắt một màu ngọc Bích. Đẹp nhất vào mùa lúa chín (tháng 9) khung cảnh đường vào thác sáng rực một màu vàng óng và dòng nước trắng xóa mềm mại như tóc tiên càng làm khung cảnh thêm nên thơ, hùng vỹ.</li></ul><p><br></p><p>Chùa Phậ</p><p>t Tí</p><p>ch Trúc Lâ</p><p>m Bản Giốc</p><p><br></p><p><br></p><p><br></p><ul><li>: được xây dựng theo lối kiến trúc thuần Việt trên diện tích 3 ha, đây là ngôi chùa đầu tiên được xây dựng tại nơi biên cương phía Bắc của tổ quốc.</li></ul><p><br></p><ul><li>&nbsp;Quý khách dùng cơm trưa và tiếp tục tham quan:</li></ul><p><br></p><p>Động Ng</p><p>ườ</p><p>m Ngao</p><p><br></p><p><br></p><ul><li>- một động lớn được hình thành từ sự phong hoá lâu đời của đá vôi; bước vào động, du khách như bước vào một thế giới kỳ ảo, choáng ngợp trước những dải thạch nhũ muôn màu, những tượng đá quyến rũ với nhiều kiểu dáng khác nhau mang dáng dấp hình người, cây rừng, súc vật..., các nhũ đá thả từ trên xuống hay mọc từ dưới đất lên vô cùng sống động</li></ul><p><br></p><p>Làng Đ</p><p>á Khuổi</p><p>Ky</p><p><br></p><p><br></p><ul><li>: với một ý niệm đá là khởi nguồn của sự sống và trung tâm của vụ trụ mà người Tày ở Trùng Khánh luôn gìn giữ ngôi nhà sàn, nơi sinh hoạt xung quanh mình là đá, điều đó đã tạo nên điểm nhấn cho ngôi làng nhìn từ xa như một bức tranh vững chãi giữa mây trời núi non hùng vỹ. Đến đây vào homestay và thưởng thức tách café giữa khung cảnh núi rừng sẽ cho quý khách cảm giác bình yên đến lạ.</li></ul><p><br></p><p>Xe đưa Quý khách về thành phố Cao Bằng dùng cơm tối tại nhà hàng địa phương, mua sắm đặc sản địa phương: Miến dong, thạch đen, lạp xưởng, ... Quý khách nhận phòng khách sạn nghỉ ngơi.</p><p><br></p><p><br></p><h3>Ngày 5 - CAO BẰNG – KHU DI TÍCH PÁC PÓ – BA BỂ 03 bữa ăn: (Sáng, Trưa, chiều)</h3><p><br></p><p class=\"ql-align-justify\">Quý khách ăn sáng và trả phòng khách sạn. Xe khởi hành đưa Quý khách tham quan:</p><p>Khu di tích</p><p>Pác P</p><p>ó</p><p><br></p><p><br></p><ul><li class=\"ql-align-justify\">&nbsp;- nơi chủ tịch Hồ Chí Minh từng sống và làm việc với khung cảnh nên thơ, hữu tình. Dòng suối trong xanh, thơ mộng trước cửa hang được Bác đặt tên là Suối Lê Nin, ngọn núi hùng vĩ cạnh bên là Núi Các Mác</li></ul><p><br></p><p>Khu di tích</p><p>Ki</p><p>m Đồng</p><p><br></p><p><br></p><ul><li class=\"ql-align-justify\">&nbsp;- Nơi ghi nhớ anh hùng liệt sỹ có công bảo vệ cán bộ cách mạng trong thời kỳ kháng chiến.</li></ul><p>Sau khi dù</p><p>n</p><p>g cơm tr</p><p>ưa, Quý khách</p><p>khởi hành đi Bắc C</p><p>ạn, nhận phòng và n</p><p class=\"ql-align-justify\">ghỉ ngơi tạị Ba Bể.</p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><h3>Ngày 6 - BA BỂ - BẮC CẠN – SB NỘI BÀI 02 bữa ăn: (Sáng, Trưa)</h3><p>Quý khách</p><p>ra bế</p><p>n thuyền th</p><p>am quan:</p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Hồ Ba Bể</p><p>&nbsp;</p><p><br></p><ul><li class=\"ql-align-justify\">(2 tiếng) – Khám phá bức tranh sơn thủy hữu tình vô cùng sống động, mặt nước hồ trong xanh như gương làm quyến rũ biết bao du khách làm quyến rũ biết bao du khách, thiên nhiên và con người như hòa quyện vào nhau, ngắm Ao Tiên, Đền An Mã, hòn Bà Góa. Thuyền dừng trên mặt hồ, Quý khách giao lưu hát then và đàn tính của người Tày, hoặc tham gia chèo thuyền kayak xung quanh đảo Bà Góa (chi phí tự túc).</li></ul><p class=\"ql-align-justify\">Đoàn khởi hành về Hà Nội. Đến sân bay Nội Bài, Hướng dẫn viên hỗ trợ Quý khách làm thủ tục&nbsp;</p><p class=\"ql-align-justify\">đáp ch</p><p class=\"ql-align-justify\">uy</p><p class=\"ql-align-justify\">ến bay về</p><p class=\"ql-align-justify\">Tp.HCM. Chia t</p><p class=\"ql-align-justify\">ay Quý khách và k</p><p class=\"ql-align-justify\">ết thúc chương tr</p><p>ình&nbsp;</p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>du lị</p><p>ch</p><p><br></p><p>&nbsp;tại</p><p>sân b</p><p>ay Tân Sơn Nh</p><p>ất.</p>',
+        '<h3>Ngày 1 - SB NỘI BÀI - HÀ GIANG 02 bữa ăn: (Trưa, Tối)</h3><p><br></p><p>Quý khách tập trung tại sân bay Tân Sơn Nhất (Ga nội địa), hướng dẫn viên hỗ trợ khách làm thủ tục đáp chuyến bay đi Hà Nội. Đến sân bay Nội Bài, xe và HDV Vietravel đón Quý khách đi Hà Giang - nơi có chè Shan Tuyết, rượu mật ong và thắng cố, xứ sở của đào phai, hoa lê, truyền thống và náo nhiệt trong buổi chợ phiên. Đến nơi, Quý khách chụp hình lưu niệm Cột mốc số 0 - đánh dấu điểm khởi công của con đường Hạnh Phúc nối Hà Giang và 4 huyện vùng cao nguyên đá</p><p><br></p><p>Xe đưa Quý khách về khách sạn nhận phòng và dùng cơm chiều, hoặc tự do thưởng thức món Chè Shan Tuyết, mật ong Bạc Hà và ấm bụng với món cháo Ấu Tẩu.</p><p>Nghỉ đêm tại Hà Giang.</p><h3><br></h3><h3>Ngày 2 - HÀ GIANG - QUẢN BẠ - YÊN MINH – ĐỒNG VĂN 03 bữa ăn: (Sáng, Trưa, Tối)</h3><p><br></p><p>Ăn sáng và trả phòng khách sạn. Xe và hướng dẫn viên khởi hành đưa Quý khách khám phá Công viên địa chất toàn cầu Cao nguyên đá Đồng Văn (Bao gồm địa giới hành chính của 4 huyện phía Bắc tỉnh Hà Giang với diện tích 2.356 km2) với những điểm check-in đặc sắc:</p><p><br></p><ul><li><strong>Ngắm Núi Đôi Quản Bạ</strong> - biểu tượng vẻ đẹp của vùng cao nguyên đá, Quý khách đi bộ lên Cổng trời Quản Bạ ngắm toàn bộ vẻ đẹp thơ mộng của thị trấn Tam Sơn và hít thở bầu không khí mát mẻ trong lành quanh năm.</li></ul><p><br></p><p>Sau khi ăn trưa, Quý khách tiếp tục hành trình đi tham quan:</p><p><br></p><ul><li><strong>Dốc Thẩm Mã</strong> – những con đường đèo khúc khuỷu, quanh co tựa như một dải lụa uốn lượn mềm mại trải dài theo triền núi.</li></ul><p><br></p><ul><li><strong>Làng văn hóa Lũng Cẩm – Thung lũng Sủng Là</strong>: được mênh danh là “ đóa hoa hồng” trong lòng cao nguyên đá luôn cuốn hút du khách bởi vẻ đẹp hết sức bình dị, mộc mạc. Nơi đây từng là bối cảnh quay bộ phim đạt giải phim truyện nhựa xuất sắc nhất của Hội điện ảnh Việt Nam - phim “Chuyện của Pao”, du khách tìm hiểu văn hóa người Mông.</li></ul><p><br></p><ul><li><strong>Khu kiến trúc nghệ thuật nhà Vương (Dinh Vua Mèo)</strong>, công trình kiến trúc đẹp, hiếm có và rất độc đáo của vùng cao nguyên núi đá.</li></ul><p><br></p><ul><li><strong>Chinh phục Cột cờ Lũng Cú </strong>hay còn gọi là đỉnh núi Rồng, nơi địa đầu Cực Bắc Tổ Quốc với lá cờ 54m2 tượng trưng cho 54 dân tộc anh em. Từ trên cao, Quý khách sẽ ngắm những mảng xanh mát của ruộng bậc thang và các bản làng Lô Lô Chải, Thèn Pả, xa xa có 2 hồ nước phía xa, nằm đối xứng nhau được người dân nơi đây ví như “mắt rồng”.</li></ul><p><br></p><ul><li>Quý khách dùng cơm chiều và nhận phòng khách sạn nghỉ ngơi.</li><li>Nghỉ đêm tại Đồng Văn hoặc Mèo Vạc</li></ul><p>&nbsp;</p><p><em>Ghi chú:</em> Điểm tham quan Cột Cờ Lũng Cú sẽ không tham quan được trong trường hợp thời tiết không thuận lợi.</p><p><br></p><h3>Ngày 3 - ĐỒNG VĂN – MÈO VẠC – CAO BẰNG 03 bữa ăn: (Sáng, Trưa, Tối)</h3><p><br></p><p>Quý khách ăn sáng, trả phòng khách sạn. Xe đưa Quý khách đi tham quan:</p><p><br></p><ul><li><strong>Đèo Mã Pì Lèng</strong>: Một trong Tứ đại đỉnh đèo hùng vĩ của miền Bắc Việt Nam dài 24km, dừng chân nghỉ ngơi, chụp ảnh nơi bị chia cắt về địa hình sâu nhất của Việt Nam. Trên đường dừng chụp hình tại tượng đài Thanh Niên trước Bảo tàng Con Đường Hạnh Phúc, Mã Pí Lèng café (chi phí tự túc), ngắm con đường hạnh phúc và toàn cảnh dòng sông Nho Quế từ trên cao.</li><li>Dừng chụp hình lưu niệm tại<strong> Làng Văn hóa Du lịch Cộng đồng Pả Vi</strong>, nằm dưới chân đèo Mã Pì Lèng, bên cạnh dòng sông xanh nho Quế. Nơi đây thu hút sự quan tâm của du khách bởi thiết kế ấn tượng của cổng chào hình dáng chiếc khèn Mông khổng lồ, những homestay mang đậm nét văn hóa, phong cách của người Mông,…&nbsp;&nbsp;</li></ul><p><br></p><p>Tiếp tục hành trình đến Cao Bằng, Quý khách dừng tại Bảo Lạc dùng cơm trưa tại nhà hàng địa phương. Đến Cao Bằng, Quý khách nhận phòng nghỉ ngơi và dùng cơm tối.</p><p>Nghỉ đêm tại Cao Bằng.</p><p><br></p><h3>Ngày 4 - THÁC BẢN GIỐC – ĐỘNG NGƯỜM NGAO – LÀNG ĐÁ KHUỔI KY 03 bữa ăn: (Sáng, Trưa, chiều)</h3><p><br></p><p>Quý khách ăn sáng, trả phòng khách sạn. Xe khởi hành đưa Quý khách đi tham quan:</p><p><br></p><ul><li><strong>Thác Bản Giốc</strong> - một trong những thác nước đẹp nhất của Việt Nam có đường ranh giới tự nhiên với Trung Quốc. Thác nước đẹp và hùng vỹ với dòng nước cuồn cuộn chảy quanh năm bắt nguồn từ dòng sông Quây Sơn nước xanh ngắt một màu ngọc Bích. Đẹp nhất vào mùa lúa chín (tháng 9) khung cảnh đường vào thác sáng rực một màu vàng óng và dòng nước trắng xóa mềm mại như tóc tiên càng làm khung cảnh thêm nên thơ, hùng vỹ.</li></ul><p><br></p><ul><li><strong>Chùa Phật Tích Trúc Lâm Bản Giốc</strong>: được xây dựng theo lối kiến trúc thuần Việt trên diện tích 3 ha, đây là ngôi chùa đầu tiên được xây dựng tại nơi biên cương phía Bắc của tổ quốc.</li></ul><p><br></p><p>&nbsp;Quý khách dùng cơm trưa và tiếp tục tham quan:</p><p><br></p><ul><li><strong>Động Ngườm Ngao</strong> - một động lớn được hình thành từ sự phong hoá lâu đời của đá vôi; bước vào động, du khách như bước vào một thế giới kỳ ảo, choáng ngợp trước những dải thạch nhũ muôn màu, những tượng đá quyến rũ với nhiều kiểu dáng khác nhau mang dáng dấp hình người, cây rừng, súc vật..., các nhũ đá thả từ trên xuống hay mọc từ dưới đất lên vô cùng sống động</li></ul><p><br></p><ul><li><strong>Làng Đá Khuổi Ky</strong>: với một ý niệm đá là khởi nguồn của sự sống và trung tâm của vụ trụ mà người Tày ở Trùng Khánh luôn gìn giữ ngôi nhà sàn, nơi sinh hoạt xung quanh mình là đá, điều đó đã tạo nên điểm nhấn cho ngôi làng nhìn từ xa như một bức tranh vững chãi giữa mây trời núi non hùng vỹ. Đến đây vào homestay và thưởng thức tách café giữa khung cảnh núi rừng sẽ cho quý khách cảm giác bình yên đến lạ.</li></ul><p><br></p><p>Xe đưa Quý khách về thành phố Cao Bằng dùng cơm tối tại nhà hàng địa phương, mua sắm đặc sản địa phương: Miến dong, thạch đen, lạp xưởng, ... Quý khách nhận phòng khách sạn nghỉ ngơi.</p><p><br></p><p><br></p><h3>Ngày 5 - CAO BẰNG – KHU DI TÍCH PÁC PÓ – BA BỂ 03 bữa ăn: (Sáng, Trưa, chiều)</h3><p><br></p><p class=\"ql-align-justify\">Quý khách ăn sáng và trả phòng khách sạn. Xe khởi hành đưa Quý khách tham quan:</p><p>Khu di tích Pác Pó&nbsp;- nơi chủ tịch Hồ Chí Minh từng sống và làm việc với khung cảnh nên thơ, hữu tình. Dòng suối trong xanh, thơ mộng trước cửa hang được Bác đặt tên là Suối Lê Nin, ngọn núi hùng vĩ cạnh bên là Núi Các Mác</p><p><br></p><p>Khu di tích Kim Đồng&nbsp;- Nơi ghi nhớ anh hùng liệt sỹ có công bảo vệ cán bộ cách mạng trong thời kỳ kháng chiến.</p><p>Sau khi dùng cơm trưa, Quý khách khởi hành đi Bắc Cạn, nhận phòng và nghỉ ngơi tạị Ba Bể.</p><p><br></p><h3>Ngày 6 - BA BỂ - BẮC CẠN – SB NỘI BÀI 02 bữa ăn: (Sáng, Trưa)</h3><p>Quý khách ra bến thuyền tham quan:</p><p><br></p><p><strong>Hồ Ba Bể</strong> (2 tiếng) – Khám phá bức tranh sơn thủy hữu tình vô cùng sống động, mặt nước hồ trong xanh như gương làm quyến rũ biết bao du khách làm quyến rũ biết bao du khách, thiên nhiên và con người như hòa quyện vào nhau, ngắm Ao Tiên, Đền An Mã, hòn Bà Góa. Thuyền dừng trên mặt hồ, Quý khách giao lưu hát then và đàn tính của người Tày, hoặc tham gia chèo thuyền kayak xung quanh đảo Bà Góa (chi phí tự túc).</p><p><br></p><p>Đoàn khởi hành về Hà Nội. Đến sân bay Nội Bài, Hướng dẫn viên hỗ trợ Quý khách làm thủ tục&nbsp;đáp chuyến bay về Tp.HCM. Chia tay Quý khách và kết thúc chương trình&nbsp;du lịch tại sân bay Tân Sơn Nhất.</p>',
         10000000,
         7000000,
         500000,
         NULL,
         'ZZWKFKLMEI-BKTRAVEL-1686761036707',
-        '2023-06-10 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-10 14:45:35'
     ), (
         6,
         'Đà Nẵng - Sơn Trà - KDL Bà Nà - Cầu Vàng - Hội An - La Vang - Động Phong Nha & Thiên Đường - Huế (Khách sạn 4* trọn tour)',
@@ -371,6 +355,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761814/pcj9bwhl76sr5zyfyenu.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761816/mz8iea1zrxjcoqrlqeam.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686761818/zocanq0hzpytxb4qudjt.jpg',
+        '2023-07-04 20:02:30',
         '5 ngày 4 đêm',
         'TP. Hồ Chí Minh',
         'Đà Nẵng, Sơn Trà, Hội An, Huế, Mỹ Khê, Ngũ Hành Sơn, Đầm Lập An, Đại Nội, Chùa Thiên Mụ, Chùa Linh Ứng, Bán Đảo Sơn Trà, Động Phong Nha, Động Thiên Đường, Thánh Địa La Vang',
@@ -383,9 +368,8 @@ VALUES (
         280000,
         NULL,
         'DKQDCTLOTH-BKTRAVEL-1686761819072',
-        '2023-06-19 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-19 14:45:35'
     ), (
         7,
         'Hà Nội - Vịnh Hạ Long - Chùa Bái Đính - Tràng An - Tuyệt Tịnh Cốc (Khách sạn 4 sao)',
@@ -393,6 +377,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762266/gwlizfk3fmxcjnxqmung.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762268/qojwyn1iesspxwt7mczq.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762270/mgback5k2kyxl4esjdhn.jpg',
+        '2023-07-04 20:02:30',
         '4 ngày 3 đêm',
         'TP. Hồ Chí Minh',
         'Hà Nội, Bái Đính, Tràng An, Hạ Long, Yên Tử, Tuyệt Tình Cốc, Quảng Ninh, Văn Miếu, Hồ Gươm',
@@ -405,9 +390,8 @@ VALUES (
         500000,
         NULL,
         'P8OE1G0LA2-BKTRAVEL-1686762270314',
-        '2023-06-22 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-22 14:45:35'
     ), (
         8,
         'Miền Bắc: Hà Nội - Yên Tử - Hạ Long - Ninh Bình',
@@ -415,6 +399,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762539/yzwgitn8glihp6l3rbke.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762541/mbdca9pkwdq7j1onqvxf.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686762545/huoqep9flbogawybxeun.jpg',
+        '2023-07-04 20:02:30',
         '4 ngày 3 đêm',
         'Đà Lạt',
         'Hà Nội - Yên Tử - Hạ Long - Ninh Bình - Tràng An - Bái Đính',
@@ -427,9 +412,8 @@ VALUES (
         0,
         NULL,
         'THXWVPGFXL-BKTRAVEL-1686762545023',
-        '2023-06-20 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-20 14:45:35'
     ), (
         9,
         'Phú Quốc - Đảo Ngọc thiên đường - Bãi Sao - Thử Tài Câu Cá - Bay Vietjet air - Khách sạn 4 sao',
@@ -437,6 +421,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763045/fm0hanynzwczmmrkqykk.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763047/hrl84owdnvpww2buqt8e.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763049/m9owq0vah3suisbphhum.jpg',
+        '2023-07-04 20:02:30',
         '4 ngày 3 đêm',
         'Hà Nội',
         'Phú Quốc, Đảo Ngọc thiên đường, Bãi Sao',
@@ -449,9 +434,8 @@ VALUES (
         500000,
         NULL,
         'XSRKUO2MIQ-BKTRAVEL-1686763048985',
-        '2023-06-21 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-21 14:45:35'
     ), (
         10,
         'Long Xuyên- Côn Đảo - Thiên Đường Nghỉ Dưỡng Nơi Biển Xanh Cát Trắng',
@@ -459,6 +443,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763723/urpeziynpgm08cm4s5wl.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763725/kx9kfm73ivmtgawoybhh.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686763728/vmu2fxjlq31igry9p8xa.jpg',
+        '2023-07-04 20:02:30',
         '3 ngày 2 đêm',
         'Long Xuyên',
         'Trại tù Phú Hải, Chuồng cọp Pháp - Mỹ, Nghĩa trang Hàng Dương, Miếu Bà Phi Yến, Chùa Vân Sơn, Biển Đầm Trầu, Miếu Cậu, Cảng Bến Đầm',
@@ -471,9 +456,8 @@ VALUES (
         0,
         NULL,
         '2OSCGVG8S9-BKTRAVEL-1686763728032',
-        '2023-06-22 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-22 14:45:35'
     ), (
         11,
         'Miền Tây: Tiền Giang - Cần Thơ - Bạc Liêu - Nhà Thờ Tắc Sậy',
@@ -481,6 +465,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764189/onjei0jenblthuhkrky4.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764190/zsusa1gdfnczh3iemjbp.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764193/odwkmldjvk25pehezhuo.jpg',
+        '2023-07-04 20:02:30',
         '3 ngày 2 đêm',
         'TP. Hồ Chí Minh',
         'Tiền Giang, Cù Lao Tân Phong, Làng Cổ Đông Hòa, Vĩnh Long, Chùa Phật Ngọc Xá Lợi, Cần Thơ, Chợ Nổi Cái Răng, Bạc Liêu, Nhà Thờ Tắc Sậy, Sóc Trăng',
@@ -493,9 +478,8 @@ VALUES (
         0,
         NULL,
         'DEHYS6Y6BE-BKTRAVEL-1686764193409',
-        '2023-06-23 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-23 14:45:35'
     ), (
         12,
         'Miền Tây - Mỹ Tho - Thới Sơn - Bến Tre',
@@ -503,6 +487,7 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764472/ijfaglcbtjoa7fcl18lz.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764474/wlaws1yjfwjktpnvdrib.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1686764476/zivs5w4duufhqvlf83dn.jpg',
+        '2023-07-04 20:02:30',
         '1 ngày',
         'TP. Hồ Chí Minh',
         'Mỹ Tho, Thới Sơn, Bến Tre, Vườn Trái Cây, Chùa Vĩnh Tràng',
@@ -515,9 +500,8 @@ VALUES (
         0,
         NULL,
         'GZJIG48ORF-BKTRAVEL-1686764475890',
-        '2023-06-24 14:45:35',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-06-24 14:45:35'
     ), (
         14,
         'Đà Lạt - Thác Bobla - KDL Cao Nguyên Hoa - Trang Trại rau và hoa Vạn Thành',
@@ -525,41 +509,25 @@ VALUES (
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1688357030/wt2scno3yzqxlmbbai5g.jpg',
         'https://res.cloudinary.com/dtm4bscge/image/upload/v1688357033/graclezgpvzp66b4sadm.webp',
         'https://megadalat.com/wp-content/uploads/2021/01/nha-tho-con-ga-megadalat-08.jpg',
+        '2023-07-04 20:02:30',
         '3 ngày 2 đêm',
         'TP. Hồ Chí Minh',
         'Da Lat, thac Bobla, KDL Cao Nguyen Hoa, Phan Vien Sinh Hoc, Dinh I, Puppy Farm, Gallery Chocolate, nha tho con ga',
         30,
         30,
         'Xe du lịch',
-        '<h3>Ngày 1 - TP. HỒ CHÍ MINH - ĐÀ LẠT Số bữa ăn: 3 bữa (Ăn sáng, trưa, tối)</h3><p><br></p><p>Quý khách tập trung tại Vietravel (190 Pasteur, phường Võ Thị Sáu, quận 3, TP.HCM), xe đưa đoàn khởi hành đi Đà Lạt. Trên đường đi Quý khách dừng chân tham quan:</p><p>- <strong>Thác Bobla</strong>: đẹp như một bức tranh thiên nhiên với dòng thác nguyên sơ, hùng vĩ cao hơn 40m, rộng hơn 20m, cùng cảnh quan được tôn tạo tuyệt đẹp, lưu giữ nhiều cây cổ thụ hàng trăm năm tuổi, phía xa hút tầm mắt là những đồi chè, cà phê xanh mát.</p><p><br></p><p>Chiều đoàn tiếp tục hành trình về Đà Lạt, nhận phòng nghỉ ngơi. Buổi tối, Quý khách tự do thưởng thức café ngắm hồ Xuân Hương về đêm.</p><p><br></p><p><strong>Nghỉ đêm tại Đà Lạt.</strong></p><p><br></p><h3>Ngày 2 - ĐÀ LẠT – KDL CAO NGUYÊN HOA – PUPPY FARRM Số bữa ăn: 2 bữa (Ăn sáng, trưa, tự túc ăn tối)</h3><p>Đà Lạt chào đón du khách với không khí lạnh tràn về, sau khi dùng bữa sáng, xe đưa đoàn tham quan:</p><p><br></p><p>- <strong>KDL Cao Nguyên Hoa</strong>: với diện tích hơn 122ha, là nơi bảo tồn đa dạng sinh học đặc biệt là các loài hoa thân gỗ không chỉ có ở Đà Lạt mà còn trên toàn Thế giới với mảng xanh của rừng - thảm cỏ tự nhiên rộng khắp, điểm xuyến những khóm hoa Thanh Anh nhẹ nhàng dọc lối đi. Đến đây Quý khách sẽ được trải nghiệm:&nbsp;</p><p><br></p><p>+ <strong>Quán Seven-T Coffee</strong> nằm giữa rừng thông với view 360° núi đồi xanh mát, bể bơi vô cực giữa rừng nhiệt đới&nbsp;</p><p>+ Xả stress và ghi lại những khoảnh khắc đẹp với Đà Lạt Swing – trò chơi “xích đu tiên” lớn nhất Việt Nam.&nbsp;</p><p>+ <strong>Rose Garden</strong> – Vườn hoa hồng với hàng trăm gốc hồng ngoại, hồng nội, hồng cổ thụ quý hiếm tỏa hương khoe sắc bốn mùa.&nbsp;</p><p>+ Con đường rừng nhiệt đới dẫn lối đến<strong> gốc si cổ thụ nghìn năm</strong> huyền bí và cổ kính.&nbsp;</p><p>+ Thoả sức chụp hình<strong> check in với dàn siêu xe</strong> cực chill, cực chất hay ngôi nhà phù thủy, đồi mai anh đào, đồi huệ sông Nile, đồi hoa sim tím, đồi hoa hoàng yến,…</p><p><br></p><p>- <strong>Trang trại rau và hoa Vạn Thành</strong>: du khách sẽ choáng ngợp bởi vẻ quyến rũ của bức tranh tuyệt mỹ được tạo nên bởi vô vàn các loài hoa đua nhau khoe sắc như đóa Hồng, Cẩm Chướng, Lily, Đồng Tiền, Cẩm Tú Cầu… Ngoài ra, Quý khách còn được khám phá quy trình trồng những loại nông sản và thỏa sức chụp hình tại vườn cà chua, bí khổng lồ, dưa Pepino, dâu và các loại rau trồng thủy canh (tùy theo mùa).</p><p><br></p><p>Buổi chiều, đoàn tiếp tục tham quan:</p><p><br></p><p>- <strong>Nông Trại Cún Puppy Farm</strong>: đến đây, du khách thỏa thích tạo dáng cùng những chú cún siêu dễ thương hay chọn cho mình những góc chụp đẹp bên các loài hoa với đủ màu sắc rực rỡ, vườn bí ngô, dâu tây, cà chua bi, … tựa như là một Đà Lạt thu nhỏ, vô cùng thơ mộng và lãng mạn.&nbsp;</p><p><br></p><p>-<strong> Quảng trường Lâm Viên</strong>: Điểm nhấn của TP. Đà Lạt bên bờ hồ Xuân Hương với công trình nghệ thuật bông hoa dã quỳ và nụ hoa Atiso khổng lồ được thiết kế bằng kính màu, lấp lánh phản chiếu đẹp mắt bởi ánh sáng.</p><p>Buổi tối Quý khách tự do tản bộ Chợ Đà Lạt thưởng thức sữa đậu nành và bánh tráng nướng tại khu phố Tăng Bạt Hổ. Nghỉ đêm tại Đà Lạt.</p><p>- <strong>Mua sắm đặc sản Đà Lạt tại cơ sở mứt Thanh Nhu</strong>: các loại trái cây sấy giòn, sấy dẻo, nước cốt dâu tằm – dâu tươi, trà atiso, trà hoa, ...</p><p><br></p><p>Buổi tối Quý khách tự do tản bộ Chợ Đà Lạt thưởng thức sữa đậu nành và bánh tráng nướng tại khu phố Tăng Bạt Hổ.</p><p><br></p><p><strong>Nghỉ đêm tại Đà Lạt.</strong></p><p><br></p><h3>Ngày 3 - ĐÀ LẠT - TP. HỒ CHÍ MINH Số bữa ăn: 2 bữa (Ăn sáng, trưa)</h3><p>Sau khi dùng bữa sáng và trả phòng khách sạn, xe đưa đoàn tham quan:</p><p>- <strong>Nhà thờ Con Gà</strong>: đây là một trong những công trình kiến trúc tôn giáo với phong cách kiến trúc đặc trưng và tiêu biểu được coi là cổ xưa nhất của Đà Lạt. Được xây dựng từ thời Pháp nhưng đến nay vẫn giữ nguyên được nét hiện trạng ban đầu.</p><p>- <strong>Dinh I</strong>: còn được biết đến là Dinh Bảo Đại 1 – King Palace. Tọa lạc tại một ngon đồi xung quanh được bao bọc bởi những rừng thông xanh biếc. Cùng với đó lại nằm cách xa vị trí mặt tiền đường chính. Cho nên khung cảnh cũng như không gian nơi đây trở nên thơ mộng và yên bình hơn bao giờ hết.</p><p><br></p><p>Đoàn dừng tại Bảo Lộc dùng cơm trưa, sau đó khởi hành về điểm đón ban đầu. Chia tay đoàn và kết thúc chương trình du lịch.</p>',
+        '<h3>Ngày 1 - TP. HỒ CHÍ MINH - ĐÀ LẠT Số bữa ăn: 3 bữa (Ăn sáng, trưa, tối)</h3><p><br></p><p>Quý khách tập trung tại Vietravel (190 Pasteur, phường Võ Thị Sáu, quận 3, TP.HCM), xe đưa đoàn khởi hành đi Đà Lạt. Trên đường đi Quý khách dừng chân tham quan:</p><p>- <strong>Thác Bobla</strong>: đẹp như một bức tranh thiên nhiên với dòng thác nguyên sơ, hùng vĩ cao hơn 40m, rộng hơn 20m, cùng cảnh quan được tôn tạo tuyệt đẹp, lưu giữ nhiều cây cổ thụ hàng trăm năm tuổi, phía xa hút tầm mắt là những đồi chè, cà phê xanh mát.</p><p><br></p><p>Chiều đoàn tiếp tục hành trình về Đà Lạt, nhận phòng nghỉ ngơi. Buổi tối, Quý khách tự do thưởng thức café ngắm hồ Xuân Hương về đêm.</p><p><br></p><p><strong>Nghỉ đêm tại Đà Lạt.</strong></p><p><br></p><h3>Ngày 2 - ĐÀ LẠT – KDL CAO NGUYÊN HOA – PUPPY FARRM Số bữa ăn: 2 bữa (Ăn sáng, trưa, tự túc ăn tối)</h3><p>Đà Lạt chào đón du khách với không khí lạnh tràn về, sau khi dùng bữa sáng, xe đưa đoàn tham quan:</p><p><br></p><p>- <strong>KDL Cao Nguyên Hoa</strong>: với diện tích hơn 122ha, là nơi bảo tồn đa dạng sinh học đặc biệt là các loài hoa thân gỗ không chỉ có ở Đà Lạt mà còn trên toàn Thế giới với mảng xanh của rừng - thảm cỏ tự nhiên rộng khắp, điểm xuyến những khóm hoa Thanh Anh nhẹ nhàng dọc lối đi. Đến đây Quý khách sẽ được trải nghiệm:&nbsp;</p><p><br></p><p>+ <strong>Quán Seven-T Coffee</strong> nằm giữa rừng thông với view 360° núi đồi xanh mát, bể bơi vô cực giữa rừng nhiệt đới&nbsp;</p><p>+ Xả stress và ghi lại những khoảnh khắc đẹp với Đà Lạt Swing – trò chơi “xích đu tiên” lớn nhất Việt Nam.&nbsp;</p><p>+ <strong>Rose Garden</strong> – Vườn hoa hồng với hàng trăm gốc hồng ngoại, hồng nội, hồng cổ thụ quý hiếm tỏa hương khoe sắc bốn mùa.&nbsp;</p><p>+ Con đường rừng nhiệt đới dẫn lối đến<strong> gốc si cổ thụ nghìn năm</strong> huyền bí và cổ kính.&nbsp;</p><p>+ Thoả sức chụp hình<strong> check in với dàn siêu xe</strong> cực chill, cực chất hay ngôi nhà phù thủy, đồi mai anh đào, đồi huệ sông Nile, đồi hoa sim tím, đồi hoa hoàng yến,…</p><p><br></p><p>- <strong>Trang trại rau và hoa Vạn Thành</strong>: du khách sẽ choáng ngợp bởi vẻ quyến rũ của bức tranh tuyệt mỹ được tạo nên bởi vô vàn các loài hoa đua nhau khoe sắc như đóa Hồng, Cẩm Chướng, Lily, Đồng Tiền, Cẩm Tú Cầu… Ngoài ra, Quý khách còn được khám phá quy trình trồng những loại nông sản và thỏa sức chụp hình tại vườn cà chua, bí khổng lồ, dưa Pepino, dâu và các loại rau trồng thủy canh (tùy theo mùa).</p><p><br></p><p>Buổi chiều, đoàn tiếp tục tham quan:</p><p><br></p><p>- <strong>Nông Trại Cún Puppy Farm</strong>: đến đây, du khách thỏa thích tạo dáng cùng những chú cún siêu dễ thương hay chọn cho mình những góc chụp đẹp bên các loài hoa với đủ màu sắc rực rỡ, vườn bí ngô, dâu tây, cà chua bi, … tựa như là một Đà Lạt thu nhỏ, vô cùng thơ mộng và lãng mạn.&nbsp;</p><p><br></p><p>-<strong> Quảng trường Lâm Viên</strong>: Điểm nhấn của TP. Đà Lạt bên bờ hồ Xuân Hương với công trình nghệ thuật bông hoa dã quỳ và nụ hoa Atiso khổng lồ được thiết kế bằng kính màu, lấp lánh phản chiếu đẹp mắt bởi ánh sáng.</p><p>Buổi tối Quý khách tự do tản bộ Chợ Đà Lạt thưởng thức sữa đậu nành và bánh tráng nướng tại khu phố Tăng Bạt Hổ. Nghỉ đêm tại Đà Lạt.</p><p><br></p><p>- <strong>Mua sắm đặc sản Đà Lạt tại cơ sở mứt Thanh Nhu</strong>: các loại trái cây sấy giòn, sấy dẻo, nước cốt dâu tằm – dâu tươi, trà atiso, trà hoa, ...</p><p><br></p><p>Buổi tối Quý khách tự do tản bộ Chợ Đà Lạt thưởng thức sữa đậu nành và bánh tráng nướng tại khu phố Tăng Bạt Hổ.</p><p><br></p><p><strong>Nghỉ đêm tại Đà Lạt.</strong></p><p><br></p><h3>Ngày 3 - ĐÀ LẠT - TP. HỒ CHÍ MINH Số bữa ăn: 2 bữa (Ăn sáng, trưa)</h3><p>Sau khi dùng bữa sáng và trả phòng khách sạn, xe đưa đoàn tham quan:</p><p>- <strong>Nhà thờ Con Gà</strong>: đây là một trong những công trình kiến trúc tôn giáo với phong cách kiến trúc đặc trưng và tiêu biểu được coi là cổ xưa nhất của Đà Lạt. Được xây dựng từ thời Pháp nhưng đến nay vẫn giữ nguyên được nét hiện trạng ban đầu.</p><p>- <strong>Dinh I</strong>: còn được biết đến là Dinh Bảo Đại 1 – King Palace. Tọa lạc tại một ngon đồi xung quanh được bao bọc bởi những rừng thông xanh biếc. Cùng với đó lại nằm cách xa vị trí mặt tiền đường chính. Cho nên khung cảnh cũng như không gian nơi đây trở nên thơ mộng và yên bình hơn bao giờ hết.</p><p><br></p><p>Đoàn dừng tại Bảo Lộc dùng cơm trưa, sau đó khởi hành về điểm đón ban đầu. Chia tay đoàn và kết thúc chương trình du lịch.</p>',
         2790000,
         1500000,
         0,
         4,
         '32FB6LVPFK-BKTRAVEL-1688357036595',
-        '2023-07-03 11:03:57',
-        '2023-07-04 20:02:30',
-        'NOT_STARTED'
+        'NOT_STARTED',
+        '2023-07-03 11:03:57'
     );
 
 INSERT INTO
-    `booked_tour_information` (
-        id,
-        full_name,
-        email,
-        phone,
-        address,
-        total_persons,
-        adult_number,
-        children_number,
-        baby_number,
-        note,
-        total_price,
-        book_time,
-        account_id,
-        tour_id,
-        `status`
-    )
+    `booked_tour_information`
 VALUES (
         3,
         'Tuấn Anh',
@@ -573,9 +541,9 @@ VALUES (
         '',
         599000,
         '2023-06-24 16:24:07',
+        'REJECTED',
         3,
-        12,
-        'REJECTED'
+        12
     ), (
         4,
         'Nguyen Van A',
@@ -589,9 +557,9 @@ VALUES (
         '',
         1797000,
         '2023-06-24 16:27:54',
+        'REJECTED',
         10,
-        12,
-        'REJECTED'
+        12
     ), (
         5,
         'Nguyen Van A',
@@ -605,9 +573,9 @@ VALUES (
         '',
         7590000,
         '2023-06-28 22:07:25',
+        'NOT_PAY',
         10,
-        9,
-        'NOT_PAY'
+        9
     );
 
 INSERT INTO `tourist_list`
@@ -692,12 +660,6 @@ VALUES (
 INSERT INTO
     `touratt_blog_content`
 VALUES (
-        1,
-        'Hồ Tuyền Lâm',
-        'Khi nhắc đến các địa điểm du lịch Đà Lạt, chắc chắn là không thể thiếu Hồ Tuyền Lâm. Hồ Tuyền Lâm đã vô cùng nổi tiếng vì là hồ nước tự nhiên đẹp nhất tại xứ sở mù sương. Bao quanh bởi núi non trập trùng, rừng thông phủ sương. Tất cả tạo nên một vẻ đẹp nên thơ, trữ tình mà bạn không thể bỏ lỡ khi đến Đà Lạt. Nếu đã mệt mỏi với thành phố xô bồ, ồn ã, hãy về đây để được hòa mình vào thiên nhiên. \nNhững bạn năng động, muốn được tham gia những hoạt động náo nhiệt cũng đừng lo nhé! Hồ Tuyền Lâm còn cung cấp những hoạt động giải trí vô cùng hấp dẫn. Như là: đi cano, chèo thuyền kayak, đạp xe… Đặc biệt khi đến đây, bạn sẽ không mất phí tham quan.',
-        'https://dalatpalace.vn/wp-content/uploads/2020/03/ho-tuyen-lam-co-gi-choi-768x512-1.jpg',
-        1
-    ), (
         2,
         'Thung lũng Tình Yêu',
         'Thung lũng Tình Yêu cũng nằm trong top những địa điểm đẹp ở Đà Lạt. Thung Lũng Tình Yêu nằm sâu trong sườn đồi, được bao quanh bởi rừng thông xanh ngát. Vì lẽ đó, khí hậu nơi đây rất dễ chịu và mát mẻ. \nĐược thiên nhiên và khí hậu ưu ái, ta có thể chiêm ngưỡng mọi loài hoa khoe sắc tại thung lũng. Nếu đã đến đây, bạn hãy đến đồi Vọng Cảnh nhé!',
@@ -847,4 +809,1189 @@ VALUES (
         'Vườn quốc gia Bến En điểm du lịch sinh thái hấp dẫn với núi, rừng, sông, hồ. Đặc biệt ở đây có hồ sông Mực rộng 3.000ha với hơn 20 hòn đảo lớn nhỏ. Đi thuyền trên sông và thưởng thức những món ăn từ cá mè, khám phá phong tục tập quán của người Thái chắc chắn sẽ là những trải nghiệm đáng nhớ ở khu du lịch Bến En của mọi du khách.\n\nDu ngoạn trên hồ vào buổi bình minh, khi những hòn đảo còn mập mờ trong sương trắng, bạn sẽ có cảm giác lạc vào thế giới thần tiên với sông nước mây trời hư ảo. Ẩn hiện giữa sông nước là những hòn đảo với tên gọi đậm chất trữ tình: Tình Yêu, Hạnh Phúc, Núi Đôi, Hy Vọng,…',
         'https://statics.vinpearl.com/diem-du-lich-thanh-hoa-14_1623941386.jpg',
         6
+    ), (
+        27,
+        'Hồ Tuyền Lâm',
+        'Khi nhắc đến các địa điểm du lịch Đà Lạt, chắc chắn là không thể thiếu Hồ Tuyền Lâm. Hồ Tuyền Lâm đã vô cùng nổi tiếng vì là hồ nước tự nhiên đẹp nhất tại xứ sở mù sương. Bao quanh bởi núi non trập trùng, rừng thông phủ sương. Tất cả tạo nên một vẻ đẹp nên thơ, trữ tình mà bạn không thể bỏ lỡ khi đến Đà Lạt. Nếu đã mệt mỏi với thành phố xô bồ, ồn ã, hãy về đây để được hòa mình vào thiên nhiên. \nNhững bạn năng động, muốn được tham gia những hoạt động náo nhiệt cũng đừng lo nhé! Hồ Tuyền Lâm còn cung cấp những hoạt động giải trí vô cùng hấp dẫn. Như là: đi cano, chèo thuyền kayak, đạp xe… Đặc biệt khi đến đây, bạn sẽ không mất phí tham quan.',
+        'https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_680/v1618222108/blog/edgz24oe7ravmwg7up1p.webp',
+        1
+    );
+
+INSERT INTO `employee` VALUES (1,'OFFLINE',11);
+
+INSERT INTO `customer`
+VALUES (
+        2,
+        'ONLINE',
+        'Thích đi du lịch',
+        'jetbrains.app.for.aresky@gmail.com',
+        10
+    ), (
+        3,
+        'OFFLINE',
+        'Aresky-T',
+        'tuananh11520@gmail.com',
+        NULL
+    ), (
+        4,
+        'ONLINE',
+        'Test Customer',
+        'demosendmail@gmail.com',
+        NULL
+    ), (
+        5,
+        'ONLINE',
+        'nguyen van a',
+        'customerdemo2@gmail.com',
+        NULL
+    ), (
+        7,
+        'ONLINE',
+        'Anh Tuấn Nguyễn',
+        'tn6354103@gmail.com',
+        3
+    ), (
+        8,
+        'OFFLINE',
+        'Aresky',
+        'aresky1105@gmail.com',
+        4
+    ), (
+        9,
+        'OFFLINE',
+        'elite fitness ha noi',
+        'elitefitness@gmail.com',
+        NULL
+    ), (
+        10,
+        'OFFLINE',
+        'test customer',
+        'testgym345@gmail.com',
+        NULL
+    ), (
+        11,
+        'ONLINE',
+        'customer2',
+        'customer2@gmail.com',
+        NULL
+    ), (
+        12,
+        'OFFLINE',
+        'customer 1',
+        'customer1@gmail.com',
+        NULL
+    ), (
+        13,
+        'ONLINE',
+        'customer 3',
+        'customer3@gmail.com',
+        NULL
+    ), (
+        14,
+        'ONLINE',
+        'customer 4',
+        'customer4@gmail.com',
+        NULL
+    );
+
+INSERT INTO `chat_box`
+VALUES (2, 2, 1, '2023-10-29 22:07:05'), (3, 3, 1, '2023-10-27 15:11:02'), (4, 9, 1, '2023-11-07 17:43:51'), (5, 8, 1, '2023-11-09 21:31:44'), (8, 12, 1, '2023-11-10 02:56:54');
+
+INSERT INTO `chat`
+VALUES (
+        1,
+        'xin chao',
+        3,
+        'CUSTOMER',
+        'SEEN',
+        '2023-10-27 15:17:59'
+    ), (
+        2,
+        'bạn có thể tư vấn giúp mình được không ạ',
+        3,
+        'CUSTOMER',
+        'SEEN',
+        '2023-10-27 15:24:15'
+    ), (
+        3,
+        'Dạ vâng nhân viên Tư vấn xin nghe ạ',
+        3,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-10-27 15:27:27'
+    ), (
+        4,
+        'Không biết quý khách có gì thắc mắc về dịch vụ của chúng em, hay quý khách có nhu cầu đặt tour du lịch nhưng chưa biết cách ạ?',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-10-27 15:30:22'
+    ), (
+        5,
+        'bên bạn có tour nào đi Hải Phòng trong tháng này không ạ?',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-10-27 17:27:10'
+    ), (
+        6,
+        'Dạ bên em có 1 tour sẽ bắt đầu vào ngày 30/10/2023, tức là thứ 2 tuần sau, thời gian xuất phát là ...',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-10-27 17:30:44'
+    ), (
+        7,
+        '7 giờ sáng ạ',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-10-27 17:37:31'
+    ), (
+        8,
+        'Chào anh/chị, không biết anh chị có quyết định gì chưa ạ?',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-10-28 13:11:11'
+    ), (
+        9,
+        'hello',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 15:15:54'
+    ), (
+        10,
+        'ban co the tu van khong',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 15:20:37'
+    ), (
+        11,
+        'toi co cau hoi',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 15:21:04'
+    ), (
+        12,
+        'dung lai khi chang co ai',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 15:21:18'
+    ), (
+        13,
+        'vang',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 15:22:01'
+    ), (
+        14,
+        'anh/chi co the hoi bat ky cau hoi nao',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 15:22:17'
+    ), (
+        15,
+        'em se giai dap a',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 15:22:25'
+    ), (
+        16,
+        'ok ban',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 16:09:27'
+    ), (
+        17,
+        'cam on',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 16:23:31'
+    ), (
+        18,
+        'khong co chi a',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 16:26:50'
+    ), (
+        19,
+        'that khong',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 16:27:11'
+    ), (
+        20,
+        'asdfasdf',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 16:27:22'
+    ), (
+        21,
+        'aloasdf',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 16:27:24'
+    ), (
+        22,
+        'lo lo',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 16:27:29'
+    ), (
+        23,
+        'asdf',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 16:27:36'
+    ), (
+        24,
+        'kkk',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 16:28:41'
+    ), (
+        25,
+        'haizz',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 16:29:15'
+    ), (
+        26,
+        'hello',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:15:59'
+    ), (
+        27,
+        'kkk',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:16:07'
+    ), (
+        28,
+        'ok',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:16:52'
+    ), (
+        29,
+        'kkk',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:16:58'
+    ), (
+        30,
+        'huhu',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:17:21'
+    ), (
+        31,
+        'kkk',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:17:25'
+    ), (
+        32,
+        '123',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:17:35'
+    ), (
+        33,
+        'kkk',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:21:13'
+    ), (
+        34,
+        'kkk',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:21:51'
+    ), (
+        35,
+        'koko',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:21:55'
+    ), (
+        36,
+        '123',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:22:14'
+    ), (
+        37,
+        '456',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:22:17'
+    ), (
+        38,
+        'asdfasd',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:22:24'
+    ), (
+        39,
+        'koko',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:23:10'
+    ), (
+        40,
+        'oooo',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:23:12'
+    ), (
+        41,
+        'bug',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:23:18'
+    ), (
+        42,
+        'abc',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:23:43'
+    ), (
+        43,
+        'kkk',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:25:49'
+    ), (
+        44,
+        'xyx',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-07 17:26:10'
+    ), (
+        45,
+        '123',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:26:32'
+    ), (
+        46,
+        'ok',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:31:39'
+    ), (
+        47,
+        '123',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:31:42'
+    ), (
+        48,
+        '=))',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:42:48'
+    ), (
+        49,
+        'nhu cc',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-07 17:42:52'
+    ), (
+        50,
+        'kkk',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-07 17:45:08'
+    ), (
+        51,
+        'chao ban',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-07 17:45:13'
+    ), (
+        52,
+        'xin chao',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-07 17:45:44'
+    ), (
+        53,
+        'hello',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:35:56'
+    ), (
+        54,
+        'chao anh',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 14:36:18'
+    ), (
+        55,
+        'ban co the tu van giup minh duoc khong',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:36:51'
+    ), (
+        56,
+        'minh dang rat phan van',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:42:19'
+    ), (
+        57,
+        'da anh/chi cu hoi di a',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 14:42:41'
+    ), (
+        58,
+        'em se ho tro thong tin cho anh chi',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 14:43:16'
+    ), (
+        59,
+        'cam on ban',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:43:21'
+    ), (
+        60,
+        'ok ok',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:43:52'
+    ), (
+        61,
+        'alo alo',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:44:58'
+    ), (
+        62,
+        'da nhân viên chăm sóc khách hàng của BK TRAVEL xin chào quý khách',
+        4,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 14:45:25'
+    ), (
+        63,
+        'khong biết anh chị có thắc mắc gì muốn được tư vấn ạ?',
+        4,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 14:45:58'
+    ), (
+        64,
+        'cảm ơn bạn, mình có thể thanh toán tour đã book bằng các hình thức nào ạ?',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:47:01'
+    ), (
+        65,
+        'mình hiện đang ở miền núi',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:47:39'
+    ), (
+        66,
+        'thanks',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:47:46'
+    ), (
+        67,
+        'abcxyz',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 14:50:09'
+    ), (
+        68,
+        'hello',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:09:59'
+    ), (
+        69,
+        'kkkk',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:13:04'
+    ), (
+        70,
+        '000',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:24:25'
+    ), (
+        71,
+        '123',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:26:01'
+    ), (
+        72,
+        'alo ',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:26:08'
+    ), (
+        73,
+        'chào bạn',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:26:18'
+    ), (
+        74,
+        'ban tu van cho minh duoc khong',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:30:58'
+    ), (
+        75,
+        'hello',
+        5,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:40:26'
+    ), (
+        76,
+        'hello',
+        3,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-09 21:43:23'
+    ), (
+        77,
+        'da van',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 21:44:05'
+    ), (
+        78,
+        'chao anh',
+        3,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-09 21:44:17'
+    ), (
+        79,
+        'thank you',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 21:55:13'
+    ), (
+        80,
+        'hello',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 22:17:10'
+    ), (
+        81,
+        'chao ban',
+        5,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 22:17:22'
+    ), (
+        82,
+        'ban co the tu van cho minh khong',
+        5,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-09 22:17:32'
+    ), (
+        83,
+        'da vang',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-09 22:17:41'
+    ), (
+        84,
+        'ok',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 00:52:13'
+    ), (
+        85,
+        '123',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 00:53:35'
+    ), (
+        86,
+        '321',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 00:53:39'
+    ), (
+        87,
+        'ơ kìa',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 00:53:49'
+    ), (
+        88,
+        'bị sao á',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 00:53:53'
+    ), (
+        89,
+        'kkk',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 00:53:59'
+    ), (
+        90,
+        'alo alo',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 00:55:00'
+    ), (
+        91,
+        'nghe đây',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 00:55:16'
+    ), (
+        92,
+        '123',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 01:30:46'
+    ), (
+        93,
+        'ok',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:30:52'
+    ), (
+        94,
+        'kkk',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 01:31:01'
+    ), (
+        95,
+        'xin chao',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:31:24'
+    ), (
+        96,
+        'alo alo',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:31:33'
+    ), (
+        97,
+        'ơ',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 01:31:41'
+    ), (
+        98,
+        'vâng, bên em hiện chỉ có hình thức thanh toán tại điểm xuất phát thôi ạ',
+        4,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 01:34:23'
+    ), (
+        99,
+        'mình chưa hiểu lắm ạ',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:34:39'
+    ), (
+        100,
+        'bạn có thể giải thích cụ thể hơn được không',
+        4,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:34:51'
+    ), (
+        101,
+        'dạ cụ thể là tại điểm xuất phát, quý khách sẽ thanh toán tiền cho nhân viên ở đó ạ',
+        4,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 01:35:36'
+    ), (
+        102,
+        'à à',
+        4,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-10 01:36:08'
+    ), (
+        103,
+        'mình hiểu rồi',
+        4,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-10 01:36:14'
+    ), (
+        104,
+        'mình cảm ơn nha',
+        4,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-10 01:36:22'
+    ), (
+        105,
+        'alo alo',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 01:55:53'
+    ), (
+        106,
+        'Alo',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 02:24:29'
+    ), (
+        107,
+        'hello',
+        5,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-10 12:39:12'
+    ), (
+        108,
+        '1234',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 12:40:25'
+    ), (
+        109,
+        'xin chao quy khach',
+        2,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 12:40:54'
+    ), (
+        110,
+        'xin chao',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-10 12:41:11'
+    ), (
+        111,
+        'alo',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-11 01:12:20'
+    ), (
+        112,
+        '123',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-11 01:38:01'
+    ), (
+        113,
+        'xin chao ban',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-11 01:40:25'
+    ), (
+        114,
+        '456',
+        5,
+        'EMPLOYEE',
+        'SEEN',
+        '2023-11-11 01:42:20'
+    ), (
+        115,
+        'hello',
+        5,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-11 11:32:05'
+    ), (
+        116,
+        '123455',
+        5,
+        'CUSTOMER',
+        'NEW',
+        '2023-11-11 11:33:50'
+    ), (
+        117,
+        'hello',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-11 14:08:00'
+    ), (
+        118,
+        'how are you?',
+        2,
+        'CUSTOMER',
+        'SEEN',
+        '2023-11-11 14:08:23'
+    ), (
+        119,
+        'i\'m fine, thanks!',
+        2,
+        'EMPLOYEE',
+        'NEW',
+        '2023-11-11 14:09:02'
+    );
+
+INSERT INTO `mail_box`
+VALUES (1, 2, 1, '2023-10-28 12:20:11'), (2, 3, 1, '2023-10-30 05:24:12'), (6, 7, 1, '2023-11-04 09:18:55'), (7, 8, 1, '2023-11-06 22:15:39'), (8, 12, 1, '2023-11-10 12:52:40'), (9, 11, 1, '2023-11-10 13:05:39'), (
+        10,
+        13,
+        1,
+        '2023-11-10 13:30:01'
+    ), (
+        11,
+        14,
+        1,
+        '2023-11-10 19:19:44'
+    );
+
+INSERT INTO `mail`
+VALUES (
+        1,
+        'email test title',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus arcu nec dolor congue sagittis. Proin vitae elementum mauris, non ornare elit. Donec erat augue, dignissim et diam nec, consequat ullamcorper magna. Proin eu mauris at massa sodales vehicula. Donec facilisis a massa sit amet molestie. Donec sed laoreet ante. Nullam vulputate justo turpis, eu semper massa elementum sit amet. Maecenas at accumsan mi. Donec a ante in eros tincidunt pretium eu quis ipsum. Maecenas id ipsum vitae justo tincidunt aliquet non eget risus. Donec dapibus justo vel vehicula egestas. In vehicula euismod quam, ac rhoncus massa iaculis eget. Ut vel luctus justo. Ut tellus magna, semper ultrices lacinia ac, commodo sit amet libero.',
+        1,
+        'CUSTOMER',
+        '2023-10-28 12:21:48'
+    ), (
+        2,
+        'mail test 2 title',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        1,
+        'CUSTOMER',
+        '2023-10-28 15:33:13'
+    ), (
+        3,
+        'Hello world',
+        'Tôi chỉ test chức năng này thôi.\nXin cảm ơn.',
+        2,
+        'CUSTOMER',
+        '2023-10-30 05:24:12'
+    ), (
+        7,
+        'Thắc mắc vấn đề thanh toán',
+        'bên mình có dự tính thêm tính năng thanh toán trực tuyến không ạ?',
+        1,
+        'CUSTOMER',
+        '2023-11-01 19:11:41'
+    ), (
+        9,
+        'Hello world',
+        'test send mail to employee with socket',
+        6,
+        'CUSTOMER',
+        '2023-11-04 09:18:55'
+    ), (
+        10,
+        'hello bk travel',
+        'test send mail 2',
+        6,
+        'CUSTOMER',
+        '2023-11-04 09:32:39'
+    ), (
+        11,
+        'test mail 3',
+        'test content',
+        6,
+        'CUSTOMER',
+        '2023-11-04 09:34:34'
+    ), (
+        12,
+        'test send mail 4',
+        'xin chào, tôi đang test thử chức năng gửi mail thời gian thực...',
+        6,
+        'CUSTOMER',
+        '2023-11-04 09:35:32'
+    ), (
+        13,
+        'test title from thich di du lich',
+        'content from thich di du lich',
+        1,
+        'CUSTOMER',
+        '2023-11-06 18:00:00'
+    ), (
+        14,
+        'title demo for mail 1',
+        'content demo',
+        7,
+        'CUSTOMER',
+        '2023-11-06 22:15:39'
+    ), (
+        15,
+        'title demo for mail 2',
+        'content demo',
+        7,
+        'CUSTOMER',
+        '2023-11-06 22:16:28'
+    ), (
+        16,
+        'title 3',
+        'content 3',
+        7,
+        'CUSTOMER',
+        '2023-11-06 22:18:57'
+    ), (
+        17,
+        'title 4',
+        'content 4',
+        7,
+        'CUSTOMER',
+        '2023-11-06 22:19:48'
+    ), (
+        18,
+        'mail 5 title',
+        'content for mail 5',
+        7,
+        'CUSTOMER',
+        '2023-11-06 22:20:51'
+    ), (
+        19,
+        'Hello Heo Con',
+        'test mail',
+        2,
+        'CUSTOMER',
+        '2023-11-07 17:07:10'
+    ), (
+        20,
+        'Hello Heo Con 2',
+        'test mail 2',
+        2,
+        'CUSTOMER',
+        '2023-11-07 17:08:40'
+    ), (
+        21,
+        'mail 1',
+        'hello world',
+        8,
+        'CUSTOMER',
+        '2023-11-10 12:52:40'
+    ), (
+        22,
+        'mail 2',
+        'hello world',
+        8,
+        'CUSTOMER',
+        '2023-11-10 12:53:23'
+    ), (
+        23,
+        'mail 3',
+        'hello world',
+        8,
+        'CUSTOMER',
+        '2023-11-10 12:56:59'
+    ), (
+        24,
+        'mail 1',
+        'hello coder',
+        9,
+        'CUSTOMER',
+        '2023-11-10 13:05:39'
+    ), (
+        25,
+        'mail 1 ',
+        'hello world',
+        10,
+        'CUSTOMER',
+        '2023-11-10 13:30:01'
+    ), (
+        26,
+        'mail 1',
+        'hello bk travel',
+        11,
+        'CUSTOMER',
+        '2023-11-10 19:19:44'
+    );
+
+INSERT INTO `mail_reply`
+VALUES (
+        1,
+        'Reply \"mail test 2 title\"',
+        '<p>Follow me: <a href=\"https://bk-travel.vercel.app/\" rel=\"noopener noreferrer\" target=\"_blank\">https://bk-travel.vercel.app/</a></p>',
+        2,
+        '2023-10-29 01:33:04'
+    ), (
+        2,
+        'mail reply for jetbrains.app.for.aresky@gmail.com',
+        '<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus arcu nec dolor congue sagittis. </strong></p><p><br></p><p>Proin vitae elementum mauris, non ornare elit. Donec erat augue, dignissim et diam nec, consequat ullamcorper magna. Proin eu mauris at massa sodales vehicula. Donec facilisis a massa sit amet molestie. Donec sed laoreet ante. Nullam vulputate justo turpis, eu semper massa elementum sit amet. Maecenas at accumsan mi. Donec a ante in eros tincidunt pretium e...',
+        1,
+        '2023-10-29 21:13:38'
+    ), (
+        3,
+        'Trả lời - Hello world',
+        '<p>Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!</p>',
+        2,
+        '2023-10-30 05:39:30'
+    ), (
+        4,
+        'demo',
+        '<p>hello</p>',
+        3,
+        '2023-10-30 09:58:43'
+    ), (
+        5,
+        'test 2',
+        '<p>hello world</p>',
+        3,
+        '2023-10-30 10:20:33'
+    ), (
+        6,
+        'hello',
+        '<p>demo</p>',
+        1,
+        '2023-11-01 17:01:51'
+    ), (
+        7,
+        'hello 123456',
+        '<p>hello thich di du lich</p>',
+        1,
+        '2023-11-01 17:04:42'
+    ), (
+        8,
+        'Hello',
+        '<p>Chào!</p><p><br></p><p>Cảm ơn quý khách đã liên hệ tới chùng tôi!</p>',
+        12,
+        '2023-11-04 22:41:46'
+    ), (
+        9,
+        'reply test mail 3',
+        '<p>hello</p><p><br></p><p>content to you</p>',
+        11,
+        '2023-11-04 22:53:39'
+    ), (
+        10,
+        'reply \"Hello bk travel\"',
+        '<p>\"test send mail 2\" content to you</p>',
+        10,
+        '2023-11-04 23:30:10'
+    ), (
+        11,
+        'reply \"Hello bk travel\" part 2',
+        '<p>\"test send mail 2\" content to you part 2 demo</p>',
+        10,
+        '2023-11-04 23:31:59'
+    ), (
+        12,
+        'reply \"Hello bk travel\" part 3',
+        '<p>\"<strong>test send mail 2</strong>\" content to you part 2 demo</p><p><br></p><p><strong>Hello world!</strong></p>',
+        10,
+        '2023-11-04 23:34:28'
+    ), (
+        13,
+        'BK Travel Trả lời \"Thắc mắc vấn đề thanh toán\"',
+        '<p>anh chị có thể truy cập link dưới đây để tham khảo ạ:</p><p><br></p><p><a href=\"https://www.facebook.com/profile.php?id=100078811796824\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.facebook.com/profile.php?id=100078811796824</a></p>',
+        7,
+        '2023-11-04 23:38:47'
+    ), (
+        14,
+        'Reply \"mail 5 title\"',
+        '<p>hello world</p>',
+        18,
+        '2023-11-10 13:43:25'
+    ), (
+        15,
+        'Reply \"title 3\"',
+        '<p>hello world</p>',
+        16,
+        '2023-11-10 13:49:05'
     );

@@ -11,6 +11,7 @@ import java.util.Date;
 public class EmployeeDetails {
     private Integer id;
     private Integer accountId;
+    private String accountEmail;
     private String status;
     private String fullName;
     private String avatarUrl;

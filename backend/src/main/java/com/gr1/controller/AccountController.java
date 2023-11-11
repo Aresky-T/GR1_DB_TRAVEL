@@ -2,8 +2,8 @@ package com.gr1.controller;
 
 import com.gr1.dtos.request.UpdatePasswordForm;
 import com.gr1.dtos.response.AccountResponse;
-import com.gr1.email.IEmailService;
 import com.gr1.entity.Account;
+import com.gr1.service.IMailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ public class AccountController {
     @Autowired
     private IAccountService accountService;
     @Autowired
-    private IEmailService emailService;
+    private IMailService mailService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -75,7 +75,7 @@ public class AccountController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam String email) throws MessagingException {
-        emailService.sendForgotPasswordEmail(email);
+        mailService.sendForgotPasswordEmail(email);
         return ResponseEntity.ok("success");
     }
 

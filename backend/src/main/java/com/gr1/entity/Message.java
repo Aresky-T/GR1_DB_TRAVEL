@@ -17,15 +17,16 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "sender", nullable = false)
     private ESender sender;
-
-    @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
-    private CustomerSupport room;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @Column(name = "sent_at", nullable = false)
     private Date sentAt;
+
+    public Message (ESender sender) {
+        this.sender = sender;
+    }
 }

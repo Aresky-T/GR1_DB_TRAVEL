@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByAccount(Account account);
     Optional<Employee> findByStatus(EEmployeeStatus status);
-    Boolean existsEmployeeByStatusIs(EEmployeeStatus status);
+    Boolean existsByStatus(EEmployeeStatus status);
 }

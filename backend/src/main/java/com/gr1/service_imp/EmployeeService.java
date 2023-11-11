@@ -16,7 +16,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public boolean existsOnlineEmployee () {
-        return employeeRepository.existsEmployeeByStatusIs(EEmployeeStatus.ONLINE);
+        return employeeRepository.existsByStatus(EEmployeeStatus.ONLINE);
     }
 
     @Override

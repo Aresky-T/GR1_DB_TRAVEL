@@ -48,7 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/auth/**",
             "/api/v1/account/forgot-password",
             "/api/v1/reviews/tour/{tourId}",
-            "/api/v1/customer-support/connect/guest",
+            "/api/v1/chat/connect/guest",
+            "/api/v1/mail/send",
 
             // for controller
             "/ws/**"

@@ -3,16 +3,23 @@ package com.gr1.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "Chat")
 public class Chat extends Message{
+    @Column(name = "message", nullable = false)
     private String message;
-    private EMessageStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private EMessageStatus status = EMessageStatus.NEW;
+
+    @ManyToOne
+    @JoinColumn(name = "chat_box", nullable = false, foreignKey = @ForeignKey(name = "chat_fk_1"))
+    private ChatBox chatBox;
 
     public Chat () {
 
