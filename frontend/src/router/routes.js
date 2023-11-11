@@ -8,8 +8,8 @@ import TourDetailsPage from "../pages/Global/TourDetailsPage";
 import LoginPage from "../pages/Global/LoginPage";
 import RegisterPage from "../pages/Global/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
-import {ROLE} from "../constant/role";
-import {ROUTE} from "../constant/route";
+import { ROLE } from "../constant/role";
+import { ROUTE } from "../constant/route";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import ProfilePage from "../pages/User/ProfilePage";
@@ -34,59 +34,60 @@ import BookedTourDetailsAdminContainer from "../containers/admin/Booking/BookedT
 export const routes = [
     {
         path: ROUTE.HOME_ADMIN,
-        element: <LayoutAdmin/>,
+        element: <LayoutAdmin />,
         title: 'Admin',
         isPrivate: true,
         role: [ROLE.ADMIN],
         children: [
-            {path: '', element: <HomeAdminContainer/>, title: "Home"},
-            {path: ROUTE.TOUR_MANAGER, element: <TourManagerContainer/>},
-            {path: ROUTE.TOURIST_ATTRACTION_MANAGER, element: <TouristAttractionManagerContainer/>},
-            {path: ROUTE.BOOKING_MANAGER, element: <BookingManagerContainer/>},
-            {path: ROUTE.ACCOUNT_MANAGER, element: <AccountManagerContainer/>},
-            {path: ROUTE.TOURIST_ATTRACTION_DETAIL_ADMIN, element: <TouristAttractionDetailAdminContainer/>},
-            {path: ROUTE.TOURIST_ATTRACTION_CREATE, element: <TouristAttractionCreateContainer/>},
-            {path: ROUTE.TOUR_DETAILS_ADMIN, element: <TourDetailsAdminContainer/>},
-            {path: ROUTE.TOUR_CREATE, element: <TourCreateContainer/>},
-            {path: ROUTE.STAFF_MANAGER, element: <TourGuideManagerContainer/>},
-            {path: ROUTE.TOUR_GUIDE_DETAILS, element: <TourGuideDetailsContainer/>},
-            {path: ROUTE.TOUR_GUIDE_CREATE, element: <TourGuideCreateContainer/>},
-            {path: ROUTE.BOOKED_TOUR_DETAILS_ADMIN, element: <BookedTourDetailsAdminContainer/>}
+            { path: '', element: <HomeAdminContainer />, title: "Home" },
+            { path: ROUTE.TOUR_MANAGER, element: <TourManagerContainer /> },
+            { path: ROUTE.TOURIST_ATTRACTION_MANAGER, element: <TouristAttractionManagerContainer /> },
+            { path: ROUTE.BOOKING_MANAGER, element: <BookingManagerContainer /> },
+            { path: ROUTE.ACCOUNT_MANAGER, element: <AccountManagerContainer /> },
+            { path: ROUTE.TOURIST_ATTRACTION_DETAIL_ADMIN, element: <TouristAttractionDetailAdminContainer /> },
+            { path: ROUTE.TOURIST_ATTRACTION_CREATE, element: <TouristAttractionCreateContainer /> },
+            { path: ROUTE.TOUR_DETAILS_ADMIN, element: <TourDetailsAdminContainer /> },
+            { path: ROUTE.TOUR_CREATE, element: <TourCreateContainer /> },
+            { path: ROUTE.STAFF_MANAGER, element: <TourGuideManagerContainer /> },
+            { path: ROUTE.TOUR_GUIDE_DETAILS, element: <TourGuideDetailsContainer /> },
+            { path: ROUTE.TOUR_GUIDE_CREATE, element: <TourGuideCreateContainer /> },
+            { path: ROUTE.BOOKED_TOUR_DETAILS_ADMIN, element: <BookedTourDetailsAdminContainer /> }
         ],
     },
     {
         path: ROUTE.LAYOUT,
-        element: <Layout/>,
+        element: <Layout />,
         isPrivate: false,
         children: [
-            {path: ROUTE.HOME, element: <HomePage/>},
-            {path: ROUTE.TOUR, element: <TourPage/>},
-            {path: ROUTE.TOUR_DETAIL, element: <TourDetailsPage/>},
-            {path: ROUTE.TOURIST_ATTRACTION, element: <TouristAttractionPage/>},
-            {path: ROUTE.TOURIST_ATTRACTION_DETAIL, element: <BlogPage/>},
-            {path: ROUTE.LOGIN, element: <LoginPage/>},
-            {path: ROUTE.REGISTER, element: <RegisterPage/>},
-            {path: ROUTE.BOOKING, element: <BookingPage/>},
-            {path: ROUTE.FORGOT_PASSWORD, element: <ForgotPasswordPage/>}
+            { path: ROUTE.HOME, element: <HomePage /> },
+            { path: ROUTE.TOUR, element: <TourPage /> },
+            { path: ROUTE.TOUR_DETAIL, element: <TourDetailsPage /> },
+            { path: ROUTE.TOURIST_ATTRACTION, element: <TouristAttractionPage /> },
+            { path: ROUTE.TOURIST_ATTRACTION_DETAIL, element: <BlogPage /> },
+            { path: ROUTE.LOGIN, element: <LoginPage /> },
+            { path: ROUTE.REGISTER, element: <RegisterPage /> },
+            { path: ROUTE.BOOKING, element: <BookingPage /> },
+            { path: ROUTE.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
+            // { path: ROUTE.CONTACT, element: <ContactPage /> }
         ]
     },
     {
         path: ROUTE.LAYOUT,
-        element: <Layout/>,
+        element: <Layout />,
         isPrivate: true,
         role: [ROLE.USER],
         children: [
-            {path: ROUTE.PROFILE, element: <ProfilePage/>},
+            { path: ROUTE.PROFILE, element: <ProfilePage /> },
         ]
     },
-    {path: ROUTE.LOGIN_ADMIN, element: <LoginAdminPage/>, isPrivate: false},
-    {path: '*', element: <NotFoundPage/>, title: '404', is404: true}
+    { path: ROUTE.LOGIN_ADMIN, element: <LoginAdminPage />, isPrivate: false },
+    { path: '*', element: <NotFoundPage />, title: '404', is404: true }
 ].map((route) => {
     if (route.isPrivate) {
         return {
             ...route,
             element: (
-                <PrivateRoute>
+                <PrivateRoute role={route.role}>
                     {route.element}
                 </PrivateRoute>
             )

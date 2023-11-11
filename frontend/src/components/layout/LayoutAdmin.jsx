@@ -1,9 +1,15 @@
 import SidebarContainer from "../../containers/admin/Bar/SidebarContainer";
 import NavbarContainer from "../../containers/admin/Bar/NavbarContainer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 const LayoutAdmin = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+        location.state = "admin_location"
+    }, [location])
 
     return (
         <>

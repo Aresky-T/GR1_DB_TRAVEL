@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../redux/selector";
-import { Fragment, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ROLE } from "../../constant/role";
 import logo from "../../assets/logo/png/logo-no-background.png";
 import { links } from "../../constant/links";
@@ -13,28 +13,81 @@ const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [rightLinks, setRightLink] = useState([]);
     const [isShowSidebar, setIsShowSidebar] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-
-    const mainLinks = links.filter(link => link.align === 'center');
+    const [publicLinks, setPublicLinks] = useState([]);
 
     function handleChangeShowSidebar() {
         setIsShowSidebar(!isShowSidebar);
     }
 
-    useEffect(() => {
-        if (account.accessToken && account.role === ROLE.USER) {
-            setRightLink(links.filter(link => {
-                return link.align === 'right' && link.isPublic === false
-            }));
-        } else {
-            setRightLink(links.filter(link => {
-                return link.align === 'right' && link.isPublic === true
-            }))
-        }
+    const onFilterLinks = useCallback((links) => {
+        const isLoggedIn = account.accessToken != null && account.role === ROLE.USER;
+        return links.map(link => {
+            switch (link.title) {
+                case "login":
+                    link.isPublic = !isLoggedIn;
+                    break;
+                case "register":
+                    link.isPublic = !isLoggedIn;
+                    break;
+                case "logout":
+                    link.isPublic = isLoggedIn;
+                    break;
+                case "profile":
+                    link.isPublic = isLoggedIn;
+                    break;
+                default:
+                    break;
+            }
 
+            return link;
+        }).filter(link => link.isPublic);
     }, [account])
+
+    const renderLinks = (links) => {
+        return links.map(link => {
+            const current = location.pathname === link.path ? "active" : "";
+            if (link.path) {
+                return (
+                    <Link
+                        key={link.name}
+                        to={link.path}
+                        className={`link-item ${link.align} ${current} ${link.class}`}
+                    >
+                        {link.name}
+                    </Link>
+                )
+            } else {
+                return (
+                    <button
+                        key={link.name}
+                        className={`link-item ${link.class}`}
+                        onClick={() => {
+                            link.action(dispatch);
+                        }}
+                    >
+                        {link.name}
+                    </button>
+                )
+            }
+        })
+    }
+
+    const renderCenterLinks = () => {
+        const centerLinks = publicLinks.filter(link => link.align === "center");
+        return renderLinks(centerLinks);
+    }
+
+    const renderRightLinks = () => {
+        const rightLinks = publicLinks.filter(link => link.align === "right");
+        return renderLinks(rightLinks);
+    }
+
+    useEffect(() => {
+        const filterLinks = onFilterLinks(links);
+        setPublicLinks(filterLinks)
+    }, [onFilterLinks])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -51,41 +104,16 @@ const Header = () => {
 
     return (
         <div className={isScrolled ? 'header main header-fixed' : 'header main'}>
-            <div className='header-item logo'
+            <div className='header__item logo'
                 onClick={() => { navigate('/') }}
             >
                 <img src={logo} alt='logo' />
             </div>
-            <div className='header-item link-main'>
-                {mainLinks.map(link => (
-                    <Link
-                        to={link.path}
-                        key={link.name}
-                        className={location.pathname === link.path ? 'link-item active' : 'link-item'}
-                    >{link.name}</Link>
-                ))}
+            <div className='header__item center-links'>
+                {renderCenterLinks()}
             </div>
-            <div className='header-item link-right'>
-                {rightLinks.map((link) => (
-                    <Fragment key={link.name}>
-                        {link.isPublic ?
-                            <Link
-                                to={link.path}
-                                className={link.title === 'register' ? 'link-item register-link' : 'link-item'}
-                            >
-                                {link.name}
-                            </Link>
-                            :
-                            <Link
-                                to={link.path}
-                                className={link.title === 'logout' ? 'link-item logout' : 'link-item'}
-                                onClick={link.action ? () => { link.action(dispatch) } : ''}
-                            >
-                                {link.name}
-                            </Link>
-                        }
-                    </Fragment>
-                ))}
+            <div className='header__item right-links'>
+                {renderRightLinks()}
             </div>
             <div className={isShowSidebar ? "menu-icon active" : "menu-icon"}
                 onClick={handleChangeShowSidebar}
@@ -94,7 +122,10 @@ const Header = () => {
                 <div className="bar"></div>
                 <div className="bar"></div>
             </div>
-            {isShowSidebar && <Sidebar handleChangeShowSidebar={handleChangeShowSidebar} />}
+            {isShowSidebar && <Sidebar
+                handleChangeShowSidebar={handleChangeShowSidebar}
+                publicLinks={publicLinks}
+            />}
         </div>
     )
 }

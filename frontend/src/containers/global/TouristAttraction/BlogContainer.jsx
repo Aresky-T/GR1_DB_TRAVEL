@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Blog from '../../../components/global/TouristAttraction/Blog'
-import {useParams} from 'react-router-dom';
-import {getTouristAttractionDetailsApi} from '../../../api/global/tourist_attraction.api';
+import { useParams } from 'react-router-dom';
+import { getTouristAttractionDetailsApi } from '../../../api/global/tourist_attraction.api';
 
 const BlogContainer = () => {
     const param = useParams();
@@ -11,7 +11,6 @@ const BlogContainer = () => {
         const id = param.id;
         getTouristAttractionDetailsApi(id)
             .then(res => {
-                console.log(res.data)
                 setData(res.data);
             })
             .catch(err => {
@@ -20,7 +19,7 @@ const BlogContainer = () => {
     }, [param]);
 
     return (
-        <Blog touristAttraction={data}/>
+        <Blog touristAttraction={data} />
     )
 }
 

@@ -20,14 +20,14 @@ const authSlice = createSlice({
             storage.set("role", action.payload.role);
         },
         logout: (state) => {
+            removeLocalStorage("accountInfo");
             state.accessToken = null;
             state.role = null;
-            removeLocalStorage("accountInfo");
         }
     }
 })
 
-export  const {
+export const {
     saveAccountInfo,
     logout
 } = authSlice.actions;

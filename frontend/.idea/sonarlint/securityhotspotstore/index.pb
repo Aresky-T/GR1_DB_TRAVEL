@@ -13,8 +13,6 @@ N
 src/pages/user/ProfilePage.jsx,e\c\ec7e59f81d4ad9600aaac2b6a28ec4fec83d851b
 U
 %src/components/layout/LayoutAdmin.jsx,e\1\e188160385822ef7e26af4d3f1735d9092280005
-Y
-)src/pages/Global/SearchResultListPage.jsx,8\2\82b3de282f4748419f149c01471d399e76a7ea0f
 <
 src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d
 N
@@ -119,3 +117,50 @@ _
 /src/components/admin/Account/AccountManager.jsx,7\d\7daff338018e8702c41c0b5c575205d474d1c9d8
 D
 src/router/routes.js,c\8\c87406d5a02559934dad087edf45543c03a211cc
+G
+src/validation/index.js,2\f\2ff9e2de38ef34778e935e1e350380afad1b90ae
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+K
+src/redux/selector/index.js,f\d\fd077c5c8397745939a83e6bf1932b274c10dcbb
+]
+-src/containers/global/Auth/LoginContainer.jsx,4\7\476125738575f26976b4f6e98537eeeb14cc37dd
+B
+src/redux/store.js,b\f\bf7810bad55c8c031251188a5290278db09e4dfc
+M
+src/pages/Global/BlogPage.jsx,4\5\45f2a21a8889de9853acf085c0d558db0d6888f7
+U
+%src/components/helmet/HelmetTitle.jsx,2\0\208e79e2e1ac2e7031511b4db5be163472e4a35c
+N
+src/pages/User/ProfilePage.jsx,d\d\dd8c6a04c2c247da894695f970a3ca529661887c
+Q
+!src/pages/Global/RegisterPage.jsx,5\a\5aec01017fc1f163d1d6ac2a892055bafb47abca
+Y
+)src/components/global/Loading/Loading.jsx,d\4\d41634bc6314d4c7aa50c2849d47a65b83cfd37d
+P
+ src/components/chat/ChatIcon.jsx,8\3\83973a756d2516d932efaaa2235e839fdbf1cc61
+T
+$src/styles/animation/_animation.scss,1\7\17fa1fd81643f4b8623009393df0bea811c001e8
+N
+src/redux/slices/chat.slice.js,d\5\d54a55b6ae355345e161428c3174622047bb4a8c
+O
+src/components/chat/ChatBox.jsx,8\9\894d43ea18990e0b39911c77d0b3fabb9f197b78
+E
+src/utils/validate.js,d\1\d1b974f1b72351dc1e8d087e7400de3c4acd8c84
+P
+ src/components/chat/ChatItem.jsx,d\9\d91980d0e048f481f6304031a299e825b50c0af5
+R
+"src/styles/global/_text_field.scss,3\8\38df8071dcb8d898a40d31e1fdae4583ce1a7366
+S
+#src/components/styled/TextField.jsx,f\0\f08a75a383caa25c13deee77781338843cc0c8bb
+L
+src/styles/global/_chat.scss,b\3\b3dac8ffbd19040d566b3c782eff75c5f64e1c50
+U
+%src/components/chat/ChatBoxHeader.jsx,d\c\dc6b25ca794841332b21e929c644844ec866bf68
+U
+%src/containers/chat/ChatContainer.jsx,8\0\80246103343acf0bb9a125e4ddf6d947a864c27a
+U
+%src/containers/chat/ChatBox/index.jsx,1\6\16a592538ecfe568a9a9b91a428a5cad2804b8fe
+S
+#src/components/chat/ChatBoxBody.jsx,f\d\fdfec6059f320341cc8faaf79dacd7585ee50c58
