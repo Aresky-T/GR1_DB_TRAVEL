@@ -21,6 +21,10 @@ export default function ValidateUtils({ formData, rules, messages }) {
 
     const ruleMethods = {
         required: (valueInput, valueRule) => {
+            if (typeof valueInput === "number") {
+                return valueInput !== 0;
+            }
+            
             return valueInput.trim() !== '';
         },
         minLength: (valueInput, valueRule) => {

@@ -9,6 +9,18 @@ export const successAlert = async (title, text, confirmButtonText) => {
     })
 }
 
+export const warningAlert = async (title, text, options) => {
+    return await Swal.fire({
+        title: title,
+        icon: "warning",
+        text: text,
+        showCancelButton: options?.cancelButtonText,
+        showConfirmButton: options?.confirmButtonText,
+        cancelButtonText: options?.cancelButtonText || "",
+        confirmButtonText: options?.confirmButtonText || "",
+    })
+}
+
 export const warningAlertNoCancel = async (title, text, confirmButtonText) => {
     return await Swal.fire({
         title: title,
@@ -30,11 +42,15 @@ export const warningAlertWithCancel = async (title, text, confirmButtonText, can
 }
 
 
-export const errorAlert = async (title, text) => {
+export const errorAlert = async (title, text, options) => {
     return await Swal.fire({
         title: title,
         icon: "error",
         text: text,
+        showCancelButton: options?.cancelButtonText,
+        showConfirmButton: options?.confirmButtonText,
+        cancelButtonText: options?.cancelButtonText || "",
+        confirmButtonText: options?.confirmButtonText || "",
     })
 }
 
@@ -44,8 +60,8 @@ export const questionAlert = async (title, text, confirmButtonText, cancelButton
         icon: "question",
         text: text,
         showCancelButton: true,
-        cancelButtonText: cancelButtonText,
-        confirmButtonText: confirmButtonText
+        cancelButtonText: cancelButtonText ?? "OK",
+        confirmButtonText: confirmButtonText ?? "Confirm"
     })
 }
 

@@ -5,6 +5,7 @@ export const authSelector = (state) => state.auth;
 export const loadingSelector = (state) => state.loading.status;
 export const mailSelector = (state) => state.mail;
 export const chatSelector = (state) => state.chat;
+export const bookingSelector = (state) => state.booking;
 
 export const useAuth = () => {
     return useSelector(authSelector);
@@ -20,4 +21,8 @@ export const useMail = () => {
 
 export const useChat = () => {
     return useSelector(chatSelector);
+}
+
+export const useBooking = () => {
+    return useSelector(bookingSelector);
 }

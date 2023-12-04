@@ -4,6 +4,7 @@ import profileReduce from "./slices/profile.slice"
 import loadingReducer from "./slices/loading.slice"
 import mailReducer from "./slices/mail.slice"
 import chatReducer from "./slices/chat.slice"
+import bookingReducer from "./slices/booking.slice"
 
 const rootReducer = {
     auth: authReducer,
@@ -11,6 +12,7 @@ const rootReducer = {
     loading: loadingReducer,
     mail: mailReducer,
     chat: chatReducer,
+    booking: bookingReducer,
 }
 
 const store = configureStore({

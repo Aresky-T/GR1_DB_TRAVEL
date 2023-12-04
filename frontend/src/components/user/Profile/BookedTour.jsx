@@ -56,10 +56,10 @@ const BookedTour = ({ bookedTour }) => {
                 newStatus = "Chưa thanh toán";
                 break;
             case 'PAY_UP':
-                newStatus = "Chưa thanh toán";
+                newStatus = "Đã thanh toán";
                 break;
             case 'REJECTED':
-                newStatus = "Chưa thanh toán";
+                newStatus = "Từ chối đặt tour";
                 break;
             default:
         }

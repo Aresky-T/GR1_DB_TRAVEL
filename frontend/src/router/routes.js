@@ -30,6 +30,7 @@ import TourGuideCreateContainer from "../containers/admin/TourGuide/TourGuideCre
 import AccountManagerContainer from "../containers/admin/Account/AccountManagerContainer";
 import BookingManagerContainer from "../containers/admin/Booking/BookingManagerContainer";
 import BookedTourDetailsAdminContainer from "../containers/admin/Booking/BookedTourDetailsAdminContainer";
+import CheckoutPage from "../pages/User/CheckoutPage";
 
 export const routes = [
     {
@@ -78,6 +79,7 @@ export const routes = [
         role: [ROLE.USER],
         children: [
             { path: ROUTE.PROFILE, element: <ProfilePage /> },
+            { path: ROUTE.CHECKOUT, element: <CheckoutPage /> },
         ]
     },
     { path: ROUTE.LOGIN_ADMIN, element: <LoginAdminPage />, isPrivate: false },
