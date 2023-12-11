@@ -3,6 +3,8 @@ export const ROUTE = {
     HOME: '/',
     LOGIN: '/login',
     PROFILE: '/profile',
+    PROFILE_ACCOUNT_INFO: '/profile/account-info',
+    PROFILE_BOOKED_TOUR: '/profile/booked-tour',
     BOOKING: '/booking/:tourCode',
     REGISTER: '/register',
     TOUR: '/tour',

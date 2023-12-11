@@ -31,6 +31,8 @@ import AccountManagerContainer from "../containers/admin/Account/AccountManagerC
 import BookingManagerContainer from "../containers/admin/Booking/BookingManagerContainer";
 import BookedTourDetailsAdminContainer from "../containers/admin/Booking/BookedTourDetailsAdminContainer";
 import CheckoutPage from "../pages/User/CheckoutPage";
+import AccountInfo from "../components/user/profile2/menu";
+import BookedTourList from "../components/user/profile2/booked_tour";
 
 export const routes = [
     {
