@@ -113,10 +113,10 @@ const PersonalInfo = () => {
   };
 
   const handleResetForm = () => {
-    setErrors(new Map());
+    removeErrors();
     for (const key in formData) {
-      if (Object.hasOwnProperty.call(profile, key) && profile[key]) {
-        setFormData((prevForm) => ({ ...prevForm, [key]: profile[key] }));
+      if (Object.hasOwnProperty.call(profile, key)) {
+        setFormData((prevForm) => ({ ...prevForm, [key]: profile[key] ?? "" }));
       }
     }
   };

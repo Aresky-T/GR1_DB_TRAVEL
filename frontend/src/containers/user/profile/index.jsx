@@ -4,9 +4,8 @@ import { useProfile } from "../../../redux/selector";
 import defaultAvatar from "../../../assets/image/avatar.jpg";
 import { FaRegUser } from "react-icons/fa6";
 import { FaOpencart } from "react-icons/fa";
-import "./style.scss";
 import AccountInfo from "../../../components/user/profile2/account_info";
-import BookedTourList from "../../../components/user/profile2/booked_tour";
+import BookedTourInfo from "../../../components/user/profile2/booked_tour";
 
 const menu = [
   {
@@ -21,7 +20,7 @@ const menu = [
     label: "Tour đã đặt",
     icon: FaOpencart,
     path: ROUTE.PROFILE_BOOKED_TOUR,
-    element: BookedTourList,
+    element: BookedTourInfo,
   },
 ];
 

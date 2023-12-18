@@ -251,8 +251,9 @@ body {
 @import url("./global/_main_session.scss");
 
 // user style
-@import url("./user/_profile.scss");
+// @import url("./user/_profile.scss");
 @import url("./user/_checkout.scss");
+@import url("./user/_profile_ver2.scss");
 
 // responsive
 @media screen and (max-width: 855px) {
