@@ -70,9 +70,7 @@ public class BookTourService implements IBookTourService {
 
     @Transactional
     @Override
-    public void create (BookTourRequest request, String username) {
-
-        Account account = accountService.findByUsername(username);
+    public BookedTour create (BookTourRequest request, Account account) {
         Tour tour = tourService.findById(request.getTourId());
 
         if(Boolean.TRUE.equals(bookTourRepository.existByAccountAndTour(account, tour))){
@@ -84,26 +82,7 @@ public class BookTourService implements IBookTourService {
             touristLists.add(dto.buildEntity());
         }
 
-        int totalPersons = request.getAdultNumber() + request.getChildrenNumber() + request.getBabyNumber();
-        int adultPrice = request.getAdultNumber() * tour.getPrice1();
-        int childPrice = request.getChildrenNumber() * tour.getPrice2();
-        int babyPrice = request.getBabyNumber() * tour.getPrice3();
-        int totalPrice = adultPrice + childPrice + babyPrice;
-
-        BookedTour bt = new BookedTour();
-        bt.setFullName(request.getFullName());
-        bt.setEmail(request.getEmail());
-        bt.setPhone(request.getPhone());
-        bt.setAddress(request.getAddress());
-        bt.setTotalPersons(totalPersons);
-        bt.setAdultNumber(request.getAdultNumber());
-        bt.setChildrenNumber(request.getChildrenNumber());
-        bt.setBabyNumber(request.getBabyNumber());
-        bt.setNote(request.getNote());
-        bt.setTotalPrice(totalPrice);
-        bt.setTour(tour);
-        bt.setAccount(account);
-        bt.setStatus(EBookedTour.NOT_PAY);
+        BookedTour bt = getBookedTour(request, account, tour);
 
         BookedTour newBookedTour = bookTourRepository.save(bt);
         touristLists.forEach(t -> {
@@ -112,6 +91,7 @@ public class BookTourService implements IBookTourService {
         touristListRepository.saveAll(touristLists);
         tour.setAvailableSeats(tour.getAvailableSeats() - newBookedTour.getTotalPersons());
         tourService.saveTour(tour);
+        return newBookedTour;
     }
 
     @Transactional
@@ -132,5 +112,38 @@ public class BookTourService implements IBookTourService {
     @Override
     public Boolean isBookedTourByUser (Account account, Tour tour) {
         return bookTourRepository.existByAccountAndTour(account, tour);
+    }
+
+    @Override
+    public void save(BookedTour entity) {
+        bookTourRepository.save(entity);
+    }
+
+    private BookedTour getBookedTour(BookTourRequest request, Account account, Tour tour) {
+        int totalPersons = request.getAdultNumber() + request.getChildrenNumber() + request.getBabyNumber();
+        int adultPrice = request.getAdultNumber() * tour.getPrice1();
+        int childPrice = request.getChildrenNumber() * tour.getPrice2();
+        int babyPrice = request.getBabyNumber() * tour.getPrice3();
+        int totalPrice = adultPrice + childPrice + babyPrice;
+
+        if(totalPrice != request.getTotalPrice()){
+            throw new CustomException("Tổng chi phí không hợp lệ!");
+        }
+
+        BookedTour bt = new BookedTour();
+        bt.setFullName(request.getFullName());
+        bt.setEmail(request.getEmail());
+        bt.setPhone(request.getPhone());
+        bt.setAddress(request.getAddress());
+        bt.setTotalPersons(totalPersons);
+        bt.setAdultNumber(request.getAdultNumber());
+        bt.setChildrenNumber(request.getChildrenNumber());
+        bt.setBabyNumber(request.getBabyNumber());
+        bt.setNote(request.getNote());
+        bt.setTotalPrice(totalPrice);
+        bt.setTour(tour);
+        bt.setAccount(account);
+        bt.setStatus(EBookedTour.NOT_PAY);
+        return bt;
     }
 }

@@ -153,7 +153,7 @@ const BookedTourInfo = () => {
 
   const renderBookedTourList = useCallback(() => {
     if (bookedTours.length === 0) {
-      return "Danh sách trống!";
+      return <>Danh sách trống!</>;
     }
 
     return bookedTours.map((item) => (
@@ -193,7 +193,7 @@ const BookedTourInfo = () => {
             <LoadingIndicator />
           ) : (
             <>
-              {bookedTours.length && (
+              {bookedTours.length > 0 && (
                 <div className="profile__note">
                   Bạn đã đặt {bookedTours.length} tour:
                 </div>

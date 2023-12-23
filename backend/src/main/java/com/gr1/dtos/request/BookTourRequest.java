@@ -17,5 +17,6 @@ public class BookTourRequest {
     private Integer babyNumber;
     private String note;
     private Integer tourId;
+    private Integer totalPrice;
     private List<TouristListRequest> touristList;
 }

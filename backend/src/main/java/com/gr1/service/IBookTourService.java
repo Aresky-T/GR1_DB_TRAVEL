@@ -16,7 +16,8 @@ public interface IBookTourService {
     Page<BookedTour> findAll(Pageable pageable);
     BookedTour findById (int id);
     BookedTour findByTourAndAccount (int tourId, String username);
-    void create (BookTourRequest request, String username);
+    BookedTour create (BookTourRequest request, Account account);
     void changeStatusBookedTour(BookedTour bookedTour, EBookedTour status);
     Boolean isBookedTourByUser(Account account, Tour tour);
+    void save(BookedTour entity);
 }

@@ -8,8 +8,14 @@ import { differenceInYears } from "date-fns";
 import { useFormik } from "formik";
 import { bookTourForUserApi } from "../../api/user/booking.api";
 import { offLoading } from "../../redux/slices/loading.slice";
-import { errorAlert, successAlert } from "../../config/sweetAlertConfig";
+import {
+  errorAlert,
+  successAlert,
+  warningAlert,
+} from "../../config/sweetAlertConfig";
 import { ROUTE } from "../../constant/route";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
 
 const CheckoutContainer = () => {
   const navigate = useNavigate();
@@ -117,30 +123,54 @@ const CheckoutContainer = () => {
   };
 
   const handleSubmitBooking = (type) => {
+    const { adultNumber, babyNumber, childrenNumber, totalPrice } =
+      formik.values;
+    const formData = {};
+    const bookingMap = new Map();
+    bookingMap.set("fullName", representative.fullName);
+    bookingMap.set("email", representative.email);
+    bookingMap.set("phone", representative.phone);
+    bookingMap.set("address", representative.address);
+    bookingMap.set("note", note);
+    bookingMap.set("touristList", touristList);
+    bookingMap.set("tourId", tour.id);
+    bookingMap.set("adultNumber", adultNumber);
+    bookingMap.set("babyNumber", babyNumber);
+    bookingMap.set("childrenNumber", childrenNumber);
+    bookingMap.set("totalPrice", totalPrice);
+
+    bookingMap.entries();
+    bookingMap.forEach((value, key) => {
+      formData[key] = value;
+    });
+
     switch (type) {
       case "VNPAY":
+        axios
+          .post("http://localhost:8080/payment/vnpay/submit", formData, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((res) => {
+            const returnURL = res.data;
+            window.open(
+              returnURL,
+              "_blank"
+              // "width=1000,height=1000,scrollbars=yes"
+            );
+          })
+          .catch((err) => {
+            if (err instanceof AxiosError) {
+              const message =
+                err.response?.data?.message ??
+                "Không thể đặt tour, vui lòng kiểm tra lại!";
+              toast(message, { icon: "⚠️" });
+            }
+          });
+
         break;
       case "PAY_LATER":
-        const { adultNumber, babyNumber, childrenNumber } = formik.values;
-        const formData = {};
-        const bookingMap = new Map();
-        bookingMap.set("fullName", representative.fullName);
-
-        bookingMap.set("fullName", representative.fullName);
-        bookingMap.set("email", representative.email);
-        bookingMap.set("phone", representative.phone);
-        bookingMap.set("address", representative.address);
-        bookingMap.set("note", note);
-        bookingMap.set("touristList", touristList);
-        bookingMap.set("tourId", tour.id);
-        bookingMap.set("adultNumber", adultNumber);
-        bookingMap.set("babyNumber", babyNumber);
-        bookingMap.set("childrenNumber", childrenNumber);
-        bookingMap.entries();
-        bookingMap.forEach((value, key) => {
-          formData[key] = value;
-        });
-
         bookTourForUserApi(formData, accessToken, dispatch)
           .then((res) => {
             dispatch(offLoading());
@@ -317,7 +347,12 @@ const CheckoutContainer = () => {
           </div>
           <div className="buttons-area">
             <div className="buttons-area--submit">
-              <button className="vnpay">
+              <button
+                className="vnpay"
+                onClick={() => {
+                  handleSubmitBooking("VNPAY");
+                }}
+              >
                 <img src={vnpayLogo} alt="" />
               </button>
               <button

@@ -45,7 +45,8 @@ public class BookTourController {
     @PostMapping()
     public ResponseEntity<?> bookTour(@RequestBody BookTourRequest request, Authentication authentication){
         String username = authentication.getName();
-        bookTourService.create(request, username);
+        Account account = accountService.findByUsername(username);
+        bookTourService.create(request, account);
         return ResponseEntity.ok("success");
     }
 

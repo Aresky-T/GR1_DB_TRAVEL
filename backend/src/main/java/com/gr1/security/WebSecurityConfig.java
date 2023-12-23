@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/mail/send",
 
             // for controller
-            "/ws/**"
+            "/ws/**",
+            "/payment/**"
     };
 
     @Bean

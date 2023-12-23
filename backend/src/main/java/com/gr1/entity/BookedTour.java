@@ -55,9 +55,13 @@ public class BookedTour implements Serializable {
     @Column(name = "book_time", nullable = false)
     private Date bookTime;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private EBookedTour status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "form_of_payment")
+    private EFormOfPayment formOfPayment;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false, referencedColumnName = "id")
