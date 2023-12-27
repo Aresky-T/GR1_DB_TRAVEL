@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookTourService implements IBookTourService {
@@ -73,23 +74,38 @@ public class BookTourService implements IBookTourService {
     public BookedTour create (BookTourRequest request, Account account) {
         Tour tour = tourService.findById(request.getTourId());
 
+        // check customer has booked this tour, an exception is returned
         if(Boolean.TRUE.equals(bookTourRepository.existByAccountAndTour(account, tour))){
-            throw new CustomException("bạn đã đặt tour này rồi, không thể đặt lại!");
+            throw new CustomException("Bạn đã đặt tour này rồi, không thể đặt lại!");
         }
 
-        List<TouristList> touristLists = new ArrayList<>();
-        for (TouristListRequest dto : request.getTouristList()) {
-            touristLists.add(dto.buildEntity());
+        // check tourist count
+        int touristsCount = request.getTouristList().size();
+        int currentAvailableSeats = tour.getAvailableSeats();
+
+        if(touristsCount > currentAvailableSeats){
+            throw  new CustomException("Tổng số hành khách không thể vượt quá " + currentAvailableSeats + "!");
         }
 
+        // generate the booked tour entity for requested information and save to database
         BookedTour bt = getBookedTour(request, account, tour);
-
         BookedTour newBookedTour = bookTourRepository.save(bt);
-        touristLists.forEach(t -> {
-            t.setBookedTour(newBookedTour);
-        });
+
+        // convert tourist dto list to the tourist entities list and set booked tour id for tourist entity
+        List<TouristList> touristLists = request.getTouristList()
+                .stream()
+                .map(t -> {
+                    TouristList touristList = t.buildEntity();
+                    touristList.setBookedTour(newBookedTour);
+                    return touristList;
+                })
+                .collect(Collectors.toList());
+
+        // save all tourist entities list to database
         touristListRepository.saveAll(touristLists);
-        tour.setAvailableSeats(tour.getAvailableSeats() - newBookedTour.getTotalPersons());
+
+        // update available seats of current tour if successfully booked tour
+        tour.setAvailableSeats(currentAvailableSeats - touristsCount);
         tourService.saveTour(tour);
         return newBookedTour;
     }
@@ -120,10 +136,15 @@ public class BookTourService implements IBookTourService {
     }
 
     private BookedTour getBookedTour(BookTourRequest request, Account account, Tour tour) {
-        int totalPersons = request.getAdultNumber() + request.getChildrenNumber() + request.getBabyNumber();
-        int adultPrice = request.getAdultNumber() * tour.getPrice1();
-        int childPrice = request.getChildrenNumber() * tour.getPrice2();
-        int babyPrice = request.getBabyNumber() * tour.getPrice3();
+        int adultNumber = request.getAdultNumber();
+        int childNumber = request.getChildrenNumber();
+        int babyNumber = request.getBabyNumber();
+        int totalPersons = adultNumber + childNumber + babyNumber;
+
+        int adultPrice = adultNumber * tour.getPrice1();
+        int childPrice = childNumber * tour.getPrice2();
+        int babyPrice = babyNumber * tour.getPrice3();
+
         int totalPrice = adultPrice + childPrice + babyPrice;
 
         if(totalPrice != request.getTotalPrice()){
@@ -136,9 +157,9 @@ public class BookTourService implements IBookTourService {
         bt.setPhone(request.getPhone());
         bt.setAddress(request.getAddress());
         bt.setTotalPersons(totalPersons);
-        bt.setAdultNumber(request.getAdultNumber());
-        bt.setChildrenNumber(request.getChildrenNumber());
-        bt.setBabyNumber(request.getBabyNumber());
+        bt.setAdultNumber(adultNumber);
+        bt.setChildrenNumber(childNumber);
+        bt.setBabyNumber(babyNumber);
         bt.setNote(request.getNote());
         bt.setTotalPrice(totalPrice);
         bt.setTour(tour);
