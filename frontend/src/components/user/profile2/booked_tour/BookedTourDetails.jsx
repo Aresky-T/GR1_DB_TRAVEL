@@ -9,7 +9,9 @@ const BookedTourDetails = ({ bookedTour }) => {
   const isShowReviewButton =
     bookedTour.tourStatus === "FINISHED" && bookedTour.status === "PAY_UP";
   const isShowCancelTourButton =
-    bookedTour.tourStatus === "NOT_STARTED" && bookedTour.status !== "PAY_UP";
+    bookedTour.tourStatus === "NOT_STARTED" && bookedTour.status === "NOT_PAY";
+  const isShowPaymentButton =
+    bookedTour.tourStatus === "NOT_STARTED" && bookedTour.status === "NOT_PAY";
 
   const renderTouristList = (touristList) => {
     const renderGender = (gender) => {
@@ -200,6 +202,9 @@ const BookedTourDetails = ({ bookedTour }) => {
             <button className="profile-btn submit" onClick={handleShowDetail}>
               Xem chi tiết
             </button>
+          )}
+          {isShowPaymentButton && (
+            <button className="profile-btn normal">Thanh toán</button>
           )}
         </div>
       </div>
