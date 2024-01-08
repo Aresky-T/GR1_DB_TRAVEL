@@ -1,7 +1,6 @@
 package com.gr1.service_imp;
 
 import com.gr1.dtos.request.BookTourRequest;
-import com.gr1.dtos.request.BookedTourUpdate;
 import com.gr1.dtos.request.TouristListRequest;
 import com.gr1.entity.*;
 import com.gr1.exception.CustomException;
@@ -10,14 +9,15 @@ import com.gr1.repository.TouristListRepository;
 import com.gr1.service.IAccountService;
 import com.gr1.service.IBookTourService;
 import com.gr1.service.ITourService;
+import com.gr1.service.ITouristListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,7 +31,7 @@ public class BookTourService implements IBookTourService {
     @Autowired
     private BookTourRepository bookTourRepository;
     @Autowired
-    private TouristListRepository touristListRepository;
+    private ITouristListService touristListService;
 
     @Override
     public List<BookedTour> findAllByUser (String username) {
@@ -71,8 +71,8 @@ public class BookTourService implements IBookTourService {
 
     @Transactional
     @Override
-    public BookedTour create (BookTourRequest request, Account account) {
-        Tour tour = tourService.findById(request.getTourId());
+    public BookedTour create (BookTourRequest bookingInfo, Account account) {
+        Tour tour = tourService.findById(bookingInfo.getTourId());
 
         // check customer has booked this tour, an exception is returned
         if(Boolean.TRUE.equals(bookTourRepository.existByAccountAndTour(account, tour))){
@@ -80,48 +80,61 @@ public class BookTourService implements IBookTourService {
         }
 
         // check tourist count
-        int touristsCount = request.getTouristList().size();
+        int touristsCount = bookingInfo.getTouristList().size();
         int currentAvailableSeats = tour.getAvailableSeats();
 
         if(touristsCount > currentAvailableSeats){
-            throw  new CustomException("Tổng số hành khách không thể vượt quá " + currentAvailableSeats + "!");
+            throw new CustomException("Tổng số hành khách không thể vượt quá " + currentAvailableSeats + "!");
+        }
+
+        int adultNumber = bookingInfo.getAdultNumber();
+        int childNumber = bookingInfo.getChildrenNumber();
+        int babyNumber = bookingInfo.getBabyNumber();
+        int adultPrice = adultNumber * tour.getPrice1();
+        int childPrice = childNumber * tour.getPrice2();
+        int babyPrice = babyNumber * tour.getPrice3();
+        int totalPrice = adultPrice + childPrice + babyPrice;
+
+        if(totalPrice != bookingInfo.getTotalPrice()){
+            throw new CustomException("Tổng chi phí không hợp lệ!");
         }
 
         // generate the booked tour entity for requested information and save to database
-        BookedTour bt = getBookedTour(request, account, tour);
-        BookedTour newBookedTour = bookTourRepository.save(bt);
+//        BookedTour bt = getBookedTour(request, account, tour);
+        BookedTour entity = bookingInfo.buildEntity();
+        entity.setTour(tour);
+        entity.setAccount(account);
+        BookedTour bt = bookTourRepository.save(entity);
 
         // convert tourist dto list to the tourist entities list and set booked tour id for tourist entity
-        List<TouristList> touristLists = request.getTouristList()
-                .stream()
-                .map(t -> {
-                    TouristList touristList = t.buildEntity();
-                    touristList.setBookedTour(newBookedTour);
-                    return touristList;
-                })
-                .collect(Collectors.toList());
-
         // save all tourist entities list to database
-        touristListRepository.saveAll(touristLists);
+        touristListService.saveAll(bookingInfo.getTouristList(), bt);
 
         // update available seats of current tour if successfully booked tour
         tour.setAvailableSeats(currentAvailableSeats - touristsCount);
         tourService.saveTour(tour);
-        return newBookedTour;
+
+        return bt;
     }
 
     @Transactional
     @Override
-    public void changeStatusBookedTour (BookedTour bookedTour, EBookedTour status) {
+    public void changeStatusBookedTour (BookedTour bookedTour, EBookedTour status, EFormOfPayment formOfPayment) {
         if(bookedTour.getStatus().equals(EBookedTour.REJECTED)){
             throw new CustomException("Trạng thái đặt tour đã bị từ chối nên không thể cập nhật!");
         }
+
+        if(status.equals(EBookedTour.PAY_UP) && Objects.isNull(formOfPayment)){
+            throw new CustomException("Chưa chọn hình thức thanh toán!");
+        }
+
         Tour tour = bookedTour.getTour();
         if(status.equals(EBookedTour.REJECTED)){
             tour.setAvailableSeats(tour.getAvailableSeats() + bookedTour.getTotalPersons());
             tourService.saveTour(tour);
         }
         bookedTour.setStatus(status);
+        bookedTour.setFormOfPayment(status == EBookedTour.PAY_UP ? formOfPayment : null);
         bookTourRepository.save(bookedTour);
     }
 
@@ -131,40 +144,35 @@ public class BookTourService implements IBookTourService {
     }
 
     @Override
-    public void save(BookedTour entity) {
-        bookTourRepository.save(entity);
+    public Boolean existById(int id) {
+        return bookTourRepository.existsById(id);
     }
 
-    private BookedTour getBookedTour(BookTourRequest request, Account account, Tour tour) {
-        int adultNumber = request.getAdultNumber();
-        int childNumber = request.getChildrenNumber();
-        int babyNumber = request.getBabyNumber();
-        int totalPersons = adultNumber + childNumber + babyNumber;
+    @Override
+    public BookedTour save(BookedTour entity) {
+        return bookTourRepository.save(entity);
+    }
 
-        int adultPrice = adultNumber * tour.getPrice1();
-        int childPrice = childNumber * tour.getPrice2();
-        int babyPrice = babyNumber * tour.getPrice3();
+    @Service
+    public static class TouristListService implements ITouristListService {
 
-        int totalPrice = adultPrice + childPrice + babyPrice;
-
-        if(totalPrice != request.getTotalPrice()){
-            throw new CustomException("Tổng chi phí không hợp lệ!");
+        @Autowired
+        private TouristListRepository touristListRepository;
+        @Override
+        public void saveAll(List<TouristList> touristList) {
+            if(Objects.nonNull(touristList)){
+                touristListRepository.saveAll(touristList);
+            }
         }
 
-        BookedTour bt = new BookedTour();
-        bt.setFullName(request.getFullName());
-        bt.setEmail(request.getEmail());
-        bt.setPhone(request.getPhone());
-        bt.setAddress(request.getAddress());
-        bt.setTotalPersons(totalPersons);
-        bt.setAdultNumber(adultNumber);
-        bt.setChildrenNumber(childNumber);
-        bt.setBabyNumber(babyNumber);
-        bt.setNote(request.getNote());
-        bt.setTotalPrice(totalPrice);
-        bt.setTour(tour);
-        bt.setAccount(account);
-        bt.setStatus(EBookedTour.NOT_PAY);
-        return bt;
+        @Override
+        public void saveAll(List<TouristListRequest> dtos, BookedTour bookedTour) {
+            List<TouristList> entities = dtos.stream().map(t -> {
+                TouristList tourist = t.buildEntity();
+                tourist.setBookedTour(bookedTour);
+                return tourist;
+            }).collect(Collectors.toList());
+            saveAll(entities);
+        }
     }
 }

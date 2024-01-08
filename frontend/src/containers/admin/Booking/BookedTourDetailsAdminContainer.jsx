@@ -17,11 +17,13 @@ const BookedTourDetailsAdminContainer = () => {
             email: '',
             address: '',
             phone: '',
-            adultNumber: '',
-            childrenNumber: '',
-            babyNumber: '',
+            adultNumber: 0,
+            childrenNumber: 0,
+            babyNumber: 0,
+            totalPersons: 0,
             note: '',
             status: '',
+            formOfPayment: '',
             totalPrice: '',
             tourId: '',
             touristList: [],
@@ -32,17 +34,20 @@ const BookedTourDetailsAdminContainer = () => {
     })
 
     const handleChangeStatusBookedTour = () => {
-        const {status, id} = bookedTour.values;
+        const {status, formOfPayment, id} = bookedTour.values;
         changeStatusBookedTourApi({
             bookedTourId: id,
-            status: status
+            status,
+            formOfPayment
         }, account.accessToken)
         .then(res => {
             successAlert("Thành công", "Đã cập nhật thành công!", "OK");
         })
         .catch(err => {
             const message = err.response.data.message;
-            errorAlert("Thất bại", message);
+            errorAlert("Thất bại", message, {
+                cancelButtonText: "Kiểm tra lại"
+            });
         })
     }
 

@@ -3,11 +3,8 @@ package com.gr1.service_imp;
 import com.gr1.configuration.BookingStorageConfig;
 import com.gr1.configuration.VNPayConfig;
 import com.gr1.dtos.request.BookTourRequest;
-import com.gr1.entity.Account;
-import com.gr1.entity.Tour;
-import com.gr1.exception.CustomException;
+import com.gr1.entity.BookedTour;
 import com.gr1.service.IBookTourService;
-import com.gr1.service.ITourService;
 import com.gr1.service.IVNPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,23 +21,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class VNPayService implements IVNPayService {
 
     @Autowired
-    private ITourService tourService;
-
-    @Autowired
     private BookingStorageConfig bookingStorage;
 
     @Autowired
     private IBookTourService bookTourService;
 
     @Override
-    public String createOrder(BookTourRequest bookTourRequest, Account account, String urlReturn) {
-        Tour tour = tourService.findById(bookTourRequest.getTourId());
-        String bookingInfo = "THANH TOAN TOUR " + tour.getTourCode();
-        if(bookTourService.isBookedTourByUser(account, tour)){
-           throw new CustomException("Bạn đã đặt tour này rồi!");
-        }
-
-        int total = bookTourRequest.getTotalPrice();
+    public String createOrder(int amount, String content, String urlReturn) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
@@ -52,11 +39,11 @@ public class VNPayService implements IVNPayService {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(total*100));
+        vnp_Params.put("vnp_Amount", String.valueOf(amount*100));
         vnp_Params.put("vnp_CurrCode", "VND");
 
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", bookingInfo);
+        vnp_Params.put("vnp_OrderInfo", content);
         vnp_Params.put("vnp_OrderType", orderType);
 
         String locate = "vn";
@@ -106,13 +93,15 @@ public class VNPayService implements IVNPayService {
         String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
+        System.out.println(paymentUrl);
         return paymentUrl;
     }
 
     @Override
     public int orderReturn(HttpServletRequest request) {
         AtomicInteger paymentStatus = new AtomicInteger(0);
-        BookTourRequest bookingInfo = bookingStorage.getBookingInfo();
+        BookTourRequest bookingInfo = bookingStorage.getBookingInfo().getValue();
+        Integer bookedTourId = bookingStorage.getBookedTourId().getValue();
         // ex: PaymentStatus = 0; pending
         //  PaymentStatus = 1; success
         //  PaymentStatus = -1; Failed
@@ -133,6 +122,7 @@ public class VNPayService implements IVNPayService {
         }
 
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
         int vnp_Amount = Integer.parseInt(request.getParameter("vnp_Amount"));
 
         if (fields.containsKey("vnp_SecureHashType")) {
@@ -147,18 +137,30 @@ public class VNPayService implements IVNPayService {
         String signValue = VNPayConfig.hashAllFields(fields);
 
         if (signValue.equals(vnp_SecureHash)) {
-            boolean checkOrderId = Objects.nonNull(bookingInfo); // vnp_TxnRef exists in your database
-            boolean checkAmount = vnp_Amount/100 == bookingInfo.getTotalPrice(); // vnp_Amount is valid (Check vnp_Amount VNPAY returns compared to the amount of the code (vnp_TxnRef) in the Your database).
+            boolean isBookingInfoNonNull = bookingInfo != null;
+            boolean isBookedTourIdNonNull = bookedTourId != null;
+
+            boolean checkBookingInfo = isBookingInfoNonNull || isBookedTourIdNonNull;
             boolean checkBookingStatus = paymentStatus.get() == 0; // PaymentStatus = 0 (pending)
 
-            if(checkOrderId) {
+            if (checkBookingInfo) {
+                int totalPrice = 0;
+
+                if(isBookedTourIdNonNull){
+                    BookedTour bt = bookTourService.findById(bookedTourId);
+                    totalPrice = bt.getTotalPrice();
+                } else {
+                    totalPrice = bookingInfo.getTotalPrice();
+                }
+
+                boolean checkAmount = totalPrice == vnp_Amount/100 ; // vnp_Amount is valid (Check vnp_Amount VNPAY returns compared to the amount of the code (vnp_TxnRef) in the Your database).
                 if(checkAmount) {
                     if (checkBookingStatus){
-                        if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
+                        if ("00".equals(vnp_ResponseCode)) {
                             paymentStatus.set(1);
                         } else {
                             // Here Code update PaymentStatus = 0 into your Database
-                            paymentStatus.set(0);
+                            paymentStatus.set(Integer.parseInt(vnp_ResponseCode));
                         }
                         System.out.println("{\"RspCode\":\"00\",\"Message\":\"Confirm Success\"}");
                     } else {
@@ -171,11 +173,11 @@ public class VNPayService implements IVNPayService {
                 }
             } else {
                 paymentStatus.set(4);
-                System.out.println("{\"RspCode\":\"04\",\"Message\":\"Order not Found\"}");
+                System.out.println("{\"RspCode\":\"04\",\"Message\":\"Invalid Booking\"}");
             }
         } else {
             paymentStatus.set(-1);
-            System.out.println("{\"RspCode\":\"97\",\"Message\":\"Invalid Checksum\"}");
+            System.out.println("{\"RspCode\":\"-1\",\"Message\":\"Invalid Checksum\"}");
         }
         return paymentStatus.get();
     }

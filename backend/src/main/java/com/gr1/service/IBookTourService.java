@@ -1,10 +1,7 @@
 package com.gr1.service;
 
 import com.gr1.dtos.request.BookTourRequest;
-import com.gr1.entity.Account;
-import com.gr1.entity.BookedTour;
-import com.gr1.entity.EBookedTour;
-import com.gr1.entity.Tour;
+import com.gr1.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,7 +14,8 @@ public interface IBookTourService {
     BookedTour findById (int id);
     BookedTour findByTourAndAccount (int tourId, String username);
     BookedTour create (BookTourRequest request, Account account);
-    void changeStatusBookedTour(BookedTour bookedTour, EBookedTour status);
+    void changeStatusBookedTour(BookedTour bookedTour, EBookedTour status, EFormOfPayment formOfPayment);
     Boolean isBookedTourByUser(Account account, Tour tour);
-    void save(BookedTour entity);
+    Boolean existById(int id);
+    BookedTour save(BookedTour entity);
 }

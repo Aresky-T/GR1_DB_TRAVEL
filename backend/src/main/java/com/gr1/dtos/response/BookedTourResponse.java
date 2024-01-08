@@ -1,6 +1,7 @@
 package com.gr1.dtos.response;
 
 import com.gr1.entity.EBookedTour;
+import com.gr1.entity.EFormOfPayment;
 import com.gr1.entity.ETourStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class BookedTourResponse {
     private String tourTourCode;
     private EBookedTour status;
     private ETourStatus tourStatus;
+    private EFormOfPayment formOfPayment;
     private String bookTime;
     private List<TouristListDTO> touristList;
 

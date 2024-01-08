@@ -2,13 +2,11 @@ package com.gr1.controller;
 
 import com.gr1.configuration.BookingStorageConfig;
 import com.gr1.dtos.request.BookTourRequest;
-import com.gr1.entity.Account;
-import com.gr1.entity.BookedTour;
-import com.gr1.entity.EBookedTour;
-import com.gr1.entity.EFormOfPayment;
-import com.gr1.service.IAccountService;
+import com.gr1.entity.*;
 import com.gr1.service.IBookTourService;
+import com.gr1.service.ITouristListService;
 import com.gr1.service.IVNPayService;
+import com.gr1.service.IVnPayPaymentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,39 +28,90 @@ public class VNPayController {
     private IBookTourService bookTourService;
 
     @Autowired
-    private IAccountService accountService;
+    private ITouristListService touristListService;
+
+    @Autowired
+    private IVnPayPaymentInfoService vnPayPaymentInfoService;
 
     @GetMapping("/payment/vnpay_return")
-    public String GetMapping(HttpServletRequest request, Model model){
+    public String handleVnPayReturn(HttpServletRequest request, Model model){
         int paymentStatus = vnPayService.orderReturn(request);
-        String paymentTransactionCode = request.getParameter("vnp_TxnRef");
-        String totalPrice = request.getParameter("vnp_Amount");
-        String orderInfo = request.getParameter("vnp_OrderInfo");
-        String paymentErrorCode = request.getParameter("vnp_ResponseCode");
-        String transactionId = request.getParameter("vnp_TransactionNo");
-        String bankCode = request.getParameter("vnp_BankCode");
-        String paymentDate = request.getParameter("vnp_PayDate");
+        System.out.println("----------------------------------------------");
+        System.out.println("vnpay payment status: [ " + paymentStatus + " ]");
+        System.out.println("----------------------------------------------");
 
-        model.addAttribute("paymentTransactionCode", paymentTransactionCode);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("orderInfo", orderInfo);
-        model.addAttribute("paymentErrorCode", paymentErrorCode);
-        model.addAttribute("transactionId", transactionId);
-        model.addAttribute("bankCode", bankCode);
-        model.addAttribute("paymentDate", paymentDate);
-        model.addAttribute("paymentStatus", paymentStatus);
+        if(paymentStatus == 24){
+            return "payment/cancel-payment";
+        }
 
-        BookTourRequest bookingInfo = bookingStorage.getBookingInfo();
-        Account account = bookingStorage.getAccount();
+        if (paymentStatus != 1){
+            return "payment/booking-failed";
+        }
 
-        if(paymentStatus == 1){
-            if(bookingInfo != null && account != null){
-                BookedTour newBooking = bookTourService.create(bookingInfo, account);
-                newBooking.setStatus(EBookedTour.PAY_UP);
-                newBooking.setFormOfPayment(EFormOfPayment.VNPAY_ON_WEBSITE);
-                bookTourService.save(newBooking);
+        BookingStorageConfig.BookingStorageElement<Integer> bookedTourIdConfig = bookingStorage.getBookedTourId();
+        BookingStorageConfig.BookingStorageElement<BookTourRequest> bookingInfoConfig = bookingStorage.getBookingInfo();
+        BookingStorageConfig.BookingStorageElement<Account> accountInfoConfig = bookingStorage.getAccount();
+        BookingStorageConfig.BookingStorageElement<Tour> tourInfoConfig = bookingStorage.getTour();
+
+        if(bookedTourIdConfig.getValue() != null){
+            int bookedTourId = bookedTourIdConfig.getValue();
+            handleUpdateBookedTourById(bookedTourId);
+        } else {
+            Account account = accountInfoConfig.getValue();
+            Tour tour = tourInfoConfig.getValue();
+            BookTourRequest bookingInfo = bookingInfoConfig.getValue();
+            if(account != null && tour != null && bookingInfo != null){
+                BookedTour bt = handleSaveNewBookingInfoToDB(bookingInfo, account, tour);
+                bookingStorage.getBookedTourId().setValue(bt.getId());
+            } else {
+                System.out.println("booking storage info element null");
             }
         }
-        return "payment/vnpay_return";
+
+        extractAndAddAttributesToModel(request, model);
+
+        return "payment/booking-success";
+    }
+
+    private void extractAndAddAttributesToModel(HttpServletRequest request, Model model){
+        String[] attributeNames = {
+                "vnp_TxnRef", "vnp_Amount", "vnp_OrderInfo", "vnp_ResponseCode",
+                "vnp_TransactionNo", "vnp_BankCode", "vnp_PayDate"
+        };
+
+        VnPayPaymentInfo vnPayPaymentInfo = new VnPayPaymentInfo();
+        vnPayPaymentInfo.setAmount(request.getParameter("vnp_Amount"));
+        vnPayPaymentInfo.setOrderInfo(request.getParameter("vnp_OrderInfo"));
+        vnPayPaymentInfo.setTxnRef(request.getParameter("vnp_TxnRef"));
+        vnPayPaymentInfo.setTransactionNo(request.getParameter("vnp_TransactionNo"));
+
+        if(bookingStorage.getBookedTourId().getValue() != null) {
+            vnPayPaymentInfo.setBookedTour(bookTourService.findById(bookingStorage.getBookedTourId().getValue()));
+        }
+
+        vnPayPaymentInfoService.save(vnPayPaymentInfo);
+
+        for(String attributeName : attributeNames){
+            String attributeValue = request.getParameter(attributeName);
+            if(attributeValue != null && !attributeValue.isEmpty()){
+                model.addAttribute(attributeName, attributeValue);
+            }
+        }
+    }
+
+    private void handleUpdateBookedTourById(int bookedTourId){
+        BookedTour bookedTour = bookTourService.findById(bookedTourId);
+        saveBookedTourAfterPaymentSuccess(bookedTour);
+    }
+
+    private BookedTour handleSaveNewBookingInfoToDB(BookTourRequest bookingInfo, Account account, Tour tour) {
+        BookedTour bt = bookTourService.create(bookingInfo, account);
+        return saveBookedTourAfterPaymentSuccess(bt);
+    }
+
+    private BookedTour saveBookedTourAfterPaymentSuccess(BookedTour bookedTour){
+        bookedTour.setStatus(EBookedTour.PAY_UP);
+        bookedTour.setFormOfPayment(EFormOfPayment.VNPAY_ON_WEBSITE);
+        return bookTourService.save(bookedTour);
     }
 }

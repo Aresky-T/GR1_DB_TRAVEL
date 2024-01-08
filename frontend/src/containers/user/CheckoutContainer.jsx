@@ -6,16 +6,17 @@ import { useDispatch } from "react-redux";
 import { removeBookingInfo } from "../../redux/slices/booking.slice";
 import { differenceInYears } from "date-fns";
 import { useFormik } from "formik";
-import { bookTourForUserApi } from "../../api/user/booking.api";
+import {
+  bookTourAndPaymentWithVNPayApi,
+  bookTourForUserApi,
+} from "../../api/user/booking.api";
 import { offLoading } from "../../redux/slices/loading.slice";
 import {
-  errorAlert,
   successAlert,
   warningAlert,
 } from "../../config/sweetAlertConfig";
 import { ROUTE } from "../../constant/route";
-import axios, { AxiosError } from "axios";
-import { toast } from "react-hot-toast";
+import { AxiosError } from "axios";
 
 const CheckoutContainer = () => {
   const navigate = useNavigate();
@@ -146,12 +147,7 @@ const CheckoutContainer = () => {
 
     switch (type) {
       case "VNPAY":
-        axios
-          .post("http://localhost:8080/payment/vnpay/submit", formData, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
+        bookTourAndPaymentWithVNPayApi(formData, accessToken)
           .then((res) => {
             const returnURL = res.data;
             window.open(
@@ -165,7 +161,9 @@ const CheckoutContainer = () => {
               const message =
                 err.response?.data?.message ??
                 "Không thể đặt tour, vui lòng kiểm tra lại!";
-              toast(message, { icon: "⚠️" });
+              warningAlert("Cảnh báo", message, {
+                cancelButtonText: "OK",
+              });
             }
           });
 
@@ -187,13 +185,14 @@ const CheckoutContainer = () => {
           })
           .catch((err) => {
             dispatch(offLoading());
-            errorAlert(
-              "Thất bại",
-              "Đặt tour không thành công, vui lòng thử lại!",
-              {
+            if (err instanceof AxiosError) {
+              const message =
+                err.response?.data?.message ??
+                "Không thể đặt tour, vui lòng kiểm tra lại!";
+              warningAlert("Cảnh báo", message, {
                 cancelButtonText: "Kiểm tra lại",
-              }
-            );
+              });
+            }
           });
         break;
       default:

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { paymentBookedTourWithVNPayApi } from "../../../../api/payment";
 
 const BookedTourDetails = ({ bookedTour }) => {
   const [isShowDetails, setIsShowDetails] = useState(false);
@@ -81,6 +82,19 @@ const BookedTourDetails = ({ bookedTour }) => {
     }
   };
 
+  const renderFormOfPayment = (formOfPayment) => {
+    switch (formOfPayment) {
+      case "BANK_TRANSFER":
+        return "Chuyển khoản";
+      case "CASH_PAYMENT":
+        return "Thanh toán tiền mặt";
+      case "VNPAY_ON_WEBSITE":
+        return "Thanh toán VNPAY khi đặt tour";
+      default:
+        return;
+    }
+  };
+
   const renderTourStatus = (status) => {
     switch (status) {
       case "NOT_STARTED":
@@ -94,6 +108,19 @@ const BookedTourDetails = ({ bookedTour }) => {
       default:
         return;
     }
+  };
+
+  const handlePayment = () => {
+    const { id } = bookedTour;
+    id &&
+      paymentBookedTourWithVNPayApi(id)
+        .then((res) => {
+          const vnpayResponseUrl = res.data;
+          window.open(vnpayResponseUrl, "_blank");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   return (
@@ -145,6 +172,16 @@ const BookedTourDetails = ({ bookedTour }) => {
             {renderPaymentStatus(bookedTour.status)}
           </span>
         </div>
+        {bookedTour.status === "PAY_UP" && (
+          <div className="booked-tour-details__item payment-status">
+            <span className="booked-tour-details__item__label">
+              ▶ Hình thức thanh toán:
+            </span>
+            <span className="booked-tour-details__item__content">
+              {renderFormOfPayment(bookedTour.formOfPayment)}
+            </span>
+          </div>
+        )}
         <div className="booked-tour-details__item tour-status">
           <span className="booked-tour-details__item__label">
             ▶ Trạng thái Tour:
@@ -193,18 +230,20 @@ const BookedTourDetails = ({ bookedTour }) => {
           )}
           {isShowDetails ? (
             <button
-              className="profile-btn reset"
+              className="profile-btn normal"
               onClick={handleCancelShowDetail}
             >
               Ẩn
             </button>
           ) : (
-            <button className="profile-btn submit" onClick={handleShowDetail}>
+            <button className="profile-btn normal" onClick={handleShowDetail}>
               Xem chi tiết
             </button>
           )}
           {isShowPaymentButton && (
-            <button className="profile-btn normal">Thanh toán</button>
+            <button className="profile-btn submit" onClick={handlePayment}>
+              Thanh toán
+            </button>
           )}
         </div>
       </div>

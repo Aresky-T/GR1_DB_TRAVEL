@@ -10,6 +10,11 @@ export const bookTourForUserApi = (data, token, dispatch) => {
     return axios.post(baseURL, data, config);
 }
 
+export const bookTourAndPaymentWithVNPayApi = (bookingInfo, token) => {
+    const config = configAPI(token);
+    return axios.post(`${baseURL}/with-payment-vnpay`, bookingInfo, config);
+}
+
 export const getAllBookedToursApi = (token) => {
     return axios.get(`${baseURL}/user`, configAPI(token));
 }
