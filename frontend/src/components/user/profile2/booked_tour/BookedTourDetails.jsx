@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { paymentBookedTourWithVNPayApi } from "../../../../api/payment";
+import { AxiosError } from "axios";
+import { warningAlert } from "../../../../config/sweetAlertConfig";
+import { useAuth } from "../../../../redux/selector";
 
 const BookedTourDetails = ({ bookedTour }) => {
   const [isShowDetails, setIsShowDetails] = useState(false);
   const handleShowDetail = () => setIsShowDetails(true);
   const handleCancelShowDetail = () => setIsShowDetails(false);
+  const auth = useAuth();
 
   const isShowReviewButton =
     bookedTour.tourStatus === "FINISHED" && bookedTour.status === "PAY_UP";
@@ -112,14 +116,23 @@ const BookedTourDetails = ({ bookedTour }) => {
 
   const handlePayment = () => {
     const { id } = bookedTour;
+    const { accessToken } = auth;
     id &&
-      paymentBookedTourWithVNPayApi(id)
+      paymentBookedTourWithVNPayApi(id, accessToken)
         .then((res) => {
           const vnpayResponseUrl = res.data;
           window.open(vnpayResponseUrl, "_blank");
         })
         .catch((err) => {
           console.log(err);
+          if (err instanceof AxiosError) {
+            const response = err.response;
+            const data = response.data;
+            const message = data?.message ?? "Lỗi thanh toán";
+            warningAlert("Cảnh báo", message, {
+              cancelButtonText: "Thoát",
+            });
+          }
         });
   };
 
