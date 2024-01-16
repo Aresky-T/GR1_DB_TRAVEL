@@ -167,7 +167,12 @@ const BookedTourInfo = () => {
       getAllBookedToursApi(accessToken)
         .then((res) => {
           endLoading();
-          setBookedTours(res.data);
+          const bookedTours = [...res.data].sort((a, b) => {
+            const bookTime1 = new Date(a.bookTime);
+            const bookTime2 = new Date(b.bookTime);
+            return bookTime2.getTime() - bookTime1.getTime();
+          });
+          setBookedTours(bookedTours);
         })
         .catch((err) => {
           endLoading();
