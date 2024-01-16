@@ -4,7 +4,6 @@ import com.gr1.configuration.BookingStorageConfig;
 import com.gr1.dtos.request.BookTourRequest;
 import com.gr1.entity.*;
 import com.gr1.service.IBookTourService;
-import com.gr1.service.ITouristListService;
 import com.gr1.service.IVNPayService;
 import com.gr1.service.IVnPayPaymentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @Controller
@@ -28,48 +29,52 @@ public class VNPayController {
     private IBookTourService bookTourService;
 
     @Autowired
-    private ITouristListService touristListService;
-
-    @Autowired
     private IVnPayPaymentInfoService vnPayPaymentInfoService;
 
     @GetMapping("/payment/vnpay_return")
     public String handleVnPayReturn(HttpServletRequest request, Model model){
+        String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
+        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+        String title = vnp_OrderInfo + "_" + vnp_TxnRef;
+        BookingStorageConfig.Element element = bookingStorage.getElement(title);
         int paymentStatus = vnPayService.orderReturn(request);
+
         System.out.println("----------------------------------------------");
         System.out.println("vnpay payment status: [ " + paymentStatus + " ]");
+        System.out.println("session: [ " + element.getTitle() + " ]");
         System.out.println("----------------------------------------------");
 
         if(paymentStatus == 24){
+            bookingStorage.removeElement(element);
             return "payment/cancel-payment";
         }
 
         if (paymentStatus != 1){
+            bookingStorage.removeElement(element);
             return "payment/booking-failed";
         }
 
-        BookingStorageConfig.BookingStorageElement<Integer> bookedTourIdConfig = bookingStorage.getBookedTourId();
-        BookingStorageConfig.BookingStorageElement<BookTourRequest> bookingInfoConfig = bookingStorage.getBookingInfo();
-        BookingStorageConfig.BookingStorageElement<Account> accountInfoConfig = bookingStorage.getAccount();
-        BookingStorageConfig.BookingStorageElement<Tour> tourInfoConfig = bookingStorage.getTour();
+        BookTourRequest bookingInfo = element.getBookingInfo();
+        System.out.println(bookingInfo);
+        System.out.println("----------------------------------------------");
+        BookedTour bookedTour = Optional.ofNullable(bookingInfo)
+                .map((dto) ->  bookTourService.create(dto, element.getAccount()))
+                .orElseGet(() -> bookTourService.findByTourAndAccount(element.getTour(), element.getAccount()));
 
-        if(bookedTourIdConfig.getValue() != null){
-            int bookedTourId = bookedTourIdConfig.getValue();
-            handleUpdateBookedTourById(bookedTourId);
-        } else {
-            Account account = accountInfoConfig.getValue();
-            Tour tour = tourInfoConfig.getValue();
-            BookTourRequest bookingInfo = bookingInfoConfig.getValue();
-            if(account != null && tour != null && bookingInfo != null){
-                BookedTour bt = handleSaveNewBookingInfoToDB(bookingInfo, account, tour);
-                bookingStorage.getBookedTourId().setValue(bt.getId());
-            } else {
-                System.out.println("booking storage info element null");
-            }
-        }
+        bookedTour.setStatus(EBookedTour.PAY_UP);
+        bookedTour.setFormOfPayment(EFormOfPayment.VNPAY_ON_WEBSITE);
 
+        VnPayPaymentInfo vnPayPaymentInfo = new VnPayPaymentInfo();
+        vnPayPaymentInfo.setAmount(request.getParameter("vnp_Amount"));
+        vnPayPaymentInfo.setOrderInfo(request.getParameter("vnp_OrderInfo"));
+        vnPayPaymentInfo.setTxnRef(request.getParameter("vnp_TxnRef"));
+        vnPayPaymentInfo.setTransactionNo(request.getParameter("vnp_TransactionNo"));
+        vnPayPaymentInfo.setBookedTour(bookTourService.save(bookedTour));
+
+        vnPayPaymentInfoService.save(vnPayPaymentInfo);
         extractAndAddAttributesToModel(request, model);
 
+        bookingStorage.removeElement(element);
         return "payment/booking-success";
     }
 
@@ -79,39 +84,11 @@ public class VNPayController {
                 "vnp_TransactionNo", "vnp_BankCode", "vnp_PayDate"
         };
 
-        VnPayPaymentInfo vnPayPaymentInfo = new VnPayPaymentInfo();
-        vnPayPaymentInfo.setAmount(request.getParameter("vnp_Amount"));
-        vnPayPaymentInfo.setOrderInfo(request.getParameter("vnp_OrderInfo"));
-        vnPayPaymentInfo.setTxnRef(request.getParameter("vnp_TxnRef"));
-        vnPayPaymentInfo.setTransactionNo(request.getParameter("vnp_TransactionNo"));
-
-        if(bookingStorage.getBookedTourId().getValue() != null) {
-            vnPayPaymentInfo.setBookedTour(bookTourService.findById(bookingStorage.getBookedTourId().getValue()));
-        }
-
-        vnPayPaymentInfoService.save(vnPayPaymentInfo);
-
         for(String attributeName : attributeNames){
             String attributeValue = request.getParameter(attributeName);
             if(attributeValue != null && !attributeValue.isEmpty()){
                 model.addAttribute(attributeName, attributeValue);
             }
         }
-    }
-
-    private void handleUpdateBookedTourById(int bookedTourId){
-        BookedTour bookedTour = bookTourService.findById(bookedTourId);
-        saveBookedTourAfterPaymentSuccess(bookedTour);
-    }
-
-    private BookedTour handleSaveNewBookingInfoToDB(BookTourRequest bookingInfo, Account account, Tour tour) {
-        BookedTour bt = bookTourService.create(bookingInfo, account);
-        return saveBookedTourAfterPaymentSuccess(bt);
-    }
-
-    private BookedTour saveBookedTourAfterPaymentSuccess(BookedTour bookedTour){
-        bookedTour.setStatus(EBookedTour.PAY_UP);
-        bookedTour.setFormOfPayment(EFormOfPayment.VNPAY_ON_WEBSITE);
-        return bookTourService.save(bookedTour);
     }
 }

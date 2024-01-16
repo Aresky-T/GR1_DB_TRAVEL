@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -60,10 +59,11 @@ public class BookTourController {
 
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/with-payment-vnpay")
-    public ResponseEntity<String> bookTourAndPaymentWithVNPay (
+    public ResponseEntity<?> bookTourAndPaymentWithVNPay (
             @RequestBody BookTourRequest bookingInfo,
             Authentication authentication,
-            HttpServletRequest request){
+            HttpServletRequest request
+    ){
         String username = authentication.getName();
         Account account = accountService.findByUsername(username);
         Tour tour = tourService.findById(bookingInfo.getTourId());
@@ -74,16 +74,14 @@ public class BookTourController {
             throw new CustomException("Bạn đã đặt tour này rồi, không thể đặt lại!");
         }
 
-        // config booking storage
-        bookingStorageConfig.getBookingInfo().setValue(bookingInfo);
-        bookingStorageConfig.getAccount().setValue(account);
-        bookingStorageConfig.getTour().setValue(tour);
-
+        // Get element from booking storage by account and tour
+        BookingStorageConfig.Element element = bookingStorageConfig.checkElementAndCreateOrUpdate(account, tour);
+        if(element == null){
+            return ResponseEntity.badRequest().body(new MessageResponse("Không thể tạo phiên thanh toán!"));
+        }
+        element.setBookingInfo(bookingInfo);
         // generate vnpay url for payment
-        int amount = bookingInfo.getTotalPrice();
-        String content = "THANH TOAN TOUR " + tour.getTourCode();
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        String vnpayReturnUrl = vnPayService.createOrder(amount, content, baseUrl);
+        String vnpayReturnUrl = vnPayService.createOrder(element, request);
 
         return ResponseEntity.ok(vnpayReturnUrl);
     }
