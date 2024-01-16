@@ -38,4 +38,10 @@ public class BookTourRequest {
         entity.setStatus(EBookedTour.NOT_PAY);
         return entity;
     }
+
+    @Override
+    public String toString() {
+        return "BookingInfo: [name: \"" + fullName + "\", email: \"" + email + "\", phone: \"" + phone
+                + "\", address: \"" + address + "\", tourId: \"" + tourId + "\", totalPrice: \n" + totalPrice + "\"";
+    }
 }
