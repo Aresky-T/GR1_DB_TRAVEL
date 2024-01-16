@@ -13,6 +13,7 @@ public interface IBookTourService {
     Page<BookedTour> findAll(Pageable pageable);
     BookedTour findById (int id);
     BookedTour findByTourAndAccount (int tourId, String username);
+    BookedTour findByTourAndAccount (Tour tour, Account account);
     BookedTour create (BookTourRequest request, Account account);
     void changeStatusBookedTour(BookedTour bookedTour, EBookedTour status, EFormOfPayment formOfPayment);
     Boolean isBookedTourByUser(Account account, Tour tour);

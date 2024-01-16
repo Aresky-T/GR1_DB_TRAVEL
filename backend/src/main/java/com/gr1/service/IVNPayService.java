@@ -1,8 +1,10 @@
 package com.gr1.service;
 
+import com.gr1.configuration.BookingStorageConfig;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface IVNPayService {
-    String createOrder(int amount, String content, String urlReturn);
     int orderReturn(HttpServletRequest request);
+    String createOrder(BookingStorageConfig.Element element, HttpServletRequest request);
 }

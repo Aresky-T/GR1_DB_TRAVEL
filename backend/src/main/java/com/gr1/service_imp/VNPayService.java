@@ -3,7 +3,10 @@ package com.gr1.service_imp;
 import com.gr1.configuration.BookingStorageConfig;
 import com.gr1.configuration.VNPayConfig;
 import com.gr1.dtos.request.BookTourRequest;
+import com.gr1.entity.Account;
 import com.gr1.entity.BookedTour;
+import com.gr1.entity.Tour;
+import com.gr1.exception.CustomException;
 import com.gr1.service.IBookTourService;
 import com.gr1.service.IVNPayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +30,114 @@ public class VNPayService implements IVNPayService {
     private IBookTourService bookTourService;
 
     @Override
-    public String createOrder(int amount, String content, String urlReturn) {
+    public String createOrder(BookingStorageConfig.Element element, HttpServletRequest request) {
+        Account account = element.getAccount();
+        Tour tour = element.getTour();
+        BookedTour bt = bookTourService.findByTourAndAccount(tour, account);
+
+        int amount = Optional.ofNullable(bt).map(BookedTour::getTotalPrice).orElseGet(() -> {
+            BookTourRequest bookingInfo = element.getBookingInfo();
+            if(Objects.isNull(bookingInfo)){
+                throw new CustomException("Yêu cầu các thông tin về khách hàng trước khi tiếp tục!");
+            }
+            return bookingInfo.getTotalPrice();
+        });
+
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String content = "THANH TOAN TOUR " + tour.getTourCode();
+        return generateVnPayUrl(element, amount, content, baseUrl);
+    }
+
+    @Override
+    public int orderReturn(HttpServletRequest request) {
+        AtomicInteger paymentStatus = new AtomicInteger(0);
+        Map<String, String> fields = new HashMap<>();
+        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
+            String fieldName = null;
+            String fieldValue = null;
+            try {
+                fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
+                fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                fields.put(fieldName, fieldValue);
+            }
+        }
+
+        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+        String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
+        String vnp_Session = vnp_OrderInfo + "_" + vnp_TxnRef;
+        int vnp_Amount = Integer.parseInt(request.getParameter("vnp_Amount"));
+
+        if (fields.containsKey("vnp_SecureHashType")) {
+            fields.remove("vnp_SecureHashType");
+        }
+
+        if (fields.containsKey("vnp_SecureHash")) {
+            fields.remove("vnp_SecureHash");
+        }
+
+        // Check checksum
+        String signValue = VNPayConfig.hashAllFields(fields);
+
+        if (signValue.equals(vnp_SecureHash)) {
+            BookingStorageConfig.Element element = bookingStorage.getElement(vnp_Session);
+            System.out.println(element);
+            boolean checkBookingInfo = Objects.nonNull(element);
+            boolean checkBookingStatus = paymentStatus.get() == 0; // PaymentStatus = 0 (pending)
+
+            if (checkBookingInfo) {
+                BookTourRequest bookingInfo = element.getBookingInfo();
+                int totalPrice = Optional.ofNullable(bookingInfo)
+                        .map(BookTourRequest::getTotalPrice)
+                        .orElseGet(() -> {
+                            Account account = element.getAccount();
+                            Tour tour = element.getTour();
+                            BookedTour bt = bookTourService.findByTourAndAccount(tour, account);
+                            return bt.getTotalPrice();
+                        });
+                boolean checkAmount = totalPrice == vnp_Amount/100 ;
+
+                if(checkAmount) {
+                    if (checkBookingStatus){
+                        if ("00".equals(vnp_ResponseCode)) {
+                            paymentStatus.set(1);
+                            System.out.println("{\"RspCode\":\"00\",\"Message\":\"Confirm Success\"}");
+                        } else {
+                            paymentStatus.set(Integer.parseInt(vnp_ResponseCode));
+                            System.out.println("{\"RspCode\":\"" + vnp_ResponseCode +"\",\"Message\":\"Booking Failed\"}");
+                        }
+                    } else {
+                        paymentStatus.set(2);
+                        System.out.println("{\"RspCode\":\"02\",\"Message\":\"Booking already confirmed\"}");
+                    }
+                } else {
+                    paymentStatus.set(3);
+                    System.out.println("{\"RspCode\":\"03\",\"Message\":\"Invalid Amount\"}");
+                }
+            } else {
+                paymentStatus.set(4);
+                System.out.println("{\"RspCode\":\"04\",\"Message\":\"Invalid Booking\"}");
+            }
+        } else {
+            paymentStatus.set(-1);
+            System.out.println("{\"RspCode\":\"-1\",\"Message\":\"Invalid Checksum\"}");
+        }
+        return paymentStatus.get();
+    }
+
+    private String generateVnPayUrl(BookingStorageConfig.Element element, int amount, String content, String urlReturn) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
         String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
         String orderType = "order-type";
+        element.setTitle(content + "_" + vnp_TxnRef);
 
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
@@ -92,93 +196,6 @@ public class VNPayService implements IVNPayService {
         String queryUrl = query.toString();
         String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
-        System.out.println(paymentUrl);
-        return paymentUrl;
-    }
-
-    @Override
-    public int orderReturn(HttpServletRequest request) {
-        AtomicInteger paymentStatus = new AtomicInteger(0);
-        BookTourRequest bookingInfo = bookingStorage.getBookingInfo().getValue();
-        Integer bookedTourId = bookingStorage.getBookedTourId().getValue();
-        // ex: PaymentStatus = 0; pending
-        //  PaymentStatus = 1; success
-        //  PaymentStatus = -1; Failed
-        //  Begin process return from VNPAY
-        Map<String, String> fields = new HashMap<>();
-        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
-            String fieldName = null;
-            String fieldValue = null;
-            try {
-                fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
-                fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                fields.put(fieldName, fieldValue);
-            }
-        }
-
-        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
-        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
-        int vnp_Amount = Integer.parseInt(request.getParameter("vnp_Amount"));
-
-        if (fields.containsKey("vnp_SecureHashType")) {
-            fields.remove("vnp_SecureHashType");
-        }
-
-        if (fields.containsKey("vnp_SecureHash")) {
-            fields.remove("vnp_SecureHash");
-        }
-
-        // Check checksum
-        String signValue = VNPayConfig.hashAllFields(fields);
-
-        if (signValue.equals(vnp_SecureHash)) {
-            boolean isBookingInfoNonNull = bookingInfo != null;
-            boolean isBookedTourIdNonNull = bookedTourId != null;
-
-            boolean checkBookingInfo = isBookingInfoNonNull || isBookedTourIdNonNull;
-            boolean checkBookingStatus = paymentStatus.get() == 0; // PaymentStatus = 0 (pending)
-
-            if (checkBookingInfo) {
-                int totalPrice = 0;
-
-                if(isBookedTourIdNonNull){
-                    BookedTour bt = bookTourService.findById(bookedTourId);
-                    totalPrice = bt.getTotalPrice();
-                } else {
-                    totalPrice = bookingInfo.getTotalPrice();
-                }
-
-                boolean checkAmount = totalPrice == vnp_Amount/100 ; // vnp_Amount is valid (Check vnp_Amount VNPAY returns compared to the amount of the code (vnp_TxnRef) in the Your database).
-                if(checkAmount) {
-                    if (checkBookingStatus){
-                        if ("00".equals(vnp_ResponseCode)) {
-                            paymentStatus.set(1);
-                        } else {
-                            // Here Code update PaymentStatus = 0 into your Database
-                            paymentStatus.set(Integer.parseInt(vnp_ResponseCode));
-                        }
-                        System.out.println("{\"RspCode\":\"00\",\"Message\":\"Confirm Success\"}");
-                    } else {
-                        paymentStatus.set(2);
-                        System.out.println("{\"RspCode\":\"02\",\"Message\":\"Booking already confirmed\"}");
-                    }
-                } else {
-                    paymentStatus.set(3);
-                    System.out.println("{\"RspCode\":\"03\",\"Message\":\"Invalid Amount\"}");
-                }
-            } else {
-                paymentStatus.set(4);
-                System.out.println("{\"RspCode\":\"04\",\"Message\":\"Invalid Booking\"}");
-            }
-        } else {
-            paymentStatus.set(-1);
-            System.out.println("{\"RspCode\":\"-1\",\"Message\":\"Invalid Checksum\"}");
-        }
-        return paymentStatus.get();
+        return VNPayConfig.vnp_PayUrl + "?" + queryUrl;
     }
 }

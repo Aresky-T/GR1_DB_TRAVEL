@@ -69,6 +69,11 @@ public class BookTourService implements IBookTourService {
         return optional.get();
     }
 
+    @Override
+    public BookedTour findByTourAndAccount(Tour tour, Account account) {
+        return bookTourRepository.findByTourAndAccount(tour, account).orElse(null);
+    }
+
     @Transactional
     @Override
     public BookedTour create (BookTourRequest bookingInfo, Account account) {
@@ -100,7 +105,6 @@ public class BookTourService implements IBookTourService {
         }
 
         // generate the booked tour entity for requested information and save to database
-//        BookedTour bt = getBookedTour(request, account, tour);
         BookedTour entity = bookingInfo.buildEntity();
         entity.setTour(tour);
         entity.setAccount(account);
