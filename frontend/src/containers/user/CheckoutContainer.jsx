@@ -161,9 +161,7 @@ const CheckoutContainer = () => {
               const message =
                 err.response?.data?.message ??
                 "Không thể đặt tour, vui lòng kiểm tra lại!";
-              warningAlert("Cảnh báo", message, {
-                cancelButtonText: "OK",
-              });
+              handlePaymentError(message);
             }
           });
 
@@ -189,9 +187,7 @@ const CheckoutContainer = () => {
               const message =
                 err.response?.data?.message ??
                 "Không thể đặt tour, vui lòng kiểm tra lại!";
-              warningAlert("Cảnh báo", message, {
-                cancelButtonText: "Kiểm tra lại",
-              });
+              handlePaymentError(message);
             }
           });
         break;
@@ -199,6 +195,17 @@ const CheckoutContainer = () => {
         break;
     }
   };
+
+  const handlePaymentError = (message) => {
+    warningAlert("Cảnh báo", message, {
+      confirmButtonText: "OK",
+    }).then(result => {
+      if(result.isConfirmed){
+        dispatch(removeBookingInfo())
+        navigate(ROUTE.HOME);
+      }
+    });
+  }
 
   const renderTourists = useCallback(() => {
     return formik.values.touristList.map((tourist) => (
