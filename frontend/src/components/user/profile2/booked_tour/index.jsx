@@ -3,6 +3,7 @@ import { useAuth } from "../../../../redux/selector";
 import { getAllBookedToursApi } from "../../../../api/user/booking.api";
 import LoadingIndicator from "../../../global/Loading/LoadingIndicator";
 import BookedTourDetails from "./BookedTourDetails";
+import CancelBookedTourRequest from "./cancel";
 
 // const initBookedTourList = [
 //   {
@@ -140,16 +141,31 @@ import BookedTourDetails from "./BookedTourDetails";
 const BookedTourInfo = () => {
   const [bookedTours, setBookedTours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [selectedBookedTour, setSelectedBookedTour] = useState();
   const { accessToken } = useAuth();
 
   const startLoading = () => {
     setIsLoading(true);
   };
+
   const endLoading = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   };
+
+  const showModal = (bookedTour) => {
+    setSelectedBookedTour(bookedTour);
+    setIsShowModal(true);
+  };
+
+  const hiddenModal = () => {
+    setSelectedBookedTour(null);
+    setIsShowModal(false);
+  };
+
+  console.log({ isShowModal, selectedBookedTour });
 
   const renderBookedTourList = useCallback(() => {
     if (bookedTours.length === 0) {
@@ -157,8 +173,14 @@ const BookedTourInfo = () => {
     }
 
     return bookedTours.map((item) => (
-      <BookedTourDetails bookedTour={item} key={item.id} />
+      <BookedTourDetails
+        bookedTour={item}
+        showModal={showModal}
+        key={item.id}
+      />
     ));
+
+    // eslint-disable-next-line
   }, [bookedTours]);
 
   useEffect(() => {
@@ -208,6 +230,11 @@ const BookedTourInfo = () => {
           )}
         </div>
       </div>
+      <CancelBookedTourRequest
+        isShow={isShowModal}
+        hiddenModal={hiddenModal}
+        bookedTour={selectedBookedTour}
+      />
     </div>
   );
 };
