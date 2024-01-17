@@ -21,8 +21,6 @@ public class RequestService implements IRequestService {
     private RequestCancelBookedTourRepository requestCancelBookedTourRepository;
     @Autowired
     private BookTourService bookTourService;
-    @Autowired
-    private IAccountService accountService;
 
     @Override
     public RequestCancelBookedTour findById(int id){
@@ -36,9 +34,8 @@ public class RequestService implements IRequestService {
 
     @Transactional
     @Override
-    public void addRequestCancelBookedTour (CancelBookedTourForm form, String username) {
+    public void addRequestCancelBookedTour (CancelBookedTourForm form, Account account) {
         BookedTour bookedTour = bookTourService.findById(form.getBookedTourId());
-        Account account = accountService.findByUsername(username);
 
         if(!bookedTour.getAccount().equals(account)) {
             throw new CustomException("Bạn không phải người đặt tour này");

@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { warningAlert } from "../../../../config/sweetAlertConfig";
 import { useAuth } from "../../../../redux/selector";
 
-const BookedTourDetails = ({ bookedTour }) => {
+const BookedTourDetails = ({ bookedTour, showModal }) => {
   const [isShowDetails, setIsShowDetails] = useState(false);
   const handleShowDetail = () => setIsShowDetails(true);
   const handleCancelShowDetail = () => setIsShowDetails(false);
@@ -236,7 +236,14 @@ const BookedTourDetails = ({ bookedTour }) => {
         </div>
         <div className="booked-tour-details__buttons">
           {isShowCancelTourButton && (
-            <button className="profile-btn cancel">Hủy đặt Tour</button>
+            <button
+              className="profile-btn cancel"
+              onClick={() => {
+                showModal(bookedTour);
+              }}
+            >
+              Hủy đặt Tour
+            </button>
           )}
           {isShowReviewButton && (
             <button className="profile-btn review">Đánh giá</button>
