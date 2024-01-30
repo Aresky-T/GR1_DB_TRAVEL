@@ -5,7 +5,7 @@ export const successAlert = async (title, text, confirmButtonText) => {
         title: title,
         icon: "success",
         text: text,
-        confirmButtonText: confirmButtonText,
+        confirmButtonText: confirmButtonText || "OK",
     })
 }
 
