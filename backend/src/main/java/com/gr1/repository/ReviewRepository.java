@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     List<Review> findAllByTourIs (Tour tour);
-    Optional<Review> findByAccountIs(Account account);
+    Optional<Review> findByAccountAndTour(Account account, Tour tour);
+    boolean existsByAccountAndTour(Account account, Tour tour);
 }
