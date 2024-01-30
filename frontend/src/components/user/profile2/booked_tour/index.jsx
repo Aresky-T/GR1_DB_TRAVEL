@@ -4,6 +4,7 @@ import { getAllBookedToursApi } from "../../../../api/user/booking.api";
 import LoadingIndicator from "../../../global/Loading/LoadingIndicator";
 import BookedTourDetails from "./BookedTourDetails";
 import CancelBookedTourRequest from "./cancel";
+import ReviewBookedTour from "./review";
 
 // const initBookedTourList = [
 //   {
@@ -138,10 +139,16 @@ import CancelBookedTourRequest from "./cancel";
 //   },
 // ];
 
+export const OPTIONS = {
+  REVIEW_BOOKED_TOUR: "review-booked-tour",
+  CANCEL_BOOKED_TOUR: "cancel-booked-tour",
+};
+
 const BookedTourInfo = () => {
   const [bookedTours, setBookedTours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const [type, setType] = useState("");
   const [selectedBookedTour, setSelectedBookedTour] = useState();
   const { accessToken } = useAuth();
 
@@ -155,17 +162,17 @@ const BookedTourInfo = () => {
     }, 1000);
   };
 
-  const showModal = (bookedTour) => {
+  const showModal = (bookedTour, type) => {
+    setType(type);
     setSelectedBookedTour(bookedTour);
     setIsShowModal(true);
   };
 
   const hiddenModal = () => {
+    setType("");
     setSelectedBookedTour(null);
     setIsShowModal(false);
   };
-
-  console.log({ isShowModal, selectedBookedTour });
 
   const renderBookedTourList = useCallback(() => {
     if (bookedTours.length === 0) {
@@ -231,9 +238,16 @@ const BookedTourInfo = () => {
         </div>
       </div>
       <CancelBookedTourRequest
+        type={type}
         isShow={isShowModal}
         hiddenModal={hiddenModal}
         bookedTour={selectedBookedTour}
+      />
+      <ReviewBookedTour
+        type={type}
+        bookedTour={selectedBookedTour}
+        isShow={isShowModal}
+        hiddenModal={hiddenModal}
       />
     </div>
   );
