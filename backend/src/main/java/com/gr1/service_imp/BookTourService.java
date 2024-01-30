@@ -157,6 +157,11 @@ public class BookTourService implements IBookTourService {
         return bookTourRepository.save(entity);
     }
 
+    @Override
+    public boolean existByAccountAndTour(Account account, Tour tour) {
+        return bookTourRepository.existsByAccountAndTour(account, tour);
+    }
+
     @Service
     public static class TouristListService implements ITouristListService {
 

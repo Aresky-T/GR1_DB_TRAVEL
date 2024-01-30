@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IReviewService {
     Review save(Review review);
-    Review findByAccount(Account account);
+    Review findByAccountAndTour(Account account, Tour tour);
     List<Review> findAllByTour(Tour tour);
+    boolean isExist(Account account, Tour tour);
 }

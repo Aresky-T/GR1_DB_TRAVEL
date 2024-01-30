@@ -22,4 +22,6 @@ public interface BookTourRepository extends JpaRepository<BookedTour, Integer> {
 
     @Query("SELECT B FROM BookedTour B WHERE B.tour = ?1 AND B.account = ?2")
     Optional<BookedTour> findByTourAndAccount (Tour tour, Account account);
+
+    boolean existsByAccountAndTour(Account account, Tour tour);
 }

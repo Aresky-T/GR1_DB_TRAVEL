@@ -19,4 +19,5 @@ public interface IBookTourService {
     Boolean isBookedTourByUser(Account account, Tour tour);
     Boolean existById(int id);
     BookedTour save(BookedTour entity);
+    boolean existByAccountAndTour(Account account, Tour tour);
 }

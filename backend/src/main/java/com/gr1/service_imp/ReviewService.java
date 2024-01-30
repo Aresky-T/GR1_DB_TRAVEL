@@ -22,12 +22,17 @@ public class ReviewService implements IReviewService {
     }
 
     @Override
-    public Review findByAccount (Account account) {
-        return reviewRepository.findByAccountIs(account).orElse(null);
+    public Review findByAccountAndTour (Account account, Tour tour) {
+        return reviewRepository.findByAccountAndTour(account, tour).orElse(null);
     }
 
     @Override
     public List<Review> findAllByTour (Tour tour) {
         return reviewRepository.findAllByTourIs(tour);
+    }
+
+    @Override
+    public boolean isExist(Account account, Tour tour) {
+        return reviewRepository.existsByAccountAndTour(account, tour);
     }
 }

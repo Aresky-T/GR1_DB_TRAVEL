@@ -6,7 +6,7 @@ import com.gr1.entity.RequestCancelBookedTour;
 import com.gr1.entity.Tour;
 
 public interface IRequestService {
-    void addRequestCancelBookedTour(CancelBookedTourForm form, String username);
+    void addRequestCancelBookedTour(CancelBookedTourForm form, Account account);
     void deleteRequestCancelBookedTour(int id);
     RequestCancelBookedTour findById(int id);
 }

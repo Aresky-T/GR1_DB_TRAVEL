@@ -124,7 +124,8 @@ public class BookTourController {
     @PostMapping("/request-cancel-booked-tour/send")
     public ResponseEntity<?> sendRequestCancelBookedTour(@RequestBody CancelBookedTourForm form, Authentication authentication){
         String username = authentication.getName();
-        requestService.addRequestCancelBookedTour(form, username);
+        Account account = accountService.findByUsername(username);
+        requestService.addRequestCancelBookedTour(form, account);
         return ResponseEntity.ok("success");
     }
 

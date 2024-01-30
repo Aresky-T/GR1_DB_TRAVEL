@@ -3,6 +3,8 @@ import { useAuth } from "../../../../redux/selector";
 import { getAllBookedToursApi } from "../../../../api/user/booking.api";
 import LoadingIndicator from "../../../global/Loading/LoadingIndicator";
 import BookedTourDetails from "./BookedTourDetails";
+import CancelBookedTourRequest from "./cancel";
+import ReviewBookedTour from "./review";
 
 // const initBookedTourList = [
 //   {
@@ -137,18 +139,39 @@ import BookedTourDetails from "./BookedTourDetails";
 //   },
 // ];
 
+export const OPTIONS = {
+  REVIEW_BOOKED_TOUR: "review-booked-tour",
+  CANCEL_BOOKED_TOUR: "cancel-booked-tour",
+};
+
 const BookedTourInfo = () => {
   const [bookedTours, setBookedTours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [type, setType] = useState("");
+  const [selectedBookedTour, setSelectedBookedTour] = useState();
   const { accessToken } = useAuth();
 
   const startLoading = () => {
     setIsLoading(true);
   };
+
   const endLoading = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
+  };
+
+  const showModal = (bookedTour, type) => {
+    setType(type);
+    setSelectedBookedTour(bookedTour);
+    setIsShowModal(true);
+  };
+
+  const hiddenModal = () => {
+    setType("");
+    setSelectedBookedTour(null);
+    setIsShowModal(false);
   };
 
   const renderBookedTourList = useCallback(() => {
@@ -157,8 +180,14 @@ const BookedTourInfo = () => {
     }
 
     return bookedTours.map((item) => (
-      <BookedTourDetails bookedTour={item} key={item.id} />
+      <BookedTourDetails
+        bookedTour={item}
+        showModal={showModal}
+        key={item.id}
+      />
     ));
+
+    // eslint-disable-next-line
   }, [bookedTours]);
 
   useEffect(() => {
@@ -208,6 +237,18 @@ const BookedTourInfo = () => {
           )}
         </div>
       </div>
+      <CancelBookedTourRequest
+        type={type}
+        isShow={isShowModal}
+        hiddenModal={hiddenModal}
+        bookedTour={selectedBookedTour}
+      />
+      <ReviewBookedTour
+        type={type}
+        bookedTour={selectedBookedTour}
+        isShow={isShowModal}
+        hiddenModal={hiddenModal}
+      />
     </div>
   );
 };

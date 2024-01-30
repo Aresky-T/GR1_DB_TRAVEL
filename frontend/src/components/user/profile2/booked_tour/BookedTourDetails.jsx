@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { paymentBookedTourWithVNPayApi } from "../../../../api/payment";
 import { AxiosError } from "axios";
 import { warningAlert } from "../../../../config/sweetAlertConfig";
 import { useAuth } from "../../../../redux/selector";
+import { OPTIONS } from ".";
+import { getReviewByTourAndAccount } from "../../../../api/review";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { PiSealWarningFill } from "react-icons/pi";
 
-const BookedTourDetails = ({ bookedTour }) => {
+const BookedTourDetails = ({ bookedTour, showModal }) => {
   const [isShowDetails, setIsShowDetails] = useState(false);
+  const [isReviewed, setIsReviewed] = useState(false);
   const handleShowDetail = () => setIsShowDetails(true);
   const handleCancelShowDetail = () => setIsShowDetails(false);
   const auth = useAuth();
@@ -136,6 +141,23 @@ const BookedTourDetails = ({ bookedTour }) => {
         });
   };
 
+  useEffect(() => {
+    function checkReviewedTour(tourId, accessToken) {
+      getReviewByTourAndAccount(tourId, accessToken)
+        .then((res) => {
+          const data = res.data;
+          setIsReviewed(data != null ? true : false);
+        })
+        .catch((err) => {});
+    }
+
+    const accessToken = auth.accessToken;
+    if (accessToken && bookedTour) {
+      const tourId = bookedTour.tourId;
+      checkReviewedTour(tourId, accessToken);
+    }
+  }, [auth, bookedTour]);
+
   return (
     <div
       className={
@@ -236,10 +258,38 @@ const BookedTourDetails = ({ bookedTour }) => {
         </div>
         <div className="booked-tour-details__buttons">
           {isShowCancelTourButton && (
-            <button className="profile-btn cancel">Hủy đặt Tour</button>
+            <button
+              className="profile-btn cancel"
+              onClick={() => {
+                showModal(bookedTour, OPTIONS.CANCEL_BOOKED_TOUR);
+              }}
+            >
+              Hủy đặt Tour
+            </button>
           )}
           {isShowReviewButton && (
-            <button className="profile-btn review">Đánh giá</button>
+            <>
+              <div className="review-status">
+                {isReviewed ? (
+                  <span className="reviewed">
+                    Đã đánh giá <IoCheckmarkDone size={16} />
+                  </span>
+                ) : (
+                  <span className="non-review">
+                    Chưa đánh giá
+                    <PiSealWarningFill size={16} />
+                  </span>
+                )}
+              </div>
+              <button
+                className="profile-btn review"
+                onClick={() => {
+                  showModal(bookedTour, OPTIONS.REVIEW_BOOKED_TOUR);
+                }}
+              >
+                Đánh giá
+              </button>
+            </>
           )}
           {isShowDetails ? (
             <button
