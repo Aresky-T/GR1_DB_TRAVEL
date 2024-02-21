@@ -18,7 +18,7 @@ CREATE TABLE `Account` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`),
     UNIQUE KEY `email` (`email`)
-) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+);
 
 --
 -- Table structure for table `profile`
@@ -36,8 +36,8 @@ CREATE TABLE `Profile` (
     `account_id` int NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `account_id` (`account_id`),
-    CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`) ON DELETE CASCADE
+);
 
 --
 -- Table structure for table `tour_guide`
@@ -55,7 +55,7 @@ CREATE TABLE `Tour_guide` (
     `address` varchar(200) NOT NULL,
     `status` enum('BUSY', 'AVAILABLE') NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+);
 
 --
 -- Table structure for table `tour`
@@ -93,7 +93,7 @@ CREATE TABLE `Tour` (
     UNIQUE KEY `title` (`title`),
     UNIQUE KEY `tour_code` (`tour_code`),
     KEY `tour_guide` (`tour_guide`),
-    CONSTRAINT `tour_ibfk_1` FOREIGN KEY (`tour_guide`) REFERENCES `tour_guide` (`id`) ON DELETE
+    CONSTRAINT `tour_ibfk_1` FOREIGN KEY (`tour_guide`) REFERENCES `Tour_guide` (`id`) ON DELETE
     SET
         NULL
 );
@@ -127,8 +127,8 @@ CREATE TABLE `Booked_tour_information` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_account_tour` (`account_id`, `tour_id`),
     KEY `tour_id` (`tour_id`),
-    CONSTRAINT `booked_tour_information_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `booked_tour_information_ibfk_2` FOREIGN KEY (`tour_id`) REFERENCES `tour` (`id`) ON DELETE CASCADE
+    CONSTRAINT `booked_tour_information_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `booked_tour_information_ibfk_2` FOREIGN KEY (`tour_id`) REFERENCES `Tour` (`id`) ON DELETE CASCADE
 );
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `Tourist_list` (
     `booked_tour_id` int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `booked_tour_id` (`booked_tour_id`),
-    CONSTRAINT `tourist_list_ibfk_1` FOREIGN KEY (`booked_tour_id`) REFERENCES `booked_tour_information` (`id`) ON DELETE CASCADE
+    CONSTRAINT `tourist_list_ibfk_1` FOREIGN KEY (`booked_tour_id`) REFERENCES `Booked_tour_information` (`id`) ON DELETE CASCADE
 );
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `Request_cancel_booked_tour` (
     `booked_tour_id` int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `booked_tour_id` (`booked_tour_id`),
-    CONSTRAINT `request_cancel_booked_tour_ibfk_1` FOREIGN KEY (`booked_tour_id`) REFERENCES `booked_tour_information` (`id`) ON DELETE CASCADE
+    CONSTRAINT `request_cancel_booked_tour_ibfk_1` FOREIGN KEY (`booked_tour_id`) REFERENCES `Booked_tour_information` (`id`) ON DELETE CASCADE
 );
 
 --
@@ -177,8 +177,8 @@ CREATE TABLE `Review` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `review_unique_key` (`tour_id`, `account_id`),
     KEY `review_fk_1` (`account_id`),
-    CONSTRAINT `review_fk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
-    CONSTRAINT `review_fk_2` FOREIGN KEY (`tour_id`) REFERENCES `tour` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `review_fk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`),
+    CONSTRAINT `review_fk_2` FOREIGN KEY (`tour_id`) REFERENCES `Tour` (`id`) ON DELETE CASCADE,
     CONSTRAINT `review_chk_1` CHECK (
         (
             `stars` between 1 and 5
@@ -189,9 +189,9 @@ CREATE TABLE `Review` (
 --
 -- Table structure for table `tourist_attraction`
 --
-DROP TABLE IF EXISTS `tourist_attraction`;
+DROP TABLE IF EXISTS `Tourist_attraction`;
 
-CREATE TABLE `tourist_attraction` (
+CREATE TABLE `Tourist_attraction` (
     `id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `image_url` text NOT NULL,
@@ -205,9 +205,9 @@ CREATE TABLE `tourist_attraction` (
 --
 -- Table structure for table `touratt_blog_content`
 --
-DROP TABLE IF EXISTS `touratt_blog_content`;
+DROP TABLE IF EXISTS `TourAtt_blog_content`;
 
-CREATE TABLE `touratt_blog_content` (
+CREATE TABLE `TourAtt_blog_content` (
     `id` int NOT NULL AUTO_INCREMENT,
     `sub_title` varchar(255) NOT NULL,
     `content` text NOT NULL,
@@ -215,15 +215,15 @@ CREATE TABLE `touratt_blog_content` (
     `tourAtt_id` int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `tourAtt_id` (`tourAtt_id`),
-    CONSTRAINT `touratt_blog_content_ibfk_1` FOREIGN KEY (`tourAtt_id`) REFERENCES `tourist_attraction` (`id`) ON DELETE CASCADE
+    CONSTRAINT `touratt_blog_content_ibfk_1` FOREIGN KEY (`tourAtt_id`) REFERENCES `Tourist_attraction` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `customer`
 --
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `Customer`;
 
-CREATE TABLE `customer` (
+CREATE TABLE `Customer` (
     `id` int NOT NULL AUTO_INCREMENT,
     `status` enum('ONLINE', 'OFFLINE') NOT NULL,
     `full_name` varchar(100) NOT NULL,
@@ -231,29 +231,29 @@ CREATE TABLE `customer` (
     `account_id` int DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `account_id` (`account_id`),
-    CONSTRAINT `cus_fk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE SET NULL
+    CONSTRAINT `cus_fk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`) ON DELETE SET NULL
 );
 
 --
 -- Table structure for table `employee`
 --
-DROP TABLE IF EXISTS `employee`;
+DROP TABLE IF EXISTS `Employee`;
 
-CREATE TABLE `employee` (
+CREATE TABLE `Employee` (
     `id` int NOT NULL AUTO_INCREMENT,
     `status` enum('ONLINE', 'OFFLINE') NOT NULL,
     `account_id` int NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `account_id` (`account_id`),
-    CONSTRAINT `emp_fk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
+    CONSTRAINT `emp_fk_1` FOREIGN KEY (`account_id`) REFERENCES `Account` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `chat_box`
 --
-DROP TABLE IF EXISTS `chat_box`;
+DROP TABLE IF EXISTS `Chat_box`;
 
-CREATE TABLE `chat_box` (
+CREATE TABLE `Chat_box` (
     `id` int NOT NULL AUTO_INCREMENT,
     `customer_id` int NOT NULL,
     `employee_id` int NOT NULL,
@@ -261,16 +261,16 @@ CREATE TABLE `chat_box` (
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
     KEY `employee_id` (`employee_id`),
-    CONSTRAINT `chat_box_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `chat_box_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE
+    CONSTRAINT `chat_box_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `chat_box_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `Employee` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `mail_box`
 --
-DROP TABLE IF EXISTS `mail_box`;
+DROP TABLE IF EXISTS `Mail_box`;
 
-CREATE TABLE `mail_box` (
+CREATE TABLE `Mail_box` (
     `id` int NOT NULL AUTO_INCREMENT,
     `customer_id` int NOT NULL,
     `employee_id` int NOT NULL,
@@ -278,16 +278,16 @@ CREATE TABLE `mail_box` (
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
     KEY `employee_id` (`employee_id`),
-    CONSTRAINT `mail_box_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `mail_box_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE
+    CONSTRAINT `mail_box_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `mail_box_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `Employee` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `chat`
 --
-DROP TABLE IF EXISTS `chat`;
+DROP TABLE IF EXISTS `Chat`;
 
-CREATE TABLE `chat` (
+CREATE TABLE `Chat` (
     `id` int NOT NULL AUTO_INCREMENT,
     `message` text NOT NULL,
     `chat_box` int NOT NULL,
@@ -296,15 +296,15 @@ CREATE TABLE `chat` (
     `sent_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `chat_fk_1` (`chat_box`),
-    CONSTRAINT `chat_fk_1` FOREIGN KEY (`chat_box`) REFERENCES `chat_box` (`id`) ON DELETE CASCADE
+    CONSTRAINT `chat_fk_1` FOREIGN KEY (`chat_box`) REFERENCES `Chat_box` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `mail`
 --
-DROP TABLE IF EXISTS `mail`;
+DROP TABLE IF EXISTS `Mail`;
 
-CREATE TABLE `mail` (
+CREATE TABLE `Mail` (
     `id` int NOT NULL AUTO_INCREMENT,
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
@@ -313,15 +313,15 @@ CREATE TABLE `mail` (
     `sent_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `mail_fk_1` (`mail_box`),
-    CONSTRAINT `mail_fk_1` FOREIGN KEY (`mail_box`) REFERENCES `mail_box` (`id`) ON DELETE CASCADE
+    CONSTRAINT `mail_fk_1` FOREIGN KEY (`mail_box`) REFERENCES `Mail_box` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `mail_reply`
 --
-DROP TABLE IF EXISTS `mail_reply`;
+DROP TABLE IF EXISTS `Mail_reply`;
 
-CREATE TABLE `mail_reply` (
+CREATE TABLE `Mail_reply` (
     `id` int NOT NULL AUTO_INCREMENT,
     `title` varchar(255) NOT NULL,
     `content` text NOT NULL,
@@ -329,15 +329,15 @@ CREATE TABLE `mail_reply` (
     `replied_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `mail_reply_fk1` (`original_mail`),
-    CONSTRAINT `mail_reply_fk1` FOREIGN KEY (`original_mail`) REFERENCES `mail` (`id`) ON DELETE CASCADE
+    CONSTRAINT `mail_reply_fk1` FOREIGN KEY (`original_mail`) REFERENCES `Mail` (`id`) ON DELETE CASCADE
 );
 
 --
 -- Table structure for table `vnpay_payment_info`
 --
-DROP TABLE IF EXISTS `vnpay_payment_info`;
+DROP TABLE IF EXISTS `Vnpay_payment_info`;
 
-CREATE TABLE `vnpay_payment_info` (
+CREATE TABLE `Vnpay_payment_info` (
     `id` int NOT NULL AUTO_INCREMENT,
     `order_info` varchar(255) DEFAULT NULL,
     `transaction_no` varchar(255) DEFAULT NULL,
@@ -346,5 +346,5 @@ CREATE TABLE `vnpay_payment_info` (
     `booked_tour_id` int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `booked_tour_id` (`booked_tour_id`),
-    CONSTRAINT `booked_tour_id` FOREIGN KEY (`booked_tour_id`) REFERENCES `booked_tour_information` (`id`) ON DELETE CASCADE
+    CONSTRAINT `booked_tour_id` FOREIGN KEY (`booked_tour_id`) REFERENCES `Booked_tour_information` (`id`) ON DELETE CASCADE
 );

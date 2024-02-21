@@ -1,6 +1,6 @@
 USE bk_travel_database;
 
-INSERT INTO `account`
+INSERT INTO `Account`
 VALUES (
         1,
         'admin',
@@ -102,7 +102,7 @@ VALUES (
         '2023-10-26 21:49:15'
     );
 
-INSERT INTO `profile`
+INSERT INTO `Profile`
 VALUES (
         1,
         'string',
@@ -204,7 +204,7 @@ VALUES (
         11
     );
 
-INSERT INTO `tour_guide`
+INSERT INTO `Tour_guide`
 VALUES (
         1,
         'Nguyễn Anh Tuấn',
@@ -237,7 +237,7 @@ VALUES (
         'BUSY'
     );
 
-INSERT INTO `tour`
+INSERT INTO `Tour`
 VALUES (
         1,
         'Tour 1: Đà Lạt: Dịch vụ vé máy bay + 2 đêm nghỉ dưỡng tại khách sạn Sandals Camellia 4 sao (Đã gồm Ăn sáng)',
@@ -527,7 +527,7 @@ VALUES (
     );
 
 INSERT INTO
-    `booked_tour_information`
+    `Booked_tour_information`
 VALUES (
         3,
         'Tuấn Anh',
@@ -578,7 +578,7 @@ VALUES (
         9
     );
 
-INSERT INTO `tourist_list`
+INSERT INTO `Tourist_list`
 VALUES (
         5,
         'Tuấn Anh',
@@ -612,7 +612,7 @@ VALUES (
     );
 
 INSERT INTO
-    `tourist_attraction`
+    `Tourist_attraction`
 VALUES (
         1,
         'Đà Lạt',
@@ -658,7 +658,7 @@ VALUES (
     );
 
 INSERT INTO
-    `touratt_blog_content`
+    `Touratt_blog_content`
 VALUES (
         2,
         'Thung lũng Tình Yêu',
@@ -817,9 +817,9 @@ VALUES (
         1
     );
 
-INSERT INTO `employee` VALUES (1,'OFFLINE',11);
+INSERT INTO `Employee` VALUES (1,'OFFLINE',11);
 
-INSERT INTO `customer`
+INSERT INTO `Customer`
 VALUES (
         2,
         'ONLINE',
@@ -894,10 +894,10 @@ VALUES (
         NULL
     );
 
-INSERT INTO `chat_box`
+INSERT INTO `Chat_box`
 VALUES (2, 2, 1, '2023-10-29 22:07:05'), (3, 3, 1, '2023-10-27 15:11:02'), (4, 9, 1, '2023-11-07 17:43:51'), (5, 8, 1, '2023-11-09 21:31:44'), (8, 12, 1, '2023-11-10 02:56:54');
 
-INSERT INTO `chat`
+INSERT INTO `Chat`
 VALUES (
         1,
         'xin chao',
@@ -1733,7 +1733,7 @@ VALUES (
         '2023-11-11 14:09:02'
     );
 
-INSERT INTO `mail_box`
+INSERT INTO `Mail_box`
 VALUES (1, 2, 1, '2023-10-28 12:20:11'), (2, 3, 1, '2023-10-30 05:24:12'), (6, 7, 1, '2023-11-04 09:18:55'), (7, 8, 1, '2023-11-06 22:15:39'), (8, 12, 1, '2023-11-10 12:52:40'), (9, 11, 1, '2023-11-10 13:05:39'), (
         10,
         13,
@@ -1746,7 +1746,7 @@ VALUES (1, 2, 1, '2023-10-28 12:20:11'), (2, 3, 1, '2023-10-30 05:24:12'), (6, 7
         '2023-11-10 19:19:44'
     );
 
-INSERT INTO `mail`
+INSERT INTO `Mail`
 VALUES (
         1,
         'email test title',
@@ -1903,7 +1903,7 @@ VALUES (
         '2023-11-10 19:19:44'
     );
 
-INSERT INTO `mail_reply`
+INSERT INTO `Mail_reply`
 VALUES (
         1,
         'Reply \"mail test 2 title\"',
