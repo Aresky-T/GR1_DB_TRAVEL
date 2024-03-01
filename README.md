@@ -55,8 +55,8 @@ my-project/
    ```
 ### Running the Frontend
    ```
-   cd backend
-   mvn spring-boot:run
+   cd frontend
+   npm start
    ```
 ### Database Setup
 1. Create a MySQL database
