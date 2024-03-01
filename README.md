@@ -2,12 +2,13 @@
 A website designed for travel enthusiasts.
 ## Table of Contents
 - Project Structure
+- Project Functions
 - Getting Started
-- Prerequisites
-- Installation
-- Running the Backend
-- Running the Frontend
-- Database Setup
+    - Prerequisites
+    - Installation
+    - Running the Backend
+    - Running the Frontend
+    - Database Setup
 - Usage
 - Contributing
 - License
@@ -28,6 +29,14 @@ my-project/
     ├── GR1_database.sql
     └── Data_insert.sql
 ```
+## Project Functions
+- User authentication (Sign in/Sign up)
+- Tour search, booking, and rating.
+- Pay online with VNPAY
+- Destination search for travel locations.
+- Real-time chat with customer service representatives.
+- Inquiry submission via email.
+- Admin and Staff management.
 ## Getting Started
 ### Prerequisites
 - ***Java 11*** or higher
